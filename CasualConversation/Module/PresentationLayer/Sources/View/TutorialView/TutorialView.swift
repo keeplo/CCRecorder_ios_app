@@ -16,7 +16,7 @@ struct TutorialView: View {
 	var body: some View {
 		TabView {
 			ForEach(Array(names.enumerated()), id: \.offset) { index, name in
-				Image(name)
+				Image(name, bundle: .module)
 					.resizable()
 					.scaledToFit()
 					.cornerRadius(50)

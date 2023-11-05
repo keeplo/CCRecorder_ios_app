@@ -6,9 +6,10 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 
 let workspace = Workspace(
-    name: "CCRecorderApps",
+    name: projectName + "Apps",
     projects: [
         "Projects/**"
     ],

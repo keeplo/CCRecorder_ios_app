@@ -43,7 +43,7 @@ public struct DomainLayer {
         name: name + "Tests",
         platform: .iOS,
         product: .unitTests,
-        bundleId: "com.anipen.\(name)Tests",
+        bundleId: "com.pseapplications.\(name)Tests",
         infoPlist: .default,
         sources: ["../../Module/\(name)/Tests/**"],
         resources: [],

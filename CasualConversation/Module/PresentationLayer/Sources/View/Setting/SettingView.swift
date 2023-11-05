@@ -52,7 +52,7 @@ extension SettingView {
 				}
 			}, label: {
 				HStack {
-					Image(viewModel.logoImageName(by: systemColorScheme))
+					Image(viewModel.logoImageName(by: systemColorScheme), bundle: .module)
 						.resizable()
 						.frame(width: 41.7, height: 48)
 					Text("What is Casual Conversation?")
@@ -65,7 +65,7 @@ extension SettingView {
 	@ViewBuilder
 	private func AcademyInfo() -> some View {
 		VStack(alignment: .center) {
-			Image(viewModel.titleImageName(by: systemColorScheme))
+            Image(viewModel.titleImageName(by: systemColorScheme), bundle: .module)
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.frame(height: 100)

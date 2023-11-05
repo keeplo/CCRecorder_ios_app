@@ -52,7 +52,7 @@ extension TeamMateInfoView {
 	func MemberInfo(by member: TeamMate) -> some View {
 		GroupBox {
 			HStack {
-				Image(member.imageName)
+				Image(member.imageName, bundle: .module)
 					.resizable()
 					.frame(width: 100, height: 100)
 					.mask(Circle())

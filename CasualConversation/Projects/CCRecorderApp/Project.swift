@@ -7,7 +7,7 @@ let localHelper = LocalHelper(name: "MyPlugin")
 
 // MARK: - Project
 let project: Project = .init(
-    name: projectName,
+    name: CCRecorderApp.name,
     organizationName: organizationName,
     options: options,
     packages: [

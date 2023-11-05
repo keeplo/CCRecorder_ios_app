@@ -10,10 +10,10 @@ import SwiftUI
 
 extension Color {
 	
-	static let ccTintColor = Self("CCTintColor")
-	static let ccAccentColor = Self("CCAccentColor")
-	static let ccBgColor = Self("CCBackgroundColor")
-	static let ccGroupBgColor = Self("CCGroupBackgroundColor")
+	static let ccTintColor = Self("CCTintColor", bundle: .module)
+	static let ccAccentColor = Self("CCAccentColor", bundle: .module)
+	static let ccBgColor = Self("CCBackgroundColor", bundle: .module)
+	static let ccGroupBgColor = Self("CCGroupBackgroundColor", bundle: .module)
 	
 	static let logoLightRed = Color(hex: "#E30111")
 	static let logoDarkRed = Color(hex: "#600000")

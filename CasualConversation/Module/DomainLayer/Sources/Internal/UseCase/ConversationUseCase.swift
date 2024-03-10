@@ -25,9 +25,9 @@ public protocol ConversationMaintainable {
 public final class ConversationUseCase: Dependency, ConversationManagable {
 	
 	public struct Dependency {
-		let dataController: ConversationDataControllerProtocol
+		let dataController: ConversationRepository
 		
-		public init(dataController: ConversationDataControllerProtocol) {
+		public init(dataController: ConversationRepository) {
 			self.dataController = dataController
 		}
 	}

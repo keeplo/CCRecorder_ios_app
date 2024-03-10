@@ -1,5 +1,5 @@
 //
-//  NoteUseCase.swift
+//  NoteUseCaseLegacy.swift
 //  CasualConversation
 //
 //  Created by Yongwoo Marco on 2022/06/23.
@@ -16,7 +16,7 @@ public protocol NoteManagable {
 	func delete(item: Note, completion: (CCError?) -> Void)
 }
 
-public final class NoteUseCase: Dependency {
+public final class NoteUseCaseLegacy: Dependency {
 	
 	public enum Filter {
 		case all
@@ -24,11 +24,11 @@ public final class NoteUseCase: Dependency {
 	}
 	
 	public struct Dependecy {
-		let dataController: NoteDataControllerProtocol
+		let dataController: NoteRepository
 		var filter: Filter
 		
 		public init(
-			dataController: NoteDataControllerProtocol,
+			dataController: NoteRepository,
 			filter: Filter
 		) {
 			self.dataController = dataController
@@ -50,16 +50,16 @@ public final class NoteUseCase: Dependency {
 		let fetcedList: [Note]
 		switch dependency.filter {
 		case .all:
-			fetcedList = dependency.dataController.fetch(filter: nil) ?? []
+			fetcedList = dependency.dataController.fetch() ?? []
 		case .selected(let item):
-			fetcedList = dependency.dataController.fetch(filter: item) ?? []
+            fetcedList = dependency.dataController.fetch() ?? []
 		}
 		self.dataSource = fetcedList.filter({ !$0.isDone }) + fetcedList.filter({ $0.isDone })
 	}
 	
 }
 
-extension NoteUseCase: NoteManagable {
+extension NoteUseCaseLegacy: NoteManagable {
 	
 	public func add(item: Note, completion: (CCError?) -> Void) {
 		self.dependency.dataController.create(item) { error in

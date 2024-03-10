@@ -17,14 +17,14 @@ public final class PresentationDIContainer: Dependency, ObservableObject {
 	public struct Dependency {
         let configurations: PresentationConfiguarations
 		let conversationUseCase: ConversationUseCase
-		let noteUseCase: NoteUseCase
+		let noteUseCase: NoteUseCaseLegacy
 		let audioRecordService: AudioRecordService
         let audioPlayService: AudioPlayService
 		
 		public init(
             configurations: PresentationConfiguarations,
             conversationUseCase: ConversationUseCase,
-            noteUseCase: NoteUseCase,
+            noteUseCase: NoteUseCaseLegacy,
             audioRecordService: AudioRecordService,
             audioPlayService: AudioPlayService
 		) {
@@ -36,7 +36,7 @@ public final class PresentationDIContainer: Dependency, ObservableObject {
 		}
 	}
 	
-	public var dependency: Dependency
+	public let dependency: Dependency
 	
 	public init(dependency: Dependency) {
 		self.dependency = dependency
@@ -70,8 +70,8 @@ public extension PresentationDIContainer {
             case .record:
                 let viewModel: RecordViewModel = .init(
                     dependency: .init(
-                        useCase: self.casualConversationUseCase,
-                        audioService: self.audioRecordService
+                        useCase: self.dependency.conversationUseCase,
+                        audioService: self.dependency.audioRecordService
                     )
                 )
                 anyView = .init(RecordView(viewModel: viewModel))
@@ -93,34 +93,39 @@ extension PresentationDIContainer {
 	}
 	
 	func recordView() -> RecordView {
-		let viewModel: RecordViewModel = .init(dependency: .init(
-				useCase: self.casualConversationUseCase,
-				audioService: self.audioRecordService
+		let viewModel: RecordViewModel = .init(
+            dependency: .init(
+				useCase: self.dependency.conversationUseCase,
+				audioService: self.dependency.audioRecordService
 			)
 		)
 		return .init(viewModel: viewModel)
 	}
 	
 	func ConversationListView() -> ConversationListView {
-		let viewModel: ConversationListViewModel = .init(dependency: .init(
-				useCase: self.casualConversationUseCase,
-				audioService: self.audioPlayService
+		let viewModel: ConversationListViewModel = .init(
+            dependency: .init(
+                useCase: self.dependency.conversationUseCase,
+				audioService: self.dependency.audioPlayService
 			)
 		)
 		return .init(viewModel: viewModel)
 	}
-	
-	func ConversationListRow(selected conversation: Conversation) -> ConversationListRow {
-		let viewModel: ConversationListRowViewModel = .init(dependency: .init(
-			item: conversation)
-		)
-		return .init(viewModel: viewModel)
-	}
-	
-	func SelectionView(selected conversation: Conversation) -> SelectionView {
-		let viewModel: SelectionViewModel = .init(dependency: .init(
-				conversationUseCase: self.casualConversationUseCase,
-				noteUseCase: makeNoteUseCase(filter: conversation),
+    
+    func ConversationListRow(selected conversation: Conversation) -> ConversationListRow {
+        let viewModel: ConversationListRowViewModel = .init(
+            dependency: .init(
+                item: conversation
+            )
+        )
+        return .init(viewModel: viewModel)
+    }
+    
+    func SelectionView(selected conversation: Conversation) -> SelectionView {
+        let viewModel: SelectionViewModel = .init(
+            dependency: .init(
+				conversationUseCase: self.dependency.conversationUseCase,
+                noteUseCase: self.dependency.noteUseCase,
 				item: conversation
 			)
 		)
@@ -132,7 +137,7 @@ extension PresentationDIContainer {
 		if let bindedUseCase = usecase {
 			viewModel = .init(dependency: .init(useCase: bindedUseCase))
 		} else {
-			viewModel = .init(dependency: .init(useCase: self.noteUseCase))
+			viewModel = .init(dependency: .init(useCase: self.dependency.noteUseCase))
 		}
 		return .init(viewModel: viewModel)
 	}
@@ -152,7 +157,7 @@ extension PresentationDIContainer {
 	func PlayTabView(with conversation: Conversation) -> PlayTabView {
 		let viewModel: PlayTabViewModel = .init(dependency: .init(
 				item: conversation,
-				audioService: self.audioPlayService
+				audioService: self.dependency.audioPlayService
 			)
 		)
 		return .init(viewModel: viewModel)
@@ -160,7 +165,7 @@ extension PresentationDIContainer {
 	
 	func NoteDetailView(selected note: Note) -> NoteDetailView {
 		let viewModel: NoteDetailViewModel = .init(dependency: .init(
-				useCase: self.noteUseCase,
+				useCase: self.dependency.noteUseCase,
 				item: note
 			)
 		)

@@ -227,19 +227,19 @@ extension SelectionView {
 	
 }
 
-#if DEBUG // MARK: - Preview
-struct SelectionView_Previews: PreviewProvider {
-	
-	static var container: PresentationDIContainer { .preview }
-	
-	static var previews: some View {
-		container.SelectionView(selected: .empty)
-			.environmentObject(container)
-			.preferredColorScheme(.light)
-		container.SelectionView(selected: .empty)
-			.environmentObject(container)
-			.preferredColorScheme(.dark)
-	}
-
-}
-#endif
+//#if DEBUG // MARK: - Preview
+//struct SelectionView_Previews: PreviewProvider {
+//	
+//	static var container: PresentationDIContainer { .preview }
+//	
+//	static var previews: some View {
+//		container.SelectionView(selected: .empty)
+//			.environmentObject(container)
+//			.preferredColorScheme(.light)
+//		container.SelectionView(selected: .empty)
+//			.environmentObject(container)
+//			.preferredColorScheme(.dark)
+//	}
+//
+//}
+//#endif

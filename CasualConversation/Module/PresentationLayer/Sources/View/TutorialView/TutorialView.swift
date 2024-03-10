@@ -52,17 +52,17 @@ struct TutorialView: View {
 	
 }
 
-struct TutorialView_Previews: PreviewProvider {
-	
-	static var container: PresentationDIContainer { .preview }
-	
-	static var previews: some View {
-		TutorialView()
-			.environmentObject(container)
-			.preferredColorScheme(.light)
-		TutorialView()
-			.environmentObject(container)
-			.preferredColorScheme(.dark)
-	}
-	
-}
+//struct TutorialView_Previews: PreviewProvider {
+//	
+//	static var container: PresentationDIContainer { .preview }
+//	
+//	static var previews: some View {
+//		TutorialView()
+//			.environmentObject(container)
+//			.preferredColorScheme(.light)
+//		TutorialView()
+//			.environmentObject(container)
+//			.preferredColorScheme(.dark)
+//	}
+//	
+//}

@@ -42,14 +42,14 @@ public final class PresentationDIContainer: Dependency, ObservableObject {
 		self.dependency = dependency
 	}
 	
-	private func makeNoteUseCase(filter item: Conversation) -> NoteUseCase {
-		return .init(
-            dependency: .init(
-                dataController: self.dependency.noteRepository,
-                filter: .selected(item)
-            )
-		)
-	}
+//	private func makeNoteUseCase(filter item: Conversation) -> NoteUseCase {
+//		return .init(
+//            dependency: .init(
+//                dataController: self.dependency.noteRepository,
+//                filter: .selected(item)
+//            )
+//		)
+//	}
 	
 }
 

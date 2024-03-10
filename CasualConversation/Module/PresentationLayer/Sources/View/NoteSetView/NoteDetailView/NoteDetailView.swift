@@ -141,58 +141,58 @@ extension NoteDetailView {
 	
 }
 
-#if DEBUG
-extension NoteDetailViewModel {
-	
-	static var previewViewModels: [NoteDetailViewModel] {
-		[
-			.init(dependency: .init(
-				useCase: DebugNoteUseCase(),
-				item: .init(
-						id: .init(),
-						original: "Way out",
-						translation: "나가는 길",
-						category: .vocabulary,
-						references: [],
-						createdDate: Date()
-					)
-				)
-			),
-			.init(dependency: .init(
-				useCase: DebugNoteUseCase(),
-				item: .init(
-						id: .init(),
-						original: "Hi, I'm Marco.\nI'm glad meet you.\nI'd like to talk to you.",
-						translation: "안녕하세요, 저는 마르코입니다.\n만나서 반갑습니다.\n이야기하기를 바랬어요.",
-						category: .sentence,
-						references: [],
-						createdDate: Date()
-					)
-				)
-			)
-		]
-	}
-	
-}
-
-// MARK: - Preview
-struct NoteDetail_Previews: PreviewProvider {
-	
-	static let viewModels = NoteDetailViewModel.previewViewModels
-	
-	static var previews: some View {
-		Group {
-			NoteDetailView(viewModel: viewModels[0])
-			NoteDetailView(viewModel: viewModels[1])
-		}
-		.previewLayout(.sizeThatFits)
-		.preferredColorScheme(.light)
-		Group {
-			NoteDetailView(viewModel: viewModels[0])
-			NoteDetailView(viewModel: viewModels[1])
-		}
-		.previewLayout(.sizeThatFits)
-		.preferredColorScheme(.dark)
-	}
-}
-#endif
+//#if DEBUG
+//extension NoteDetailViewModel {
+//	
+//	static var previewViewModels: [NoteDetailViewModel] {
+//		[
+//			.init(dependency: .init(
+//				useCase: DebugNoteUseCase(),
+//				item: .init(
+//						id: .init(),
+//						original: "Way out",
+//						translation: "나가는 길",
+//						category: .vocabulary,
+//						references: [],
+//						createdDate: Date()
+//					)
+//				)
+//			),
+//			.init(dependency: .init(
+//				useCase: DebugNoteUseCase(),
+//				item: .init(
+//						id: .init(),
+//						original: "Hi, I'm Marco.\nI'm glad meet you.\nI'd like to talk to you.",
+//						translation: "안녕하세요, 저는 마르코입니다.\n만나서 반갑습니다.\n이야기하기를 바랬어요.",
+//						category: .sentence,
+//						references: [],
+//						createdDate: Date()
+//					)
+//				)
+//			)
+//		]
+//	}
+//	
+//}
+//
+//// MARK: - Preview
+//struct NoteDetail_Previews: PreviewProvider {
+//	
+//	static let viewModels = NoteDetailViewModel.previewViewModels
+//	
+//	static var previews: some View {
+//		Group {
+//			NoteDetailView(viewModel: viewModels[0])
+//			NoteDetailView(viewModel: viewModels[1])
+//		}
+//		.previewLayout(.sizeThatFits)
+//		.preferredColorScheme(.light)
+//		Group {
+//			NoteDetailView(viewModel: viewModels[0])
+//			NoteDetailView(viewModel: viewModels[1])
+//		}
+//		.previewLayout(.sizeThatFits)
+//		.preferredColorScheme(.dark)
+//	}
+//}
+//#endif

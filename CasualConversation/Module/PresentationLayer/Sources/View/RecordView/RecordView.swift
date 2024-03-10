@@ -331,14 +331,14 @@ extension RecordView {
 	
 }
 
-#if DEBUG // MARK: - Preview
-struct RecordView_Previews: PreviewProvider {
-	
-	static var container: PresentationDIContainer { .preview }
-	
-	static var previews: some View {
-		container.recordView()
-	}
-
-}
-#endif
+//#if DEBUG // MARK: - Preview
+//struct RecordView_Previews: PreviewProvider {
+//	
+//	static var container: PresentationDIContainer { .preview }
+//	
+//	static var previews: some View {
+//		container.recordView()
+//	}
+//
+//}
+//#endif

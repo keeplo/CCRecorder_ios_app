@@ -157,19 +157,19 @@ extension PlayTabView {
 	
 }
 
-#if DEBUG // MARK: - Preview
-struct PlayTabView_Previews: PreviewProvider {
-    
-	static var container: PresentationDIContainer { .preview }
-	
-	static var previews: some View {
-		container.PlayTabView(with: .empty)
-			.previewLayout(.sizeThatFits)
-			.preferredColorScheme(.light)
-		container.PlayTabView(with: .empty)
-			.previewLayout(.sizeThatFits)
-			.preferredColorScheme(.dark)
-    }
-	
-}
-#endif
+//#if DEBUG // MARK: - Preview
+//struct PlayTabView_Previews: PreviewProvider {
+//    
+//	static var container: PresentationDIContainer { .preview }
+//	
+//	static var previews: some View {
+//		container.PlayTabView(with: .empty)
+//			.previewLayout(.sizeThatFits)
+//			.preferredColorScheme(.light)
+//		container.PlayTabView(with: .empty)
+//			.previewLayout(.sizeThatFits)
+//			.preferredColorScheme(.dark)
+//    }
+//	
+//}
+//#endif

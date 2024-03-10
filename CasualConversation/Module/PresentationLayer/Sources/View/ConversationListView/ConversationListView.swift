@@ -28,19 +28,19 @@ struct ConversationListView: View {
 	
 }
 
-#if DEBUG // MARK: - Preview
-struct ConversationListView_Previews: PreviewProvider {
-	
-	static var container: PresentationDIContainer { .preview }
-	
-	static var previews: some View {
-		container.ConversationListView()
-			.environmentObject(container)
-			.preferredColorScheme(.light)
-		container.ConversationListView()
-			.environmentObject(container)
-			.preferredColorScheme(.dark)
-	}
-
-}
-#endif
+//#if DEBUG // MARK: - Preview
+//struct ConversationListView_Previews: PreviewProvider {
+//	
+//	static var container: PresentationDIContainer { .preview }
+//	
+//	static var previews: some View {
+//		container.ConversationListView()
+//			.environmentObject(container)
+//			.preferredColorScheme(.light)
+//		container.ConversationListView()
+//			.environmentObject(container)
+//			.preferredColorScheme(.dark)
+//	}
+//
+//}
+//#endif

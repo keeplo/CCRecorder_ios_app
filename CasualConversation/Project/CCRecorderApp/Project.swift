@@ -13,7 +13,6 @@ let project: Project = .init(
     packages: [
         CCRecorderApp.packages,
         
-        CommonLayer.packages,
         DataLayer.packages,
         DomainLayer.packages,
         PresentationLayer.packages

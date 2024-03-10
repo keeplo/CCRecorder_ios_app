@@ -30,14 +30,6 @@ public struct ContentView: View {
 	
 }
 
-extension ContentView {
-	
-	private func MainTabView() -> some View {
-		container.MainTabView()
-	}
-	
-}
-
 #if DEBUG
 import CommonLayer
 import DomainLayer

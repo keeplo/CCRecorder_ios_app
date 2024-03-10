@@ -7,18 +7,41 @@
 
 import ProjectDescription
 
-public extension ConfigurationName {
-    static let sandbox: Self = .configuration("Sandbox")
-    static let test: Self = .configuration("Test")
+extension ConfigurationName: CustomStringConvertible {
+    static let sandboxDebug: Self = .configuration("SandboxDebug")
+    static let sandboxRelease: Self = .configuration("SandboxRelease")
+    static let productDebug: Self = .configuration("ProductDebug")
+    static let productRelease: Self = .configuration("ProductRelease")
+    
+    public var description: String {
+        switch self {
+            case .sandboxDebug:         return "SANDBOX DEBUG"
+            case .sandboxRelease:       return "SANDBOX RELEASE"
+            case .productDebug:         return "PRODUCT DEBUG"
+            case .productRelease:       fallthrough
+            default:                    return "PRODUCT RELEASE"
+        }
+    }
+    
+    var rawValue: String {
+        switch self {
+            case .sandboxDebug:         return "sandboxDebug"
+            case .sandboxRelease:       return "sandboxRelease"
+            case .productDebug:         return "productDebug"
+            case .productRelease:       fallthrough
+            default:                    return "productRelease"
+        }
+    }
+    
 }
 
 public struct ConfigurationInfo {
     
     public static let `default`: [Configuration] = [
-        .debug(name: .debug,        settings: ConfigurationInfo(.debug).settings),
-        .debug(name: .sandbox,      settings: ConfigurationInfo(.sandbox).settings),
-        .debug(name: .test,         settings: ConfigurationInfo(.test).settings),
-        .release(name: .release,    settings: ConfigurationInfo(.release).settings)
+        .debug(name: .sandboxDebug,         settings: ConfigurationInfo(.sandboxDebug).settings),
+        .release(name: .sandboxRelease,     settings: ConfigurationInfo(.sandboxRelease).settings),
+        .debug(name: .productDebug,         settings: ConfigurationInfo(.productDebug).settings),
+        .release(name: .productRelease,     settings: ConfigurationInfo(.productRelease).settings)
     ]
         
     private let configurationName: ConfigurationName
@@ -35,32 +58,12 @@ public struct ConfigurationInfo {
             .merging(DEBUG_INFORMATION_FORMAT)
     }
     
-    private var condition: String {
-        switch configurationName {
-            case .sandbox:      return "SANDBOX"
-            case .test:         return "TEST"
-            case .release:      return "RELEASE"
-            case .debug:        fallthrough
-            default:            return "DEBUG"
-        }
-    }
-    
-    private var rawValue: String {
-        switch configurationName {
-            case .sandbox:      return "sandbox"
-            case .test:         return "test"
-            case .release:      return "release"
-            case .debug:        fallthrough
-            default:            return "dev"
-        }
-    }
-    
     private var APP_BUNDLE_ID_POST_FIX: SettingsDictionary {
-        ["\(#function)": "\(rawValue)"]
+        ["\(#function)": "\(configurationName.rawValue)"]
     }
     
     private var SWIFT_ACTIVE_COMPILATION_CONDITIONS: SettingsDictionary {
-        ["\(#function)": "\(condition)"]
+        ["\(#function)": "\(configurationName.description)"]
     }
     
     private var DEVELOPMENT_TEAM: SettingsDictionary {

@@ -19,7 +19,7 @@ public extension Scheme {
         targets: [TargetReference] = []
     ) -> Scheme {
         Scheme(
-            name: name,
+            name: "\(name) [\(configuration.description)]",
             buildAction: .buildAction(targets: targets),
             testAction: .testPlans([], configuration: configuration),
             runAction: .runAction(

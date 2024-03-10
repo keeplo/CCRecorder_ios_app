@@ -12,15 +12,10 @@ extension Bundle {
     static let module: Bundle? = .init(identifier: "com.pseapplications.casualconversation.DataLayer")
 }
 
-public protocol CoreDataStackProtocol {
-	var mainContext: NSManagedObjectContext { get }
-	func saveContext(completion: (CCError?) -> Void)
-}
-
-public final class CoreDataStack {
+final class CoreDataStack {
 	
-	public static let modelName = "CasualConversation"
-	public static let model: NSManagedObjectModel = {
+	static let modelName = "CasualConversation"
+	static let model: NSManagedObjectModel = {
 //		guard let modelURL = Bundle(for: CoreDataStack.self).url(forResource: modelName, withExtension: "momd") else {
         guard let modelURL = Bundle.module?.url(forResource: modelName, withExtension: "momd") else {
 
@@ -47,15 +42,11 @@ public final class CoreDataStack {
 	
 	public init() {}
 
-}
-
-extension CoreDataStack: CoreDataStackProtocol {
-	
-	public var mainContext: NSManagedObjectContext {
+    var mainContext: NSManagedObjectContext {
 		self.storeContainer.viewContext
 	}
 	
-	public func saveContext(completion: (CCError?) -> Void) {
+	func saveContext(completion: (CCError?) -> Void) {
 		guard mainContext.hasChanges else { return }
 		
 		do {

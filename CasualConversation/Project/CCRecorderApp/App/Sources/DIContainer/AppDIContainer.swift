@@ -18,15 +18,10 @@ final class AppDIContainer {
     private let configurations = AppConfigurations()
     
     // MARK: - Repository
-    private lazy var coreDataStack: CoreDataStackProtocol = CoreDataStack()
     private lazy var fileManagerReposotiry: FileManagerRepositoryProtocol = FileManagerRepository()
     
-    private lazy var conversationDataContorller: ConversationDataControllerProtocol = ConversationDataController(
-        dependency: .init(coreDataStack: self.coreDataStack)
-    )
-    private lazy var noteDataController: NoteDataControllerProtocol = NoteDataController(
-        dependency: .init(coreDataStack: self.coreDataStack)
-    )
+    private lazy var conversationDataContorller: ConversationRepository = DataFactory.makeConversationRepository()
+    private lazy var noteDataController: NoteRepository = DataFactory.makeNoteRepository()
     private lazy var recordDataController: RecordDataControllerProtocol = RecordDataController(
         dependency: .init(repository: self.fileManagerReposotiry)
     )
@@ -45,7 +40,7 @@ final class AppDIContainer {
                     )
                 ),
                 conversationUseCase: ConversationUseCase(dependency: .init(dataController: self.conversationDataContorller)),
-                noteUseCase: NoteUseCase(dependency: .init(dataController: self.noteDataController, filter: .all)),
+                noteUseCase: NoteUseCaseLegacy(dependency: .init(dataController: self.noteDataController, filter: .all)),
                 audioRecordService: .init(dependency: .init(dataController: self.recordDataController)),
                 audioPlayService: .init(dependency: .init(dataController: self.recordDataController))
             )

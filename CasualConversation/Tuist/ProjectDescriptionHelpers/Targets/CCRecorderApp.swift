@@ -52,9 +52,7 @@ public struct CCRecorderApp {
         headers: nil,
         entitlements: nil,
         scripts: [],
-        dependencies: [
-            .commonLayer,
-            
+        dependencies: [            
             .dataLayer,
             .domainLayer,
             .presentationLayer
@@ -71,10 +69,10 @@ public struct CCRecorderApp {
     
     public static let configurationName: ConfigurationName = ConfigurationName(stringLiteral: "\(name)")
     public static let schemes: [Scheme] = [
-        .make(name: "\(name).dev",      for: .debug,    targets: ["\(name)"]),
-        .make(name: "\(name).sandbox",  for: .sandbox,  targets: ["\(name)"]),
-        .make(name: "\(name).test",     for: .test,     targets: ["\(name)"]),
-        .make(name: "\(name).release",  for: .release,  targets: ["\(name)"])
+        .make(name: name, for: .sandboxDebug,   targets: ["\(name)"]),
+        .make(name: name, for: .sandboxRelease, targets: ["\(name)"]),
+        .make(name: name, for: .productDebug,   targets: ["\(name)"]),
+        .make(name: name, for: .productRelease, targets: ["\(name)"])
     ]
 }
 

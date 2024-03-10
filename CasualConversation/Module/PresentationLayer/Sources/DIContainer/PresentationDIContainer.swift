@@ -10,64 +10,75 @@ import CommonLayer
 import DomainLayer
 
 import Combine
+import SwiftUI
 
 public final class PresentationDIContainer: Dependency, ObservableObject {
 	
 	public struct Dependency {
         let configurations: PresentationConfiguarations
-		let conversationRepository: ConversationDataControllerProtocol
-		let noteRepository: NoteDataControllerProtocol
-		let recordRepository: RecordDataControllerProtocol
+		let conversationUseCase: ConversationUseCase
+		let noteUseCase: NoteUseCase
+		let audioRecordService: AudioRecordService
+        let audioPlayService: AudioPlayService
 		
 		public init(
             configurations: PresentationConfiguarations,
-			conversationRepository: ConversationDataControllerProtocol,
-			noteRepository: NoteDataControllerProtocol,
-			recordRepository: RecordDataControllerProtocol
+            conversationUseCase: ConversationUseCase,
+            noteUseCase: NoteUseCase,
+            audioRecordService: AudioRecordService,
+            audioPlayService: AudioPlayService
 		) {
 			self.configurations = configurations
-			self.conversationRepository = conversationRepository
-			self.noteRepository = noteRepository
-			self.recordRepository = recordRepository
+			self.conversationUseCase = conversationUseCase
+			self.noteUseCase = noteUseCase
+			self.audioRecordService = audioRecordService
+            self.audioPlayService = audioPlayService
 		}
 	}
 	
 	public var dependency: Dependency
-	
-	// MARK: UseCase
-	lazy var casualConversationUseCase: ConversationUseCase = .init(
-		dependency: .init(
-			dataController: self.dependency.conversationRepository
-		)
-	)
-	lazy var noteUseCase: NoteUseCase = .init(dependency: .init(
-		dataController: self.dependency.noteRepository,
-		filter: .all)
-	)
-	
-	// MARK: Service
-	lazy var audioRecordService: AudioRecordService = .init(
-		dependency: .init(
-			dataController: self.dependency.recordRepository
-		)
-	)
-	lazy var audioPlayService: AudioPlayService = .init(
-		dependency: .init(
-			dataController: self.dependency.recordRepository
-		)
-	)
 	
 	public init(dependency: Dependency) {
 		self.dependency = dependency
 	}
 	
 	private func makeNoteUseCase(filter item: Conversation) -> NoteUseCase {
-		return .init(dependency: .init(
-			dataController: self.dependency.noteRepository,
-			filter: .selected(item))
+		return .init(
+            dependency: .init(
+                dataController: self.dependency.noteRepository,
+                filter: .selected(item)
+            )
 		)
 	}
 	
+}
+
+public enum Screen {
+    case main
+    case record
+}
+
+public extension PresentationDIContainer {
+    
+    func makeView(_ screen: Screen) -> some View {
+        let anyView: AnyView
+        
+        switch screen {
+            case .main:
+                let viewModel: MainTabViewModel = .init()
+                anyView = .init(MainTabView(viewModel: viewModel))
+            case .record:
+                let viewModel: RecordViewModel = .init(
+                    dependency: .init(
+                        useCase: self.casualConversationUseCase,
+                        audioService: self.audioRecordService
+                    )
+                )
+                anyView = .init(RecordView(viewModel: viewModel))
+        }
+
+        return anyView
+    }
 }
 
 extension PresentationDIContainer {
@@ -76,12 +87,12 @@ extension PresentationDIContainer {
 		self.dependency.configurations
 	}
 	
-	func MainTabView() -> MainTabView {
+	func mainView() -> MainTabView {
 		let viewModel: MainTabViewModel = .init()
 		return .init(viewModel: viewModel)
 	}
 	
-	func RecordView() -> RecordView {
+	func recordView() -> RecordView {
 		let viewModel: RecordViewModel = .init(dependency: .init(
 				useCase: self.casualConversationUseCase,
 				audioService: self.audioRecordService

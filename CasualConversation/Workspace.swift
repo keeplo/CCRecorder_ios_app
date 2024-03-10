@@ -11,7 +11,8 @@ import ProjectDescriptionHelpers
 let workspace = Workspace(
     name: projectName + "Apps",
     projects: [
-        "Projects/**"
+        "Project/**",
+        "Module/**"
     ],
     generationOptions: .options(
         enableAutomaticXcodeSchemes: false,

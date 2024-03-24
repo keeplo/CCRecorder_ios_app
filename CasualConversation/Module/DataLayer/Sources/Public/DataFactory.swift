@@ -8,6 +8,8 @@
 
 import DomainLayer
 
+import Foundation
+
 public enum DataFactory {
     
     private static let coreDataStack: CoreDataStack = .init()
@@ -28,4 +30,9 @@ public enum DataFactory {
         )
     }
     
+    public static func makeRecordRepository(of documentURL: URL) -> RecordRepository {
+        RecordDataController(
+            dependency: .init(documentURL: documentURL)
+        )
+    }
 }

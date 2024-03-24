@@ -24,9 +24,9 @@ public protocol CCRecorder {
 public final class AudioRecordService: NSObject, Dependency {
 	
 	public struct Dependency {
-		let dataController: RecordDataControllerProtocol
+		let dataController: RecordRepository
 		
-		public init(dataController: RecordDataControllerProtocol) {
+		public init(dataController: RecordRepository) {
 			self.dataController = dataController
 		}
 	}
@@ -116,7 +116,7 @@ public final class AudioRecordService: NSObject, Dependency {
 	}
 	
 	private func makeAudioRecorder() -> AVAudioRecorder? {
-		let newFilePath = dependency.dataController.requestNewFilePath()
+		let newRecordFileURL = dependency.dataController.newRecordFileURL
 //		let recordSettings: [String: Any] = [
 //			AVFormatIDKey: Int(kAudioFormatLinearPCM),
 //			AVSampleRateKey: 44100.0,
@@ -130,7 +130,7 @@ public final class AudioRecordService: NSObject, Dependency {
 			AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
 		]
 		do {
-			let recorder = try AVAudioRecorder(url: newFilePath, settings: recordSettings)
+			let recorder = try AVAudioRecorder(url: newRecordFileURL, settings: recordSettings)
 			return recorder
 		} catch {
 			CCError.log.append(.catchError(error))

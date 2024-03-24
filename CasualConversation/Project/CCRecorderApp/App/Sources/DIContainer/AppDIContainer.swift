@@ -22,8 +22,11 @@ final class AppDIContainer {
     
     private lazy var conversationDataContorller: ConversationRepository = DataFactory.makeConversationRepository()
     private lazy var noteDataController: NoteRepository = DataFactory.makeNoteRepository()
-    private lazy var recordDataController: RecordDataControllerProtocol = RecordDataController(
-        dependency: .init(repository: self.fileManagerReposotiry)
+    private lazy var recordDataController: RecordRepository = DataFactory.makeRecordRepository(
+        of: FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask
+        )[0]
     )
     
     func makePresentationDIContainer() -> PresentationDIContainer {

@@ -30,9 +30,9 @@ public protocol RecordManagable {
 public final class AudioPlayService: NSObject, Dependency {
 	
 	public struct Dependency {
-		let dataController: RecordDataControllerProtocol
+		let dataController: RecordRepository
 		
-		public init(dataController: RecordDataControllerProtocol) {
+		public init(dataController: RecordRepository) {
 			self.dataController = dataController
 		}
 	}
@@ -126,7 +126,7 @@ public final class AudioPlayService: NSObject, Dependency {
 	}
 	
 	private func makeAudioPlayer(by filePath: URL) -> AVAudioPlayer? {
-		guard let data = dependency.dataController.requestRecordData(from: filePath) else {
+		guard let data = try? dependency.dataController.read(of: filePath) else {
 			CCError.log.append(.audioServiceFailed(reason: .fileURLPathInvalidated))
 			return nil
 		}
@@ -229,8 +229,9 @@ extension AudioPlayService: CCPlayer {
 
 extension AudioPlayService: RecordManagable {
 
-	public func removeRecordFile(from filePath: URL, completion: (CCError?) -> Void) {
-		self.dependency.dataController.deleteRecordData(from: filePath, completion: completion)
+	public func removeRecordFile(from fileURL: URL, completion: (CCError?) -> Void) {
+        try? dependency.dataController.delete(from: fileURL)
+        completion(.audioServiceFailed(reason: .bindingFailure))
 	}
 	
 }

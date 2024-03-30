@@ -65,8 +65,7 @@ public extension PresentationDIContainer {
         
         switch screen {
             case .main:
-                let viewModel: MainTabViewModel = .init()
-                anyView = .init(MainTabView(viewModel: viewModel))
+                anyView = .init(MainTabView())
             case .record:
                 let viewModel: RecordViewModel = .init(
                     dependency: .init(
@@ -86,12 +85,7 @@ extension PresentationDIContainer {
 	var configurations: PresentationConfiguarations {
 		self.dependency.configurations
 	}
-	
-	func mainView() -> MainTabView {
-		let viewModel: MainTabViewModel = .init()
-		return .init(viewModel: viewModel)
-	}
-	
+		
 	func recordView() -> RecordView {
 		let viewModel: RecordViewModel = .init(
             dependency: .init(

@@ -19,7 +19,7 @@ public struct ContentView: View {
 	}
 	
 	public var body: some View {
-		MainTabView()
+        MainTabView()
 			.environmentObject(container.configurations)
 			.accentColor(.ccAccentColor)
 			.preferredColorScheme(preference.colorScheme)

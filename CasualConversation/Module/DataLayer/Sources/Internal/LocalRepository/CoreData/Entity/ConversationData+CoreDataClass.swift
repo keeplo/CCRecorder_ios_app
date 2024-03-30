@@ -1,5 +1,5 @@
 //
-//  ConversationEntity+CoreDataClass.swift
+//  ConversationData+CoreDataClass.swift
 //  Data
 //
 //  Created by Yongwoo Marco on 2022/07/29.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(ConversationEntity)
-public class ConversationEntity: NSManagedObject {
+@objc(ConversationData)
+public class ConversationData: NSManagedObject {
 
 }

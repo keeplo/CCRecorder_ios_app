@@ -51,9 +51,9 @@ final class ConversationDataController: Dependency, ConversationRepository {
 	}
 
 	func fetch() -> [Conversation]? {
-		let fetchRequest = ConversationEntity.fetchRequest()
+		let fetchRequest = ConversationData.fetchRequest()
 		let sortDescriptor = NSSortDescriptor.init(
-			key: #keyPath(ConversationEntity.recordedDate),
+			key: #keyPath(ConversationData.recordedDate),
 			ascending: false
 		)
 		fetchRequest.sortDescriptors = [sortDescriptor]
@@ -69,14 +69,14 @@ final class ConversationDataController: Dependency, ConversationRepository {
 	}
 	
 	func create(_ item: Conversation, completion: (CCError?) -> Void) {
-		let entity = ConversationEntity(context: dependency.coreDataStack.mainContext)
+		let entity = ConversationData(context: dependency.coreDataStack.mainContext)
 		item.setValues(entity)
 		self.dependency.coreDataStack.saveContext(completion: completion)
 	}
 	
 	func update(after editedItem: Conversation, completion: (CCError?) -> Void) {
 		do {
-			let objects = try dependency.coreDataStack.mainContext.fetch(ConversationEntity.fetchRequest())
+			let objects = try dependency.coreDataStack.mainContext.fetch(ConversationData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == editedItem.id }) else {
 				completion(.persistenceFailed(reason: .coreDataUnloadedEntity))
 				return
@@ -91,7 +91,7 @@ final class ConversationDataController: Dependency, ConversationRepository {
 	
 	func delete(_ item: Conversation, completion: (CCError?) -> Void) {
 		do {
-			let objects = try dependency.coreDataStack.mainContext.fetch(ConversationEntity.fetchRequest())
+			let objects = try dependency.coreDataStack.mainContext.fetch(ConversationData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == item.id }) else {
 				completion(.persistenceFailed(reason: .coreDataUnloadedEntity))
 				return

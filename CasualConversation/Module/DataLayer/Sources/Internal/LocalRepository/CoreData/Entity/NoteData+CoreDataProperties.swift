@@ -1,5 +1,5 @@
 //
-//  NoteEntity+CoreDataProperties.swift
+//  NoteData+CoreDataProperties.swift
 //  Data
 //
 //  Created by Yongwoo Marco on 2022/07/29.
@@ -11,10 +11,10 @@ import Foundation
 import CoreData
 
 
-extension NoteEntity {
+extension NoteData {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NoteEntity> {
-        return NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<NoteData> {
+        return NSFetchRequest<NoteData>(entityName: "NoteData")
     }
 
     @NSManaged public var id: UUID?
@@ -26,6 +26,6 @@ extension NoteEntity {
 
 }
 
-extension NoteEntity : Identifiable {
+extension NoteData : Identifiable {
 
 }

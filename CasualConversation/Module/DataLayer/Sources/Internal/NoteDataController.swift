@@ -55,9 +55,9 @@ final class NoteDataController: Dependency {
 extension NoteDataController: NoteRepository {
 	
 	func fetch() -> [Note]? {
-		let fetchRequest = NoteEntity.fetchRequest()
+		let fetchRequest = NoteData.fetchRequest()
 		let sortDescriptor = NSSortDescriptor.init(
-			key: #keyPath(NoteEntity.createdDate),
+			key: #keyPath(NoteData.createdDate),
 			ascending: false
 		)
 		fetchRequest.sortDescriptors = [sortDescriptor]
@@ -73,7 +73,7 @@ extension NoteDataController: NoteRepository {
 	}
 	
 	func create(_ item: Note, completion: (CCError?) -> Void) {
-		let entity = NoteEntity(context: dependency.coreDataStack.mainContext)
+		let entity = NoteData(context: dependency.coreDataStack.mainContext)
 		item.setValues(entity)
 		self.dependency.coreDataStack.saveContext(completion: completion)
 		completion(nil)
@@ -81,7 +81,7 @@ extension NoteDataController: NoteRepository {
 	
 	func update(after editedItem: Note, completion: (CCError?) -> Void) {
 		do {
-			let objects = try dependency.coreDataStack.mainContext.fetch(NoteEntity.fetchRequest())
+			let objects = try dependency.coreDataStack.mainContext.fetch(NoteData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == editedItem.id }) else {
 				completion(.persistenceFailed(reason: .coreDataUnloadedEntity))
 				return
@@ -96,7 +96,7 @@ extension NoteDataController: NoteRepository {
 	
 	func delete(_ item: Note, completion: (CCError?) -> Void) {
 		do {
-			let objects = try dependency.coreDataStack.mainContext.fetch(NoteEntity.fetchRequest())
+			let objects = try dependency.coreDataStack.mainContext.fetch(NoteData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == item.id }) else {
 				completion(.persistenceFailed(reason: .coreDataUnloadedEntity))
 				return

@@ -1,5 +1,5 @@
 //
-//  ConversationEntity+CoreDataProperties.swift
+//  ConversationData+CoreDataProperties.swift
 //  Data
 //
 //  Created by Yongwoo Marco on 2022/07/29.
@@ -11,10 +11,10 @@ import Foundation
 import CoreData
 
 
-extension ConversationEntity {
+extension ConversationData {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ConversationEntity> {
-        return NSFetchRequest<ConversationEntity>(entityName: "ConversationEntity")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ConversationData> {
+        return NSFetchRequest<ConversationData>(entityName: "ConversationData")
     }
 
     @NSManaged public var id: UUID?
@@ -27,6 +27,6 @@ extension ConversationEntity {
 
 }
 
-extension ConversationEntity : Identifiable {
+extension ConversationData : Identifiable {
 
 }

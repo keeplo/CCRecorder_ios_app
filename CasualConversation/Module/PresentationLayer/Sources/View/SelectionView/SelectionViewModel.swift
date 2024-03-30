@@ -40,7 +40,7 @@ final class SelectionViewModel: Dependency, ObservableObject {
 	struct Dependency {
 		let conversationUseCase: ConversationMaintainable
 		let noteUseCase: NoteManagable
-		let item: Conversation
+		let item: ConversationEntity
 	}
 	
 	let dependency: Dependency
@@ -66,7 +66,7 @@ final class SelectionViewModel: Dependency, ObservableObject {
 	var referenceNoteUseCase: NoteManagable {
 		self.dependency.noteUseCase
 	}
-	var referenceItem: Conversation {
+	var referenceItem: ConversationEntity {
 		self.dependency.item
 	}
 	
@@ -91,7 +91,7 @@ extension SelectionViewModel {
 extension SelectionViewModel: LanguageCheckable {
 	
 	func addNote() {
-		let newItem: Note = .init(
+		let newItem: NoteEntity = .init(
 			id: .init(),
 			original: language == .original ? self.inputText : "",
 			translation: language == .translation ? self.inputText : "",
@@ -150,7 +150,7 @@ extension SelectionViewModel: LanguageCheckable {
 							.filter({ !$0.isEmpty })
 		)
 		if beforeInfo != afterInfo {
-			let newItem: Conversation = .init(
+			let newItem: ConversationEntity = .init(
 				id: conversation.id,
 				title: afterInfo.title,
 				topic: afterInfo.topic,

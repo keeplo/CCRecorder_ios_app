@@ -15,7 +15,7 @@ final class NoteDetailViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
 		let useCase: NoteManagable
-		let item: Note
+		let item: NoteEntity
 	}
 	
 	let dependency: Dependency
@@ -50,7 +50,7 @@ extension NoteDetailViewModel {
 	
 	func updateChanges() {
 		guard isEdited else { return }
-		let newItem: Note = .init(
+		let newItem: NoteEntity = .init(
 			id: self.dependency.item.id,
 			original: self.original.trimmingCharacters(in: [" "]),
 			translation: self.translation.trimmingCharacters(in: [" "]

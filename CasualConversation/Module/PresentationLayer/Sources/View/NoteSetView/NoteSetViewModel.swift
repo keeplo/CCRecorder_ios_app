@@ -18,7 +18,7 @@ final class NoteSetViewModel: Dependency, ObservableObject {
 	
 	let dependency: Dependency
 	
-	@Published var list: [Note] = []
+	@Published var list: [NoteEntity] = []
 	
 	init(dependency: Dependency) {
 		self.dependency = dependency

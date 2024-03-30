@@ -12,7 +12,7 @@ import DomainLayer
 import CoreData
 import Combine
 
-extension Conversation {
+extension ConversationEntity {
     
 	init(entity: NSManagedObject) {
 		self.init(
@@ -39,7 +39,7 @@ extension Conversation {
 }
 
 final class ConversationDataController: Dependency, ConversationRepository {
-    public var dataSourceSubject: CurrentValueSubject<[DomainLayer.Conversation], DomainLayer.DataError> = .init([])
+    public var dataSourceSubject: CurrentValueSubject<[ConversationEntity], DomainLayer.DataError> = .init([])
     
     struct Dependency {
         let coreDataStack: CoreDataStack
@@ -50,7 +50,7 @@ final class ConversationDataController: Dependency, ConversationRepository {
 		self.dependency = dependency
 	}
 
-	func fetch() -> [Conversation]? {
+	func fetch() -> [ConversationEntity]? {
 		let fetchRequest = ConversationData.fetchRequest()
 		let sortDescriptor = NSSortDescriptor.init(
 			key: #keyPath(ConversationData.recordedDate),
@@ -60,7 +60,7 @@ final class ConversationDataController: Dependency, ConversationRepository {
 		do {
 			let list = try dependency.coreDataStack
 				.mainContext.fetch(fetchRequest)
-				.compactMap({ Conversation(entity: $0) })
+				.compactMap({ ConversationEntity(entity: $0) })
 			return list
 		} catch {
 			CCError.log.append(.persistenceFailed(reason: .coreDataUnloaded(error)))
@@ -68,13 +68,13 @@ final class ConversationDataController: Dependency, ConversationRepository {
 		}
 	}
 	
-	func create(_ item: Conversation, completion: (CCError?) -> Void) {
+	func create(_ item: ConversationEntity, completion: (CCError?) -> Void) {
 		let entity = ConversationData(context: dependency.coreDataStack.mainContext)
 		item.setValues(entity)
 		self.dependency.coreDataStack.saveContext(completion: completion)
 	}
 	
-	func update(after editedItem: Conversation, completion: (CCError?) -> Void) {
+	func update(after editedItem: ConversationEntity, completion: (CCError?) -> Void) {
 		do {
 			let objects = try dependency.coreDataStack.mainContext.fetch(ConversationData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == editedItem.id }) else {
@@ -89,7 +89,7 @@ final class ConversationDataController: Dependency, ConversationRepository {
 		}
 	}
 	
-	func delete(_ item: Conversation, completion: (CCError?) -> Void) {
+	func delete(_ item: ConversationEntity, completion: (CCError?) -> Void) {
 		do {
 			let objects = try dependency.coreDataStack.mainContext.fetch(ConversationData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == item.id }) else {

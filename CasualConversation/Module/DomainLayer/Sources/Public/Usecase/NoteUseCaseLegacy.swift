@@ -10,17 +10,17 @@ import CommonLayer
 import Combine
 
 public protocol NoteManagable {
-	var dataSourcePublisher: Published<[Note]>.Publisher { get }
-	func add(item: Note, completion: (CCError?) -> Void)
-	func edit(_ newItem: Note, completion: (CCError?) -> Void)
-	func delete(item: Note, completion: (CCError?) -> Void)
+	var dataSourcePublisher: Published<[NoteEntity]>.Publisher { get }
+	func add(item: NoteEntity, completion: (CCError?) -> Void)
+	func edit(_ newItem: NoteEntity, completion: (CCError?) -> Void)
+	func delete(item: NoteEntity, completion: (CCError?) -> Void)
 }
 
 public final class NoteUseCaseLegacy: Dependency {
 	
 	public enum Filter {
 		case all
-		case selected(Conversation)
+		case selected(ConversationEntity)
 	}
 	
 	public struct Dependecy {
@@ -38,8 +38,8 @@ public final class NoteUseCaseLegacy: Dependency {
 	
 	public var dependency: Dependecy
 	
-	@Published private var dataSource: [Note] = []
-	public var dataSourcePublisher: Published<[Note]>.Publisher { $dataSource }
+	@Published private var dataSource: [NoteEntity] = []
+	public var dataSourcePublisher: Published<[NoteEntity]>.Publisher { $dataSource }
 	
 	public init(dependency: Dependecy) {
 		self.dependency = dependency
@@ -47,7 +47,7 @@ public final class NoteUseCaseLegacy: Dependency {
 	}
 	
 	private func fetchDataSource() {
-		let fetcedList: [Note]
+		let fetcedList: [NoteEntity]
 		switch dependency.filter {
 		case .all:
 			fetcedList = dependency.dataController.fetch() ?? []
@@ -61,7 +61,7 @@ public final class NoteUseCaseLegacy: Dependency {
 
 extension NoteUseCaseLegacy: NoteManagable {
 	
-	public func add(item: Note, completion: (CCError?) -> Void) {
+	public func add(item: NoteEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.create(item) { error in
 			guard error == nil else {
 				completion(error)
@@ -72,7 +72,7 @@ extension NoteUseCaseLegacy: NoteManagable {
 		}
 	}
 	
-	public func edit(_ newItem: Note, completion: (CCError?) -> Void) {
+	public func edit(_ newItem: NoteEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.update(after: newItem) { error in
 			guard error == nil else {
 				completion(error)
@@ -83,7 +83,7 @@ extension NoteUseCaseLegacy: NoteManagable {
 		}
 	}
 	
-	public func delete(item: Note, completion: (CCError?) -> Void) {
+	public func delete(item: NoteEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.delete(item) { error in
 			guard error == nil else {
 				completion(error)

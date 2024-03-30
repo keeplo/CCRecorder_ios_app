@@ -13,13 +13,13 @@ import Combine
 public protocol ConversationManagable: ConversationRecodable, ConversationMaintainable { }
 
 public protocol ConversationRecodable {
-	func add(_ item: Conversation, completion: (CCError?) -> Void)
+	func add(_ item: ConversationEntity, completion: (CCError?) -> Void)
 }
 
 public protocol ConversationMaintainable {
-	var dataSourcePublisher: Published<[Conversation]>.Publisher { get }
-	func edit(after editedItem: Conversation, completion: (CCError?) -> Void)
-	func delete(_ item: Conversation, completion: (CCError?) -> Void)
+	var dataSourcePublisher: Published<[ConversationEntity]>.Publisher { get }
+	func edit(after editedItem: ConversationEntity, completion: (CCError?) -> Void)
+	func delete(_ item: ConversationEntity, completion: (CCError?) -> Void)
 }
 
 public final class ConversationUseCase: Dependency, ConversationManagable {
@@ -34,8 +34,8 @@ public final class ConversationUseCase: Dependency, ConversationManagable {
 	
 	public let dependency: Dependency
 	
-	@Published private var dataSource: [Conversation] = []
-	public var dataSourcePublisher: Published<[Conversation]>.Publisher { $dataSource }
+	@Published private var dataSource: [ConversationEntity] = []
+	public var dataSourcePublisher: Published<[ConversationEntity]>.Publisher { $dataSource }
 	
 	public init(dependency: Dependency) {
 		self.dependency = dependency
@@ -55,7 +55,7 @@ public final class ConversationUseCase: Dependency, ConversationManagable {
 // MARK: - ConversationRecodable
 extension ConversationUseCase {
 	
-	public func add(_ item: Conversation, completion: (CCError?) -> Void) {
+	public func add(_ item: ConversationEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.create(item) { error in
 			guard error == nil else {
 				completion(error)
@@ -71,7 +71,7 @@ extension ConversationUseCase {
 // MARK: - ConversationMaintainable
 extension ConversationUseCase {
 	
-	public func edit(after editedItem: Conversation, completion: (CCError?) -> Void) {
+	public func edit(after editedItem: ConversationEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.update(after: editedItem) { error in
 			guard error == nil else {
 				completion(error)
@@ -82,7 +82,7 @@ extension ConversationUseCase {
 		}
 	}
 	
-	public func delete(_ item: Conversation, completion: (CCError?) -> Void) {
+	public func delete(_ item: ConversationEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.delete(item) { error in
 			guard error == nil else {
 				completion(error)

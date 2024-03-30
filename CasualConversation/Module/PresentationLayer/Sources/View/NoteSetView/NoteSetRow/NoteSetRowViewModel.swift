@@ -14,12 +14,12 @@ import SwiftUI
 final class NoteSetRowViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
-		let item: Note
+		let item: NoteEntity
 	}
 	
 	let dependency: Dependency
 	
-	@Published var category: Note.Category
+	@Published var category: NoteCategory
 	@Published var original: String
 	@Published var translation: String
 	@Published var isDone: Bool

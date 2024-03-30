@@ -15,7 +15,7 @@ struct NoteSetView: View {
 	@ObservedObject var viewModel: NoteSetViewModel
 	
 	@State private var isPresentedNoteDetail: Bool = false
-	@State private var selectedRowItem: Note?
+	@State private var selectedRowItem: NoteEntity?
 	
 	var body: some View {
 		VStack {

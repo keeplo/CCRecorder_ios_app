@@ -9,7 +9,23 @@ import CommonLayer
 
 import Foundation.NSDate
 
-public struct Note: UUIDIdentifiable {
+public enum NoteCategory: String {
+    case vocabulary
+    case sentence
+}
+
+public protocol Note: UUIDIdentifiable{
+    associatedtype Category
+    
+    var id: Identifier { get }
+    var original: String { get }
+    var translation: String { get }
+    var category: Category { get }
+    var references: [Identifier] { get }
+    var createdDate: Date { get }
+}
+
+public struct NoteEntity: Note {
 	
 	public static var empty: Self {
 		.init(
@@ -21,16 +37,11 @@ public struct Note: UUIDIdentifiable {
 			createdDate: Date()
 		)
 	}
-        
-	public enum Category: String {
-        case vocabulary
-        case sentence
-    }
     
 	public let id: Identifier
 	public let original: String
 	public let translation: String
-	public let category: Category
+	public let category: NoteCategory
 	public let references: [Identifier]
 	public let createdDate: Date
 	
@@ -38,7 +49,7 @@ public struct Note: UUIDIdentifiable {
 		id: Identifier,
 		original: String,
 		translation: String,
-		category: Category,
+		category: NoteCategory,
 		references: [Identifier],
 		createdDate: Date
 	) {

@@ -62,7 +62,7 @@ final class RecordViewModel: Dependency, ObservableObject {
 		let recordedDate: Date = .init()
 		let title: String = inputTitle.isEmpty ? recordedDate.formattedString : inputTitle
 		
-		let newItem: Conversation = .init(
+		let newItem: ConversationEntity = .init(
 			id: .init(),
 			title: title,
 			topic: inputTopic,

@@ -9,8 +9,8 @@
 import Combine
 
 public protocol NoteUsecase {
-    var noteSubject: CurrentValueSubject<[Note], DomainError> { get }
-    func add(_ item: Note) async
-    func edit(_ newItem: Note) async
-    func delete(_ item: Note) async
+    var noteSubject: CurrentValueSubject<[NoteEntity], DomainError> { get }
+    func add(_ item: NoteEntity) async
+    func edit(_ newItem: NoteEntity) async
+    func delete(_ item: NoteEntity) async
 }

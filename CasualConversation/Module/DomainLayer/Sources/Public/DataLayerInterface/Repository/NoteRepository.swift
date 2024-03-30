@@ -8,8 +8,8 @@
 import CommonLayer
 
 public protocol NoteRepository {
-	func fetch() -> [Note]?
-	func create(_ item: Note, completion: (CCError?) -> Void)
-	func update(after updatedItem: Note, completion: (CCError?) -> Void)
-	func delete(_ item: Note, completion: (CCError?) -> Void)
+	func fetch() -> [NoteEntity]?
+	func create(_ item: NoteEntity, completion: (CCError?) -> Void)
+	func update(after updatedItem: NoteEntity, completion: (CCError?) -> Void)
+	func delete(_ item: NoteEntity, completion: (CCError?) -> Void)
 }

@@ -21,7 +21,7 @@ final class ConversationListViewModel: Dependency, ObservableObject {
 	
 	let dependency: Dependency
 	
-	@Published var list: [Conversation] = []
+	@Published var list: [ConversationEntity] = []
 	
 	private var cancellables: Set<AnyCancellable> = []
 	

@@ -9,7 +9,17 @@ import CommonLayer
 
 import Foundation.NSURL
 
-public struct Conversation: UUIDIdentifiable {
+public protocol Conversation: UUIDIdentifiable {
+    var id: Identifier { get }
+    var title: String? { get }
+    var topic: String? { get }
+    var members: [String] { get }
+    var recordFilePath: URL { get }
+    var recordedDate: Date { get }
+    var pins: [TimeInterval] { get }
+}
+
+public struct ConversationEntity: Conversation {
     
 	public static var empty: Self {
 		.init(

@@ -14,7 +14,7 @@ import SwiftUI
 final class ConversationListRowViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
-		let item: Conversation
+		let item: ConversationEntity
 	}
 	
 	let dependency: Dependency

@@ -40,7 +40,7 @@ final class PlayTabViewModel: Dependency, ObservableObject {
 	}
 	
 	struct Dependency {
-		let item: Conversation
+		let item: ConversationEntity
 		let audioService: CCPlayer
 	}
 	

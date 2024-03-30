@@ -12,14 +12,14 @@ import DomainLayer
 import CoreData
 import UIKit
 
-extension Note {
+extension NoteEntity {
 	
 	init(entity: NSManagedObject) {
 		self.init(
 			id: entity.value(forKey: "id") as! Identifier,
 			original: entity.value(forKey: "original") as! String,
 			translation: entity.value(forKey: "translation") as! String,
-			category: Category(rawValue: entity.value(forKey: "category") as! String)!,
+			category: NoteCategory(rawValue: entity.value(forKey: "category") as! String)!,
 			references: entity.value(forKey: "references") as! [Identifier],
 			createdDate: entity.value(forKey: "createdDate") as! Date
 		)
@@ -54,7 +54,7 @@ final class NoteDataController: Dependency {
 // MARK: - Usa CoreDataRepository
 extension NoteDataController: NoteRepository {
 	
-	func fetch() -> [Note]? {
+	func fetch() -> [NoteEntity]? {
 		let fetchRequest = NoteData.fetchRequest()
 		let sortDescriptor = NSSortDescriptor.init(
 			key: #keyPath(NoteData.createdDate),
@@ -64,7 +64,7 @@ extension NoteDataController: NoteRepository {
 		do {
 			let list = try dependency.coreDataStack
 				.mainContext.fetch(fetchRequest)
-				.compactMap({ Note(entity: $0) })
+				.compactMap({ NoteEntity(entity: $0) })
 			return list
 		} catch {
 			CCError.log.append(.persistenceFailed(reason: .coreDataUnloaded(error)))
@@ -72,14 +72,14 @@ extension NoteDataController: NoteRepository {
 		}
 	}
 	
-	func create(_ item: Note, completion: (CCError?) -> Void) {
+	func create(_ item: NoteEntity, completion: (CCError?) -> Void) {
 		let entity = NoteData(context: dependency.coreDataStack.mainContext)
 		item.setValues(entity)
 		self.dependency.coreDataStack.saveContext(completion: completion)
 		completion(nil)
 	}
 	
-	func update(after editedItem: Note, completion: (CCError?) -> Void) {
+	func update(after editedItem: NoteEntity, completion: (CCError?) -> Void) {
 		do {
 			let objects = try dependency.coreDataStack.mainContext.fetch(NoteData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == editedItem.id }) else {
@@ -94,7 +94,7 @@ extension NoteDataController: NoteRepository {
 		}
 	}
 	
-	func delete(_ item: Note, completion: (CCError?) -> Void) {
+	func delete(_ item: NoteEntity, completion: (CCError?) -> Void) {
 		do {
 			let objects = try dependency.coreDataStack.mainContext.fetch(NoteData.fetchRequest())
 			guard let object = objects.first(where: { $0.id == item.id }) else {

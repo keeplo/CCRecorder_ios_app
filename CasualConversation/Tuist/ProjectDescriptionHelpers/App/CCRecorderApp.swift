@@ -39,12 +39,12 @@ public struct CCRecorderApp {
             "Supports opening documents in place": "YES"
         ]
     )
-    public static let target: Target = .init(
+    public static let target: Target = .target(
         name: CCRecorderApp.name,
-        platform: .iOS,
+        destinations: .iOS,
         product: .app,
         bundleId: "com.\(organizationName).\(projectName.lowercased()).$(APP_BUNDLE_ID_POST_FIX)",
-        deploymentTarget: .appTarget,
+        deploymentTargets: .appTarget,
         infoPlist: infoPlist,
         sources: ["App/Sources/**"],
         resources: ["App/Resources/**"],
@@ -52,7 +52,8 @@ public struct CCRecorderApp {
         headers: nil,
         entitlements: nil,
         scripts: [],
-        dependencies: [            
+        dependencies: [           
+            .commonLayer,
             .dataLayer,
             .domainLayer,
             .presentationLayer
@@ -75,4 +76,3 @@ public struct CCRecorderApp {
         .make(name: name, for: .productRelease, targets: ["\(name)"])
     ]
 }
-

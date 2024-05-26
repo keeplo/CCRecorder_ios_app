@@ -6,8 +6,8 @@
 //  Copyright © 2022 pseapplications. All rights reserved.
 //
 
-import CommonLayer
-import DomainLayer
+import Common
+import Domain
 
 import Foundation
 import Combine

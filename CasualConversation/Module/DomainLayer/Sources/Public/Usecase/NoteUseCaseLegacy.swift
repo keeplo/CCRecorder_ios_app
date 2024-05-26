@@ -5,7 +5,7 @@
 //  Created by Yongwoo Marco on 2022/06/23.
 //
 
-import CommonLayer
+import Common
 
 import Combine
 
@@ -51,7 +51,7 @@ public final class NoteUseCaseLegacy: Dependency {
 		switch dependency.filter {
 		case .all:
 			fetcedList = dependency.dataController.fetch() ?? []
-		case .selected(let item):
+            case .selected(_):
             fetcedList = dependency.dataController.fetch() ?? []
 		}
 		self.dataSource = fetcedList.filter({ !$0.isDone }) + fetcedList.filter({ $0.isDone })

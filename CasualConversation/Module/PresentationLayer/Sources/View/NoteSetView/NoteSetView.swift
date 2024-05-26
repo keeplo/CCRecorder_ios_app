@@ -5,7 +5,7 @@
 //  Created by Yongwoo Marco on 2022/06/23.
 //
 
-import DomainLayer
+import Domain
 
 import SwiftUI
 

@@ -6,8 +6,8 @@
 //  Copyright © 2022 pseapplications. All rights reserved.
 //
 
-import CommonLayer
-import DomainLayer
+import Common
+import Domain
 
 import CoreData
 import Combine
@@ -39,7 +39,7 @@ extension ConversationEntity {
 }
 
 final class ConversationDataController: Dependency, ConversationRepository {
-    public var dataSourceSubject: CurrentValueSubject<[ConversationEntity], DomainLayer.DataError> = .init([])
+    public var dataSourceSubject: CurrentValueSubject<[ConversationEntity], DataError> = .init([])
     
     struct Dependency {
         let coreDataStack: CoreDataStack

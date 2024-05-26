@@ -63,12 +63,12 @@ struct MainTabView: View {
 
 #if DEBUG
 #Preview {
-    MainTabView(viewModel: .preview)
+    MainTabView()
         .preferredColorScheme(.light)
 }
 
 #Preview {
-    MainTabView(viewModel: .preview)
+    MainTabView()
         .preferredColorScheme(.dark)
 }
 #endif

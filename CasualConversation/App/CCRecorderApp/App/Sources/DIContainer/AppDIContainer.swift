@@ -6,10 +6,9 @@
 //  Copyright © 2022 pseapplications. All rights reserved.
 //
 
-import CommonLayer
-import DataLayer
-import DomainLayer
-import PresentationLayer
+import Data
+import Domain
+import Presentation
 
 import Foundation
 

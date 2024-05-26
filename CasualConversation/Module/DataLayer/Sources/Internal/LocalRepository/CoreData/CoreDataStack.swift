@@ -5,7 +5,7 @@
 //  Created by Yongwoo Marco on 2022/06/23.
 //
 
-import CommonLayer
+import Common
 import CoreData
 
 extension Bundle {
@@ -16,9 +16,8 @@ final class CoreDataStack {
 	
 	static let modelName = "CasualConversation"
 	static let model: NSManagedObjectModel = {
-//		guard let modelURL = Bundle(for: CoreDataStack.self).url(forResource: modelName, withExtension: "momd") else {
-        guard let modelURL = Bundle.module?.url(forResource: modelName, withExtension: "momd") else {
-
+		guard let modelURL = Bundle(for: CoreDataStack.self).url(forResource: modelName, withExtension: "momd") else {
+//        guard let modelURL = Bundle.module?.url(forResource: modelName, withExtension: "momd") else {
 			fatalError("NSManagedObjectModel 생성을 위한 momd 파일 검색 실패")
 		}
 		guard let objectModel = NSManagedObjectModel(contentsOf: modelURL) else {

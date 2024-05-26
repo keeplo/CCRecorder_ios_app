@@ -6,8 +6,9 @@
 //  Copyright © 2022 pseapplications. All rights reserved.
 //
 
-import CommonLayer
+import Common
 
+import Combine
 import AVFAudio
 
 public protocol CCPlayer {
@@ -126,7 +127,7 @@ public final class AudioPlayService: NSObject, Dependency {
 	}
 	
 	private func makeAudioPlayer(by filePath: URL) -> AVAudioPlayer? {
-		guard let data = try? dependency.dataController.read(of: filePath) else {
+		guard let data = dependency.dataController.read(of: filePath) else {
 			CCError.log.append(.audioServiceFailed(reason: .fileURLPathInvalidated))
 			return nil
 		}

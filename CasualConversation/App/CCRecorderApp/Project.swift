@@ -22,17 +22,17 @@ let project: Project = .init(
         CCRecorderApp.target,
         
         // Modules
-        CommonLayer.target,
-        CommonLayer.test,
-        
-        DataLayer.target,
-        DataLayer.test,
-        
-        DomainLayer.target,
-        DomainLayer.test,
-        
-        PresentationLayer.target,
-        PresentationLayer.test
+//        CommonLayer.target,
+//        CommonLayer.test,
+//        
+//        DataLayer.target,
+//        DataLayer.test,
+//        
+//        DomainLayer.target,
+//        DomainLayer.test,
+//        
+//        PresentationLayer.target,
+//        PresentationLayer.test
     ],
     schemes: CCRecorderApp.schemes,
     fileHeaderTemplate: nil,

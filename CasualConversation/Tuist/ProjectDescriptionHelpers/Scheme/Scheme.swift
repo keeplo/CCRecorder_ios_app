@@ -12,13 +12,11 @@ public extension Scheme {
     static func make(
         name: String,
         for configuration: ConfigurationName,
-        arguments: ProjectDescription.Arguments? = Arguments(
-            launchArguments: [.init(name: "FIRAnalyticsDebugEnabled", isEnabled: true)]
-        ),
-        diagnosticsOptions: [SchemeDiagnosticsOption] = [.mainThreadChecker, .performanceAntipatternChecker],
+        arguments: Arguments? = nil,
+        diagnosticsOptions: [SchemeDiagnosticsOptions] = [.options(mainThreadCheckerEnabled: true), .options(performanceAntipatternCheckerEnabled: true)],
         targets: [TargetReference] = []
     ) -> Scheme {
-        Scheme(
+        .scheme(
             name: "\(name) [\(configuration.description)]",
             buildAction: .buildAction(targets: targets),
             testAction: .testPlans([], configuration: configuration),
@@ -26,7 +24,7 @@ public extension Scheme {
                 configuration: configuration,
                 executable: targets.first,
                 arguments: arguments,
-                diagnosticsOptions: diagnosticsOptions
+                diagnosticsOptions: diagnosticsOptions[0]
             ),
             archiveAction: .archiveAction(configuration: configuration),
             profileAction: .profileAction(configuration: configuration),

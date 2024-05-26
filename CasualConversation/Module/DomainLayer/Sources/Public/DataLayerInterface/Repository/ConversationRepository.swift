@@ -5,8 +5,7 @@
 //  Created by Yongwoo Marco on 2022/06/28.
 //
 
-import CommonLayer
-import DomainLayer
+import Common
 
 import Combine
 

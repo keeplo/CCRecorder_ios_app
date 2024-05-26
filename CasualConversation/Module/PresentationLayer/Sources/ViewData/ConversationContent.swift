@@ -8,8 +8,8 @@
 
 import Foundation
 
-import CommonLayer
-import DomainLayer
+import Common
+import Domain
 
 struct ConversationContent: Conversation {
     let id: Identifier

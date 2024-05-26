@@ -6,7 +6,7 @@
 //  Copyright © 2024 pseapplications. All rights reserved.
 //
 
-import DomainLayer
+import Domain
 
 import Foundation
 

@@ -12,6 +12,10 @@ extension ConfigurationName: CustomStringConvertible {
     static let sandboxRelease: Self = .configuration("SandboxRelease")
     static let productDebug: Self = .configuration("ProductDebug")
     static let productRelease: Self = .configuration("ProductRelease")
+//    static let common: Self = .configuration(CommonLayer.name)
+//    static let data: Self = .configuration(DataLayer.name)
+//    static let domain: Self = .configuration(DomainLayer.name)
+//    static let presentation: Self = .configuration(PresentationLayer.name)
     
     public var description: String {
         switch self {

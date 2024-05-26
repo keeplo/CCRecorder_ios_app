@@ -8,22 +8,25 @@
 import ProjectDescription
 
 extension TargetDependency {
-    public static let commonLayer: TargetDependency = target(name: CommonLayer.name)
+    public static let commonLayer: TargetDependency = .project(
+        target: CommonLayer.name,
+        path: .path("../../Module/\(CommonLayer.name)Layer"),
+        condition: nil
+    )
 }
 
-public struct CommonLayer {
-    public static let name: String = .init(describing: Self.self)
-    public static let packages: [Package] = [
-    ]
-    public static let target: Target = .init(
+public struct CommonLayer: Module {
+    public static let name: String = "Common"
+    public static let packages: [Package] = []
+    public static let target: Target = .target(
         name: name,
-        platform: .iOS,
+        destinations: .iOS,
         product: .framework,
         productName: nil,
         bundleId: "com.pseapplications.casualconversation.\(name)",
-        deploymentTarget: .appTarget,
+        deploymentTargets: .appTarget,
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Sources/**"],
+        sources: ["../../Module/\(name)Layer/Sources/**"],
         resources: [],
         copyFiles: nil,
         headers: nil,
@@ -38,13 +41,13 @@ public struct CommonLayer {
         buildRules: [],
         mergedBinaryType: .automatic
     )
-    public static let test: Target = .init(
+    public static let test: Target = .target(
         name: name + "Tests",
-        platform: .iOS,
+        destinations: .iOS,
         product: .unitTests,
         bundleId: "com.pseapplications.\(name)Tests",
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Tests/**"],
+        sources: ["../../Module/\(name)Layer/Tests/**"],
         resources: [],
         dependencies: [
             .commonLayer,
@@ -53,4 +56,10 @@ public struct CommonLayer {
             .nimble
         ]
     )
+    public static let schemes: [Scheme] = [
+        .make(name: "\(name)", for: .sandboxDebug, targets: ["\(name)"]),
+        .make(name: "\(name)", for: .sandboxRelease, targets: ["\(name)"]),
+        .make(name: "\(name)", for: .productDebug, targets: ["\(name)"]),
+        .make(name: "\(name)", for: .productRelease, targets: ["\(name)"])
+    ]
 }

@@ -1,5 +1,3 @@
-//
-//  DataLayer.swift
 //  CCRecorderAppsManifests
 //
 //  Created by 김용우 on 2023/10/25.
@@ -8,23 +6,26 @@
 import ProjectDescription
 
 extension TargetDependency {
-    public static let dataLayer: TargetDependency = target(name: DataLayer.name)
+    public static let dataLayer: TargetDependency = .project(
+        target: DataLayer.name,
+        path: .path("../../Module/\(DataLayer.name)Layer"),
+        condition: nil
+    )
 }
 
-public struct DataLayer {
-    public static let name: String = .init(describing: Self.self)
+public struct DataLayer: Module {
+    public static let name: String = "Data"
     public static let packages: [Package] = []
-    
-    public static let target: Target = .init(
+    public static let target: Target = .target(
         name: name,
-        platform: .iOS,
+        destinations: .iOS,
         product: .framework,
         productName: nil,
         bundleId: "com.pseapplications.casualconversation.\(name)",
-        deploymentTarget: .appTarget,
+        deploymentTargets: .appTarget,
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Sources/**"],
-        resources: ["../../Module/\(name)/Resources/**"],
+        sources: ["../../Module/\(name)Layer/Sources/**"],
+        resources: ["../../Module/\(name)Layer/Resources/**"],
         copyFiles: [],
         headers: nil,
         entitlements: nil,
@@ -35,21 +36,24 @@ public struct DataLayer {
             .domainLayer
         ],
         settings: nil,
-        coreDataModels: [],
+//        coreDataModels: [
+//            .coreDataModel("../../Module/\(name)Layer/Resources/CasualConversation.xcdatamodeld")
+            //.coreDataModel("../../Module/\(name)Layer/Resources/CasualConversation.xcdatamodeld", currentVersion: "CasualConversation")
+//        ],
         environmentVariables: [:],
         launchArguments: [],
         additionalFiles: [],
         buildRules: [],
         mergedBinaryType: .automatic
     )
-    public static let test: Target = .init(
+    public static let test: Target = .target(
         name: name + "Tests",
-        platform: .iOS,
+        destinations:  .iOS,
         product: .unitTests,
         bundleId: "com.pseapplications.\(name)Tests",
-        deploymentTarget: .appTarget,
+        deploymentTargets: .appTarget,
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Tests/**"],
+        sources: ["../../Module/\(name)Layer/Tests/**"],
         resources: [],
         dependencies: [
             .dataLayer,
@@ -58,5 +62,8 @@ public struct DataLayer {
             .nimble
         ]
     )
-
+    public static let schemes: [Scheme] =  [
+        .make(name: "\(name)", for: .productDebug, targets: ["\(name)"]),
+        .make(name: "\(name)", for: .productRelease, targets: ["\(name)"])
+    ]
 }

@@ -5,7 +5,7 @@
 //  Created by Yongwoo Marco on 2022/06/25.
 //
 
-import CommonLayer
+import Common
 
 import Foundation.NSURL
 

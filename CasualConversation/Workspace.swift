@@ -9,10 +9,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let workspace = Workspace(
-    name: projectName + "Apps",
+    name: projectName + "App",
     projects: [
-        "Project/**",
-        "Module/**"
+        "App/CCRecorderApp/**",
+        "Module/CommonLayer/**",
+        "Module/DataLayer/**",
+        "Module/DomainLayer/**",
+        "Module/PresentationLayer/**"
     ],
     generationOptions: .options(
         enableAutomaticXcodeSchemes: false,

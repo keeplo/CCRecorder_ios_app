@@ -31,9 +31,9 @@ public struct ContentView: View {
 }
 
 //#if DEBUG
-//import CommonLayer
-//import DomainLayer
-//import DataLayer
+//import Common
+//Domain
+//import Data
 //
 //// MARK: Data Layer
 //struct DebugRecordDataController: RecordDataControllerProtocol {

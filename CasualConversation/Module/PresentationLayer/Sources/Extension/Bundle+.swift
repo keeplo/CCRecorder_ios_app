@@ -9,5 +9,5 @@
 import Foundation
 
 extension Bundle {
-    static let module: Bundle? = .init(identifier: "com.pseapplications.casualconversation.PresentationLayer")
+    static let module: Bundle? = .init(identifier: "com.pseapplications.casualconversation.Presentation")
 }

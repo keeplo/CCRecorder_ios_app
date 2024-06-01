@@ -19,20 +19,7 @@ let project: Project = .init(
     ].flatMap({ $0 }),
     settings: .settings(configurations: ConfigurationInfo.default),
     targets: [
-        CCRecorderApp.target,
-        
-        // Modules
-//        CommonLayer.target,
-//        CommonLayer.test,
-//        
-//        DataLayer.target,
-//        DataLayer.test,
-//        
-//        DomainLayer.target,
-//        DomainLayer.test,
-//        
-//        PresentationLayer.target,
-//        PresentationLayer.test
+        CCRecorderApp.target
     ],
     schemes: CCRecorderApp.schemes,
     fileHeaderTemplate: nil,

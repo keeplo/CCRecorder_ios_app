@@ -61,8 +61,7 @@ public struct PresentationLayer: Module {
         ]
     )
     public static let schemes: [Scheme] =  [
-        .make(name: "\(name)", for: .productDebug, targets: ["\(name)"]),
-        .make(name: "\(name)", for: .productRelease, targets: ["\(name)"])
+        .make(name: "\(name)", for: .sandboxDebug, targets: ["\(name)"])
     ]
 }
 

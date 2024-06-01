@@ -57,9 +57,6 @@ public struct CommonLayer: Module {
         ]
     )
     public static let schemes: [Scheme] = [
-        .make(name: "\(name)", for: .sandboxDebug, targets: ["\(name)"]),
-        .make(name: "\(name)", for: .sandboxRelease, targets: ["\(name)"]),
-        .make(name: "\(name)", for: .productDebug, targets: ["\(name)"]),
-        .make(name: "\(name)", for: .productRelease, targets: ["\(name)"])
+        .make(name: "\(name)", for: .sandboxDebug, targets: ["\(name)"])
     ]
 }

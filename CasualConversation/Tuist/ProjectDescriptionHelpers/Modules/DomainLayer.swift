@@ -17,7 +17,10 @@ extension TargetDependency {
 
 public struct DomainLayer: Module {    
     public static let name: String = "Domain"
-    public static let packages: [Package] = []
+    public static let packages: [Package] = [
+        .quick,
+        .nimble
+    ]
     public static let target: Target = .target(
         name: name,
         destinations: .iOS,

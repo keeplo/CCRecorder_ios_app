@@ -17,7 +17,11 @@ extension TargetDependency {
 
 public struct CommonLayer: Module {
     public static let name: String = "Common"
-    public static let packages: [Package] = []
+    public static let packages: [Package] = [
+        .swinject,
+        .quick,
+        .nimble
+    ]
     public static let target: Target = .target(
         name: name,
         destinations: .iOS,
@@ -32,7 +36,9 @@ public struct CommonLayer: Module {
         headers: nil,
         entitlements: nil,
         scripts: [],
-        dependencies: [],
+        dependencies: [
+            .swinject
+        ],
         settings: nil,
         coreDataModels: [],
         environmentVariables: [:],

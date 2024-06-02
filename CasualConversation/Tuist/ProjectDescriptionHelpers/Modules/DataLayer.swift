@@ -15,7 +15,10 @@ extension TargetDependency {
 
 public struct DataLayer: Module {
     public static let name: String = "Data"
-    public static let packages: [Package] = []
+    public static let packages: [Package] = [
+        .quick,
+        .nimble
+    ]
     public static let target: Target = .target(
         name: name,
         destinations: .iOS,

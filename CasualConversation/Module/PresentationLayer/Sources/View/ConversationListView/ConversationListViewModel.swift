@@ -15,7 +15,7 @@ import Combine
 final class ConversationListViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
-		let useCase: ConversationManagable
+		let useCase: ConversationUsecase
 		let audioService: RecordManagable
 	}
 	
@@ -23,13 +23,12 @@ final class ConversationListViewModel: Dependency, ObservableObject {
 	
 	@Published var list: [ConversationEntity] = []
 	
-	private var cancellables: Set<AnyCancellable> = []
+	private var cancellableSet: Set<AnyCancellable> = []
 	
 	init(dependency: Dependency) {
 		self.dependency = dependency
 			
-		self.dependency.useCase.dataSourcePublisher
-			.assign(to: &self.$list)
+        bind()
 	}
 	
 }
@@ -53,4 +52,16 @@ extension ConversationListViewModel {
 		}
 	}
 	
+}
+
+extension ConversationListViewModel {
+    
+    private func bind() {
+        self.dependency.useCase.conversationSubejct
+            .sink { [weak self] conversations in
+                self?.list = conversations
+            }
+            .store(in: &cancellableSet)
+    }
+    
 }

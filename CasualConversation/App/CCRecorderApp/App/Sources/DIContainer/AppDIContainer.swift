@@ -41,8 +41,8 @@ final class AppDIContainer {
                         receptionTel: URL(string: configurations.receptionTel)!
                     )
                 ),
-                conversationUseCase: ConversationUseCase(dependency: .init(dataController: self.conversationDataContorller)),
-                noteUseCase: NoteUseCaseLegacy(dependency: .init(dataController: self.noteDataController, filter: .all)),
+                conversationUsecase: ConversationUsecaseType(dependency: .init(dataController: self.conversationDataContorller)),
+                noteUsecase: NoteUsecaseType(dependency: .init(dataController: self.noteDataController, filter: .all)),
                 audioRecordService: .init(dependency: .init(dataController: self.recordDataController)),
                 audioPlayService: .init(dependency: .init(dataController: self.recordDataController))
             )

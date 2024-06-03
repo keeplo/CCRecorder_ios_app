@@ -16,21 +16,21 @@ public final class PresentationDIContainer: Dependency, ObservableObject {
 	
 	public struct Dependency {
         let configurations: PresentationConfiguarations
-		let conversationUseCase: ConversationUseCase
-		let noteUseCase: NoteUseCaseLegacy
+		let conversationUsecase: ConversationUsecase
+		let noteUsecase: NoteUsecase
 		let audioRecordService: AudioRecordService
         let audioPlayService: AudioPlayService
 		
 		public init(
             configurations: PresentationConfiguarations,
-            conversationUseCase: ConversationUseCase,
-            noteUseCase: NoteUseCaseLegacy,
+            conversationUsecase: ConversationUsecase,
+            noteUsecase: NoteUsecase,
             audioRecordService: AudioRecordService,
             audioPlayService: AudioPlayService
 		) {
 			self.configurations = configurations
-			self.conversationUseCase = conversationUseCase
-			self.noteUseCase = noteUseCase
+			self.conversationUsecase = conversationUsecase
+			self.noteUsecase = noteUsecase
 			self.audioRecordService = audioRecordService
             self.audioPlayService = audioPlayService
 		}
@@ -41,15 +41,6 @@ public final class PresentationDIContainer: Dependency, ObservableObject {
 	public init(dependency: Dependency) {
 		self.dependency = dependency
 	}
-	
-//	private func makeNoteUseCase(filter item: Conversation) -> NoteUseCase {
-//		return .init(
-//            dependency: .init(
-//                dataController: self.dependency.noteRepository,
-//                filter: .selected(item)
-//            )
-//		)
-//	}
 	
 }
 
@@ -69,7 +60,7 @@ public extension PresentationDIContainer {
             case .record:
                 let viewModel: RecordViewModel = .init(
                     dependency: .init(
-                        useCase: self.dependency.conversationUseCase,
+                        useCase: self.dependency.conversationUsecase,
                         audioService: self.dependency.audioRecordService
                     )
                 )
@@ -89,7 +80,7 @@ extension PresentationDIContainer {
 	func recordView() -> RecordView {
 		let viewModel: RecordViewModel = .init(
             dependency: .init(
-				useCase: self.dependency.conversationUseCase,
+				useCase: self.dependency.conversationUsecase,
 				audioService: self.dependency.audioRecordService
 			)
 		)
@@ -99,7 +90,7 @@ extension PresentationDIContainer {
 	func ConversationListView() -> ConversationListView {
 		let viewModel: ConversationListViewModel = .init(
             dependency: .init(
-                useCase: self.dependency.conversationUseCase,
+                useCase: self.dependency.conversationUsecase,
 				audioService: self.dependency.audioPlayService
 			)
 		)
@@ -118,20 +109,20 @@ extension PresentationDIContainer {
     func SelectionView(selected conversation: ConversationEntity) -> SelectionView {
         let viewModel: SelectionViewModel = .init(
             dependency: .init(
-				conversationUseCase: self.dependency.conversationUseCase,
-                noteUseCase: self.dependency.noteUseCase,
+				conversationUseCase: self.dependency.conversationUsecase,
+                noteUsecase: self.dependency.noteUsecase,
 				item: conversation
 			)
 		)
 		return .init(viewModel: viewModel)
 	}
 	
-	func NoteSetView(by usecase: NoteManagable? = nil) -> NoteSetView {
+	func NoteSetView(by usecase: NoteUsecase? = nil) -> NoteSetView {
 		let viewModel: NoteSetViewModel
 		if let bindedUseCase = usecase {
 			viewModel = .init(dependency: .init(useCase: bindedUseCase))
 		} else {
-			viewModel = .init(dependency: .init(useCase: self.dependency.noteUseCase))
+			viewModel = .init(dependency: .init(useCase: self.dependency.noteUsecase))
 		}
 		return .init(viewModel: viewModel)
 	}
@@ -159,7 +150,7 @@ extension PresentationDIContainer {
 	
 	func NoteDetailView(selected note: NoteEntity) -> NoteDetailView {
 		let viewModel: NoteDetailViewModel = .init(dependency: .init(
-				useCase: self.dependency.noteUseCase,
+				useCase: self.dependency.noteUsecase,
 				item: note
 			)
 		)

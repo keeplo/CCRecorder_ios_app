@@ -12,8 +12,8 @@ import Foundation
 
 public enum DataFactory {
     
+    // FIXME: 삭제 예정
     private static let coreDataStack: CoreDataStack = .init()
-    
     public static func makeConversationRepository() -> ConversationRepository {
         ConversationDataController(
             dependency: .init(
@@ -21,7 +21,6 @@ public enum DataFactory {
             )
         )
     }
-    
     public static func makeNoteRepository() -> NoteRepository {
         NoteDataController(
             dependency: .init(
@@ -29,7 +28,6 @@ public enum DataFactory {
             )
         )
     }
-    
     public static func makeRecordRepository(of documentURL: URL) -> RecordRepository {
         RecordDataController(
             dependency: .init(documentURL: documentURL)

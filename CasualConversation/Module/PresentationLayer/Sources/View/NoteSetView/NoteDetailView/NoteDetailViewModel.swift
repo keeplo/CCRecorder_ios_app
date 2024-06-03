@@ -14,7 +14,7 @@ import SwiftUI
 final class NoteDetailViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
-		let useCase: NoteManagable
+		let useCase: NoteUsecase
 		let item: NoteEntity
 	}
 	

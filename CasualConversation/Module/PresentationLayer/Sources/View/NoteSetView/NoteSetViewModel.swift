@@ -9,22 +9,24 @@ import Common
 import Domain
 
 import SwiftUI
+import Combine
 
 final class NoteSetViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
-		let useCase: NoteManagable
+		let useCase: NoteUsecase
 	}
 	
 	let dependency: Dependency
 	
 	@Published var list: [NoteEntity] = []
+    
+    private var cancellableSet: Set<AnyCancellable> = []
 	
 	init(dependency: Dependency) {
 		self.dependency = dependency
 		
-		self.dependency.useCase.dataSourcePublisher
-			.assign(to: &self.$list)
+        bind()
 	}
 	
 }
@@ -42,4 +44,16 @@ extension NoteSetViewModel {
 		}
 	}
 	
+}
+
+extension NoteSetViewModel {
+    
+    func bind() {
+        self.dependency.useCase.noteSubject
+            .sink { [weak self] notes in
+                self?.list = notes
+            }
+            .store(in: &cancellableSet)
+    }
+    
 }

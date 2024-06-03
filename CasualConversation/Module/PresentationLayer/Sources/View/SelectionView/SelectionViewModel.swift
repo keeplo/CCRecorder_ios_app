@@ -39,7 +39,7 @@ final class SelectionViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
 		let conversationUseCase: ConversationMaintainable
-		let noteUseCase: NoteManagable
+		let noteUsecase: NoteUsecase
 		let item: ConversationEntity
 	}
 	
@@ -63,8 +63,8 @@ final class SelectionViewModel: Dependency, ObservableObject {
 		self.recordedDate = dependency.item.recordedDate.formattedString
 	}
 	
-	var referenceNoteUseCase: NoteManagable {
-		self.dependency.noteUseCase
+	var referenceNoteUseCase: NoteUsecase {
+		self.dependency.noteUsecase
 	}
 	var referenceItem: ConversationEntity {
 		self.dependency.item
@@ -99,7 +99,7 @@ extension SelectionViewModel: LanguageCheckable {
 			references: [self.dependency.item.id],
 			createdDate: Date()
 		)
-		self.dependency.noteUseCase.add(item: newItem) { error in
+		self.dependency.noteUsecase.add(item: newItem) { error in
 			guard error == nil else {
 				CCError.log.append(.log("add Note 실패"))
 				return

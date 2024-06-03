@@ -1,5 +1,5 @@
 //
-//  NoteUseCaseLegacy.swift
+//  NoteUsecaseType.swift
 //  CasualConversation
 //
 //  Created by Yongwoo Marco on 2022/06/23.
@@ -9,14 +9,7 @@ import Common
 
 import Combine
 
-public protocol NoteManagable {
-	var dataSourcePublisher: Published<[NoteEntity]>.Publisher { get }
-	func add(item: NoteEntity, completion: (CCError?) -> Void)
-	func edit(_ newItem: NoteEntity, completion: (CCError?) -> Void)
-	func delete(item: NoteEntity, completion: (CCError?) -> Void)
-}
-
-public final class NoteUseCaseLegacy: Dependency {
+public final class NoteUsecaseType: Dependency, NoteUsecase {
 	
 	public enum Filter {
 		case all
@@ -38,8 +31,7 @@ public final class NoteUseCaseLegacy: Dependency {
 	
 	public var dependency: Dependecy
 	
-	@Published private var dataSource: [NoteEntity] = []
-	public var dataSourcePublisher: Published<[NoteEntity]>.Publisher { $dataSource }
+    public var noteSubject: CurrentValueSubject<[NoteEntity], Never> = .init([])
 	
 	public init(dependency: Dependecy) {
 		self.dependency = dependency
@@ -54,12 +46,8 @@ public final class NoteUseCaseLegacy: Dependency {
             case .selected(_):
             fetcedList = dependency.dataController.fetch() ?? []
 		}
-		self.dataSource = fetcedList.filter({ !$0.isDone }) + fetcedList.filter({ $0.isDone })
+        self.noteSubject.send(fetcedList.filter({ !$0.isDone }) + fetcedList.filter({ $0.isDone }))
 	}
-	
-}
-
-extension NoteUseCaseLegacy: NoteManagable {
 	
 	public func add(item: NoteEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.create(item) { error in

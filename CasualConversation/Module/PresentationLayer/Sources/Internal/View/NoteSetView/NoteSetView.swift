@@ -11,7 +11,7 @@ import SwiftUI
 
 struct NoteSetView: View {
 	
-	@EnvironmentObject private var container: PresentationDIContainer
+	@EnvironmentObject private var viewMaker: ViewMaker
 	@ObservedObject var viewModel: NoteSetViewModel
 	
 	@State private var isPresentedNoteDetail: Bool = false
@@ -21,7 +21,7 @@ struct NoteSetView: View {
 		VStack {
 			List {
 				ForEach(viewModel.list, id: \.id) { item in
-					container.NoteSetRow(by: item)
+                    NoteSetRow(viewModel: .init(dependency: .init(item: item)))
 						.listRowBackground(Color.clear)
 						.contentShape(Rectangle())
 						.onTapGesture {
@@ -35,7 +35,7 @@ struct NoteSetView: View {
 		}
 		.sheet(item: $selectedRowItem) { item in
 			HalfSheet(isFlexible: item.category == .sentence) {
-				container.NoteDetailView(selected: item)
+                viewMaker.makeView(.noteDetail(item))
 			}
 		}
 	}

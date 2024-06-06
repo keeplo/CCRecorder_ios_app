@@ -16,7 +16,7 @@ final class ConversationListViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
 		let useCase: ConversationUsecase
-		let audioService: RecordManagable
+		let audioService: CCPlayer
 	}
 	
 	let dependency: Dependency

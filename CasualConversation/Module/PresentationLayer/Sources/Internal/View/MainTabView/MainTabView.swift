@@ -14,10 +14,11 @@ enum Tab {
 
 struct MainTabView: View {
 	
-	@EnvironmentObject private var container: PresentationDIContainer
+	@EnvironmentObject private var viewMaker: ViewMaker
 	
     @State private var selectedTab: Tab = .conversations
     @State private var isPresentedRecordView: Bool = false
+    @State private var isPresentedTutorial: Bool = !Preference.shared.isDoneTutorial
     
     private var navigationTitle: String {
         switch selectedTab {
@@ -31,28 +32,32 @@ struct MainTabView: View {
             content
 				.navigationBarTitleDisplayMode(.large)
                 .fullScreenCover(isPresented: $isPresentedRecordView) {
-					container.recordView()
+                    viewMaker.makeView(.record)
 				}
+                .fullScreenCover(isPresented: $isPresentedTutorial) {
+                    TutorialView()
+                }
 		}
     }
     
     var content: some View {
         ZStack {
             switch selectedTab {
-                case .conversations:        container.ConversationListView()
-                case .notes:                container.NoteSetView()
+                case .conversations:        viewMaker.makeView(.conversationList)
+                case .notes:                viewMaker.makeView(.noteSet(nil))
             }
         }
         .overlay {
             MainTab(
                 selectedTab: $selectedTab,
-                isPresentedRecordView: $isPresentedRecordView)
+                isPresentedRecordView: $isPresentedRecordView
+            )
         }
         .background(Color.ccBgColor)
         .navigationTitle(navigationTitle)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: container.SettingView()) {
+                NavigationLink(destination: viewMaker.makeView(.setting)) {
                     Image(systemName: "gear")
                 }
             }

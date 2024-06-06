@@ -11,26 +11,9 @@ import Common
 import Combine
 import AVFAudio
 
-public protocol CCPlayer {
-	var isPlayingPublisher: Published<Bool>.Publisher { get }
-	var currentTimePublisher: Published<TimeInterval>.Publisher { get }
-	var durationPublisher: Published<TimeInterval>.Publisher { get }
-	func stopTrackingCurrentTime()
-	func setupPlaying(filePath: URL, completion: (CCError?) -> Void)
-	func startPlaying()
-	func pausePlaying()
-	func finishPlaying()
-	func seek(to time: Double)
-	func changePlayingRate(to value: Float)
-}
-
-public protocol RecordManagable {
-	func removeRecordFile(from filePath: URL, completion: (CCError?) -> Void)
-}
-
-public final class AudioPlayService: NSObject, Dependency {
+final class AudioPlayService: NSObject, Dependency {
 	
-	public struct Dependency {
+    struct Dependency {
 		let dataController: RecordRepository
 		
 		public init(dataController: RecordRepository) {
@@ -38,7 +21,7 @@ public final class AudioPlayService: NSObject, Dependency {
 		}
 	}
 	
-	public var dependency: Dependency
+    var dependency: Dependency
 	
 	private var audioPlayer: AVAudioPlayer? {
 		willSet {
@@ -55,7 +38,7 @@ public final class AudioPlayService: NSObject, Dependency {
 	@Published var duration: TimeInterval = .zero
 	@Published var currentTime: TimeInterval = .zero
 	
-	public init(dependency: Dependency) {
+    init(dependency: Dependency) {
 		self.dependency = dependency
 		
 		super.init()
@@ -157,15 +140,15 @@ public final class AudioPlayService: NSObject, Dependency {
 
 extension AudioPlayService: CCPlayer {
 	
-	public var isPlayingPublisher: Published<Bool>.Publisher { $isPlaying }
-	public var durationPublisher: Published<TimeInterval>.Publisher { $duration }
-	public var currentTimePublisher: Published<TimeInterval>.Publisher { $currentTime }
+    var isPlayingPublisher: Published<Bool>.Publisher { $isPlaying }
+    var durationPublisher: Published<TimeInterval>.Publisher { $duration }
+    var currentTimePublisher: Published<TimeInterval>.Publisher { $currentTime }
 	
-	public func stopTrackingCurrentTime() {
+    func stopTrackingCurrentTime() {
 		self.progressTimer?.invalidate()
 	}
 	
-	public func setupPlaying(filePath: URL, completion: (CCError?) -> Void) {
+    func setupPlaying(filePath: URL, completion: (CCError?) -> Void) {
 		guard let audioPlayer = makeAudioPlayer(by: filePath) else {
 			completion(.audioServiceFailed(reason: .fileBindingFailure))
 			return
@@ -184,18 +167,18 @@ extension AudioPlayService: CCPlayer {
 		completion(nil)
 	}
 	
-	public func startPlaying() {
+    func startPlaying() {
 		audioPlayer?.play()
 		self.isPlaying = true
 		self.startTrakingCurrentTime()
 	}
 	
-	public func pausePlaying() {
+    func pausePlaying() {
 		self.audioPlayer?.pause()
 		self.isPlaying = false
 	}
 	
-	public func finishPlaying() {
+    func finishPlaying() {
 		if isPlaying {
 			self.audioPlayer?.stop()
 			self.isPlaying = false
@@ -205,7 +188,7 @@ extension AudioPlayService: CCPlayer {
 		self.currentTime = .zero
 	}
 	
-	public func seek(to time: Double) {
+    func seek(to time: Double) {
 		var seekPosition = time
 		
 		if seekPosition < 0 {
@@ -222,15 +205,11 @@ extension AudioPlayService: CCPlayer {
 		}
 	}
 	
-	public func changePlayingRate(to value: Float) {
-		self.audioPlayer?.rate = value
-	}
-	
-}
+    func changePlayingRate(to value: Float) {
+        self.audioPlayer?.rate = value
+    }
 
-extension AudioPlayService: RecordManagable {
-
-	public func removeRecordFile(from fileURL: URL, completion: (CCError?) -> Void) {
+    func removeRecordFile(from fileURL: URL, completion: (CCError?) -> Void) {
         try? dependency.dataController.delete(from: fileURL)
         completion(.audioServiceFailed(reason: .bindingFailure))
 	}

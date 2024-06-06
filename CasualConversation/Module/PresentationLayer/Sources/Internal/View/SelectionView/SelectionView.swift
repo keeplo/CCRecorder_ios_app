@@ -19,7 +19,7 @@ struct SelectionView: View {
 	@Environment(\.colorScheme) var colorScheme
 	@Environment(\.presentationMode) var mode: Binding<PresentationMode>
 	
-	@EnvironmentObject private var container: PresentationDIContainer
+	@EnvironmentObject private var viewMaker: ViewMaker
 	@ObservedObject var viewModel: SelectionViewModel
 	
 	@State private var isEditing: Bool = false {
@@ -32,10 +32,13 @@ struct SelectionView: View {
 		VStack {
 			EditableInfoSection()
 			NoteInput()
-			SelectedNoteSet()
+            viewMaker.makeView(.noteSet(viewModel.referenceNoteUseCase))
 		}
 		.overlay {
-			PlayTabView()
+            VStack {
+                Spacer()
+                viewMaker.makeView(.playTab(viewModel.referenceItem))
+            }
 		}
 		.background(Color.ccBgColor)
 		.navigationBarBackButtonHidden(true)
@@ -213,18 +216,7 @@ extension SelectionView {
 		}
 		.padding([.leading, .trailing])
 	}
-	
-	private func SelectedNoteSet() -> some View {
-		container.NoteSetView(by: viewModel.referenceNoteUseCase)
-	}
-	
-	private func PlayTabView() -> some View {
-		VStack {
-			Spacer()
-			container.PlayTabView(with: viewModel.referenceItem)
-		}
-	}
-	
+    
 }
 
 //#if DEBUG // MARK: - Preview

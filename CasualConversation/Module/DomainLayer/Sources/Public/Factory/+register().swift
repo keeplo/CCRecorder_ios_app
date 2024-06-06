@@ -11,7 +11,7 @@ import Swinject
 
 extension DomainFactory {
     
-    public func register(_ container: Container) {
+    public static func register(_ container: Container) {
         container.register(ConversationUsecase.self) { resolver in
             ConversationUsecaseType(
                 dependency: .init(

@@ -1,5 +1,5 @@
 //
-//  AppAppearance.swift
+//  PresentationAppearance.swift
 //  Presentation
 //
 //  Created by Yongwoo Marco on 2022/07/03.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-final class AppAppearance {
+enum PresentationAppearance {
 	
 	static func setup() {
 		UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(.ccTintColor)

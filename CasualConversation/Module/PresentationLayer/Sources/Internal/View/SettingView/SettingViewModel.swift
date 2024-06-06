@@ -38,8 +38,27 @@ final class SettingViewModel: ObservableObject {
 		}
 	}
 	@Published var version: String
+    
+    var mainURL: URL { dependency.mainURL }
+    var cafeURL: URL { dependency.cafeURL }
+    var eLearningURL: URL { dependency.eLearningURL }
+    var tasteURL: URL { dependency.tasteURL }
+    var testURL: URL { dependency.testURL }
+    var receptionTel: URL { dependency.receptionTel }
+    
+    struct Dependency {
+        let mainURL: URL
+        let cafeURL: URL
+        let eLearningURL: URL
+        let tasteURL: URL
+        let testURL: URL
+        let receptionTel: URL
+    }
+    private let dependency: Dependency
 	
-	init() {		
+    init(dependency: Dependency) {
+        self.dependency = dependency
+        
 		self.isLockScreen = Preference.shared.isLockScreen
 		self.skipTime = Preference.shared.skipTime
 		self.displayMode = Preference.shared.displayMode
@@ -79,3 +98,23 @@ extension SettingViewModel {
 	}
 	
 }
+
+#if DEBUG
+extension SettingViewModel {
+ 
+    static var dummyURL: URL { .init(string: "https://www.naver.com")! }
+    static var preview: Self {
+        .init(
+            dependency: .init(
+                mainURL: dummyURL,
+                cafeURL: dummyURL,
+                eLearningURL: dummyURL,
+                tasteURL: dummyURL,
+                testURL: dummyURL,
+                receptionTel: dummyURL
+            )
+        )
+    }
+    
+}
+#endif

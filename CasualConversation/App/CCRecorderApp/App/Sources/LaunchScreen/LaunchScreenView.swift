@@ -6,11 +6,24 @@
 //  Copyright © 2024 pseapplications. All rights reserved.
 //
 
+import Common
+import Swinject
+import Data
+import Domain
+import Presentation
+
 import SwiftUI
 
 struct LaunchScreenView: View {
     
-    @Binding var isLaunched: Bool
+    @Binding var launchStatus: LaunchStatus
+    
+    @State var mainURL: URL!
+    @State var cafeURL: URL!
+    @State var eLearningURL: URL!
+    @State var tasteURL: URL!
+    @State var testURL: URL!
+    @State var receptionTel: URL!
     
     var body: some View {
         Image("homex_00")
@@ -22,16 +35,41 @@ struct LaunchScreenView: View {
                     .ignoresSafeArea()
             }
             .task {
-                // TODO: setup 코드 추가 필요
+                // MARK: - setup App
+                setupAVFAudio()
+                setupAppConfiguration()
+                
+                // MARK: - setup Modules
+                DataFactory.setup()
+                DomainFactory.setup()
+                PresentationFactory.setup(
+                    mainURL: mainURL,
+                    cafeURL: cafeURL,
+                    eLearningURL: eLearningURL,
+                    tasteURL: tasteURL,
+                    testURL: testURL,
+                    receptionTel: receptionTel
+                )
+                
+                // MARK: - register
+                let container = Container()
+                DataFactory.register(container)
+                DomainFactory.register(container)
+                let viewFactory = PresentationFactory.makeViewFactory(container)
+                
                 Thread.sleep(forTimeInterval: 2.0) // 임시 로딩 시간
                 
                 await MainActor.run {
-                    isLaunched.toggle()
+                    launchStatus = .launched(viewFactory)
                 }
             }
     }
+    
+//    // MARK: - Repository
+//    private lazy var fileManagerReposotiry: FileManagerRepositoryProtocol = FileManagerRepository()
+    
 }
 
 #Preview {
-    LaunchScreenView(isLaunched: .constant(false))
+    LaunchScreenView(launchStatus: .constant(.preprocess))
 }

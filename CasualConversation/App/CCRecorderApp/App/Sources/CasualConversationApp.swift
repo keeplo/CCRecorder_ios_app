@@ -6,36 +6,28 @@
 //
 
 import SwiftUI
+import Presentation
+
+enum LaunchStatus {
+    case preprocess
+    case launched(any ViewFactory)
+    case excepted
+}
 
 @main
 struct CasualConversationApp: App {
-	
-	private let appDIContainer = AppDIContainer()
     
-    enum Status {
-        case preprocess
-        case launched
-    }
+    @State private var launchStatus: LaunchStatus = .preprocess
     
-    @State private var status: Status = .preprocess
-	
     var body: some Scene {
         WindowGroup {
-            switch status {
-                case .preprocess:
-                    LaunchScreenView(
-                        isLaunched: .init(
-                            get: { status == .launched },
-                            set: {
-                                if $0 {
-                                    status = .launched
-                                }
-                            }
-                        )
-                    )
-                case .launched:
-                    appDIContainer.ContentView()
-                        .environmentObject(appDIContainer.makePresentationDIContainer())
+            switch launchStatus {
+                case .launched(let viewFactory):
+                    viewFactory.makeRootView()
+                    
+                default:
+                    LaunchScreenView(launchStatus: $launchStatus)
+                    
             }
         }
     }

@@ -41,11 +41,11 @@ public final class NoteUsecaseType: Dependency, NoteUsecase {
 	private func fetchDataSource() {
 		let fetcedList: [NoteEntity]
 		switch dependency.filter {
-		case .all:
-			fetcedList = dependency.dataController.fetch() ?? []
+            case .all:
+                fetcedList = dependency.dataController.fetch() ?? []
             case .selected(_):
-            fetcedList = dependency.dataController.fetch() ?? []
-		}
+                fetcedList = dependency.dataController.fetch() ?? []
+        }
         self.noteSubject.send(fetcedList.filter({ !$0.isDone }) + fetcedList.filter({ $0.isDone }))
 	}
 	

@@ -11,7 +11,6 @@ import SwiftUI
 struct SettingView: View {
 	
 	@Environment(\.colorScheme) private var systemColorScheme
-	@EnvironmentObject private var configurations: PresentationConfiguarations
 	
 	@ObservedObject var viewModel: SettingViewModel
 	
@@ -86,13 +85,13 @@ extension SettingView {
 	@ViewBuilder
 	private func AcademyPages() -> some View {
 		Group {
-			Link("🔍 프린서플어학원 알아보기", destination: configurations.mainURL)
-			Link("☕️ 네이버카페", destination: configurations.cafeURL)
-			Link("🖥 e-Learning", destination: configurations.eLearningURL)
-			Link("👀 정규반 맛보기 강의", destination: configurations.tasteURL)
-			Link("📄 온라인 레벨테스트", destination: configurations.testURL)
+			Link("🔍 프린서플어학원 알아보기", destination: viewModel.mainURL)
+			Link("☕️ 네이버카페", destination: viewModel.cafeURL)
+			Link("🖥 e-Learning", destination: viewModel.eLearningURL)
+			Link("👀 정규반 맛보기 강의", destination: viewModel.tasteURL)
+			Link("📄 온라인 레벨테스트", destination: viewModel.testURL)
 			Button("📞 문의전화") {
-				UIApplication.shared.open(configurations.receptionTel)
+				UIApplication.shared.open(viewModel.receptionTel)
 			}
 		}
 		.tint(.logoDarkGreen)
@@ -228,14 +227,13 @@ extension SettingView {
 	
 }
 
-// MARK: - Preview
-struct SettingView_Previews: PreviewProvider {
-	
-    static var previews: some View {
-		SettingView(viewModel: .init())
-			.preferredColorScheme(.light)
-		SettingView(viewModel: .init())
-			.preferredColorScheme(.dark)
-    }
-	
+#if DEBUG
+#Preview {
+    SettingView(viewModel: .preview)
+        .preferredColorScheme(.light)
 }
+#Preview {
+    SettingView(viewModel: .preview)
+        .preferredColorScheme(.dark)
+}
+#endif

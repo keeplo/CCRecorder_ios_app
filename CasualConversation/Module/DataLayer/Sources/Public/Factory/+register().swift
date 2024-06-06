@@ -14,7 +14,7 @@ import Foundation
 
 extension DataFactory {
     
-    public func register(_ container: Container) {
+    public static func register(_ container: Container) {
         container.register(CoreDataStack.self) { _ in
             CoreDataStack()
         }

@@ -53,11 +53,12 @@ fileprivate struct CCTabItem: View {
     @Binding var selectedTab: Tab
     
     private var tabItemImageName: String {
-        switch selectedTab {
+        switch tab {
         case .conversations:     return "rectangle.stack.badge.play.fill"
         case .notes:            return "checklist"
         }
     }
+    
     private func currentTintColor(from tab: Tab) -> Color {
         let tintColor: (light: Color, dark: Color)
         switch tab {

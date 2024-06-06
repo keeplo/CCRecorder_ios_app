@@ -10,14 +10,14 @@ import SwiftUI
 
 struct ConversationListView: View {
 	
-	@EnvironmentObject private var container: PresentationDIContainer
+	@EnvironmentObject private var viewMaker: ViewMaker
 	@ObservedObject var viewModel: ConversationListViewModel
 	
 	var body: some View {
 		List {
 			ForEach(viewModel.list, id: \.id) { item in
-				NavigationLink(destination: container.SelectionView(selected: item)) {
-					container.ConversationListRow(selected: item)
+                NavigationLink(destination: viewMaker.makeView(.selection(item))) {
+                    ConversationListRow(viewModel: .init(dependency: .init(item: item)))
 				}
 				.listRowBackground(Color.clear)
 			}

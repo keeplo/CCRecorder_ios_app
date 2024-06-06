@@ -7,11 +7,10 @@
 //
 
 import Common
-import Swinject
 
 extension DomainFactory {
     
-    public static func register(_ container: Container) {
+    public static func register(_ container: DependencyContainer) {
         container.register(ConversationUsecase.self) { resolver in
             ConversationUsecaseType(
                 dependency: .init(

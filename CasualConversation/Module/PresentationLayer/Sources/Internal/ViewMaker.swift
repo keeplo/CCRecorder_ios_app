@@ -7,7 +7,6 @@
 //
 
 import Common
-import Swinject
 import Domain
 
 import Combine
@@ -16,7 +15,7 @@ import SwiftUI
 final class ViewMaker: Dependency, ObservableObject {
     
 	struct Dependency {
-        let container: Container
+        let container: DependencyContainer
 	}
 	let dependency: Dependency
     

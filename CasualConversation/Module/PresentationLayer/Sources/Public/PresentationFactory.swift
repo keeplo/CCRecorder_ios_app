@@ -7,7 +7,6 @@
 //
 
 import Common
-import Swinject
 
 import Foundation.NSURL
 
@@ -38,7 +37,7 @@ public enum PresentationFactory {
         PresentationAppearance.setup()
     }
     
-    public static func makeViewFactory(_ container: Container) -> some ViewFactory {
+    public static func makeViewFactory(_ container: DependencyContainer) -> some ViewFactory {
         ViewMaker(
             dependency: .init(container: container)
         )

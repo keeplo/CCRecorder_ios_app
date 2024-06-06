@@ -7,7 +7,6 @@
 //
 
 import Common
-import Swinject
 import Data
 import Domain
 import Presentation
@@ -52,7 +51,7 @@ struct LaunchScreenView: View {
                 )
                 
                 // MARK: - register
-                let container = Container()
+                let container = DependencyContainer()
                 DataFactory.register(container)
                 DomainFactory.register(container)
                 let viewFactory = PresentationFactory.makeViewFactory(container)

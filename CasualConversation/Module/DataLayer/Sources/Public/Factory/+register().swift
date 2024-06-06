@@ -7,36 +7,41 @@
 //
 
 import Common
-import Swinject
 import Domain
 
 import Foundation
 
 extension DataFactory {
     
-    public static func register(_ container: Container) {
-        container.register(CoreDataStack.self) { _ in
+    public static func register(_ container: DependencyContainer) {
+        container.register(
+            CoreDataStack.self,
+            inObjectScope: .container
+        ) { _ in
             CoreDataStack()
         }
-        .inObjectScope(.container)
         
-        container.register(ConversationRepository.self) { resolver in
+        container.register(
+            ConversationRepository.self,
+            inObjectScope: .container
+        ) { resolver in
             ConversationDataController(
                 dependency: .init(
                     coreDataStack: resolver.resolve(CoreDataStack.self)!
                 )
             )
         }
-        .inObjectScope(.container)
         
-        container.register(NoteRepository.self) { resolver in
+        container.register(
+            NoteRepository.self,
+            inObjectScope: .container
+        ) { resolver in
             NoteDataController(
                 dependency: .init(
                     coreDataStack: resolver.resolve(CoreDataStack.self)!
                 )
             )
         }
-        .inObjectScope(.container)
         
         container.register(RecordRepository.self) { resolver in
             RecordDataController(

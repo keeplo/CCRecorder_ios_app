@@ -6,7 +6,7 @@
 //  Copyright © 2024 pseapplications. All rights reserved.
 //
 
-enum Category {
+enum Category: Int, CaseIterable {
     case vocabulary
     case sentence
 }

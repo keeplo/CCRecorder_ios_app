@@ -16,3 +16,14 @@ public protocol ConversationRepository {
 	func update(after updatedItem: ConversationEntity, completion: (CCError?) -> Void)
 	func delete(_ item: ConversationEntity, completion: (CCError?) -> Void)
 }
+
+#if DEBUG
+struct FakeConversationRepository: ConversationRepository {
+    
+    var dataSourceSubject: CurrentValueSubject<[ConversationEntity], DataError> = .init([])
+    func fetch() -> [ConversationEntity]? { return [] }
+    func create(_ item: ConversationEntity, completion: (Common.CCError?) -> Void) {}
+    func update(after updatedItem: ConversationEntity, completion: (Common.CCError?) -> Void) {}
+    func delete(_ item: ConversationEntity, completion: (Common.CCError?) -> Void) {}
+}
+#endif

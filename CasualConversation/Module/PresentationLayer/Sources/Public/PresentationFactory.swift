@@ -7,7 +7,6 @@
 //
 
 import Common
-
 import Foundation.NSURL
 
 public enum PresentationFactory {

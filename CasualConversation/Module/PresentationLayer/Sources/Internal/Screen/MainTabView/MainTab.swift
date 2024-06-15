@@ -16,7 +16,7 @@ struct MainTab: View {
         VStack {
             Spacer()
             HStack(alignment: .center) {
-                CCTabItem(
+                MainTabItem(
                     tab: .conversations,
                     selectedTab: $selectedTab
                 )
@@ -36,7 +36,7 @@ struct MainTab: View {
                         Spacer()
                     }
                 )
-                CCTabItem(
+                MainTabItem(
                     tab: .notes,
                     selectedTab: $selectedTab
                 )
@@ -48,47 +48,16 @@ struct MainTab: View {
     
 }
 
-fileprivate struct CCTabItem: View {
-    let tab: Tab
-    @Binding var selectedTab: Tab
-    
-    private var tabItemImageName: String {
-        switch tab {
-        case .conversations:     return "rectangle.stack.badge.play.fill"
-        case .notes:            return "checklist"
-        }
-    }
-    
-    private func currentTintColor(from tab: Tab) -> Color {
-        let tintColor: (light: Color, dark: Color)
-        switch tab {
-        case .conversations:     tintColor = (Color.logoLightRed, Color.logoDarkRed)
-        case .notes:             tintColor = (Color.logoLightBlue, Color.logoDarkBlue)
-        }
-        return tab == selectedTab ? tintColor.light : tintColor.dark
-    }
-    
-    var body: some View {
-        Button(
-            action: { selectedTab = tab },
-            label: {
-                Spacer()
-                Image(systemName: tabItemImageName)
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(currentTintColor(from: tab))
-                Spacer()
-            }
-        )
-    }
-    
+#Preview("대화 탭") {
+    MainTab(
+        selectedTab: .constant(.conversations),
+        isPresentedRecordView: .constant(false)
+    )
 }
 
-#if DEBUg
-#Preview {
-    CCTabItem(selectedTab: .constant(.conversations), tab: .conversations)
+#Preview("노트 탭") {
+    MainTab(
+        selectedTab: .constant(.notes),
+        isPresentedRecordView: .constant(false)
+    )
 }
-
-#Preview {
-    CCTabItem(selectedTab: .constant(.notes), tab: .notes)
-}
-#endif

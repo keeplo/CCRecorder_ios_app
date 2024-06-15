@@ -8,18 +8,20 @@
 
 import SwiftUI
 
+fileprivate struct TeamMate {
+    let imageName: String
+    let name: String
+    let role: String
+    let links: [(title: String, url: String)]
+}
+
 struct TeamMateInfoView: View {
 	
-	struct TeamMate {
-		let imageName: String
-		let name: String
-		let role: String
-		let links: [(title: String, url: String)]
-	}
+	
 	
     var body: some View {
 		VStack {
-			MemberInfo(by: .init(
+            MemberInfo(teamMate: .init(
 					imageName: "profile_marco",
 					name: "Marco",
 					role: "Team Leader\niOS Development",
@@ -30,7 +32,7 @@ struct TeamMateInfoView: View {
 					]
 				)
 			)
-			MemberInfo(by: .init(
+			MemberInfo(teamMate: .init(
 					imageName: "profile_coda",
 					name: "Coda",
 					role: "Project Management",
@@ -47,23 +49,24 @@ struct TeamMateInfoView: View {
     }
 }
 
-extension TeamMateInfoView {
-	
-	func MemberInfo(by member: TeamMate) -> some View {
+fileprivate struct MemberInfo: View {
+    let teamMate: TeamMate
+    
+    var body: some View {
 		GroupBox {
 			HStack {
-				Image(member.imageName, bundle: .module)
+				Image(teamMate.imageName, bundle: .module)
 					.resizable()
 					.frame(width: 100, height: 100)
 					.mask(Circle())
 					.padding()
 				VStack(alignment: .leading) {
-					Text(member.name)
+					Text(teamMate.name)
 						.font(.headline)
-					Text(member.role)
+					Text(teamMate.role)
 						.font(.subheadline)
 					HStack {
-						ForEach(member.links, id: \.0) { link in
+						ForEach(teamMate.links, id: \.0) { link in
 							Link(link.title, destination: .init(string: link.url)!)
 								.font(.caption)
 						}
@@ -71,7 +74,7 @@ extension TeamMateInfoView {
 				}
 				Spacer()
 			}
-		}
+		} // MemberInfo
 		.padding([.leading, .trailing])
 	}
 	

@@ -9,8 +9,8 @@ import Common
 
 import Foundation.NSURL
 
-public protocol Conversation: UUIDIdentifiable {
-    var id: Identifier { get }
+public protocol Conversation {
+    var id: UUID { get }
     var title: String? { get }
     var topic: String? { get }
     var members: [String] { get }
@@ -31,7 +31,7 @@ public struct ConversationEntity: Conversation {
 		)
 	}
 	
-	public var id: Identifier
+	public var id: UUID
 	public var title: String?
 	public var topic: String?
 	public var members: [String]
@@ -40,7 +40,7 @@ public struct ConversationEntity: Conversation {
 	public var pins: [TimeInterval]
 	
 	public init(
-		id: Identifier,
+		id: UUID,
 		title: String? = "",
 		topic: String? = "",
 		members: [String],
@@ -58,3 +58,21 @@ public struct ConversationEntity: Conversation {
 	}
 	
 }
+
+#if DEBUG
+public extension Conversation {
+    
+    static var preview: ConversationEntity {
+        ConversationEntity(
+            id: UUID(),
+            title: "테스트 CC",
+            topic: "연습",
+            members: [],
+            recordFilePath: .init(string: "")!,
+            recordedDate: .init(),
+            pins: []
+        )
+    }
+    
+}
+#endif

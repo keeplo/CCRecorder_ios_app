@@ -15,5 +15,9 @@ extension View {
 			.sendAction(#selector(UIResponder.resignFirstResponder),
 						to: nil, from: nil, for: nil)
 	}
+    
+    func toolbar(_ content: some ViewModifier) -> some View {
+        self.modifier(content)
+    }
 	
 }

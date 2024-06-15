@@ -9,7 +9,6 @@
 import Common
 import Domain
 
-import Combine
 import SwiftUI
 
 final class ViewMaker: Dependency, ObservableObject {
@@ -27,7 +26,7 @@ final class ViewMaker: Dependency, ObservableObject {
 	
 }
 
-public enum Screen {
+enum Screen {
     case mainTab
     case record
     case setting
@@ -83,56 +82,75 @@ extension ViewMaker {
                 anyView = .init(SettingView(viewModel: viewModel))
                 
             case .noteDetail(let note):
-                let viewModel: NoteDetailViewModel = .init(dependency: .init(
-                        useCase: container.resolve(NoteUsecase.self)!,
-                        item: note
+                anyView = .init(
+                    NoteDetailView(
+                        item: note,
+                        usecase: container.resolve(NoteUsecase.self)!
                     )
                 )
-                anyView = .init(NoteDetailView(viewModel: viewModel))
                 
             case .playTab(let conversation):
                 let viewModel: PlayTabViewModel = .init(dependency: .init(
-                        item: conversation,
-                        audioService: container.resolve(CCPlayer.self)!
-                    )
+                    item: conversation,
+                    audioService: container.resolve(CCPlayer.self)!
+                )
                 )
                 anyView = .init(PlayTabView(viewModel: viewModel))
                 
             case .conversationList:
-                let viewModel: ConversationListViewModel = .init(
-                    dependency: .init(
-                        useCase: container.resolve(ConversationUsecase.self)!,
-                        audioService: container.resolve(CCPlayer.self)!
+                anyView = .init(
+                    ConversationListView(
+                        usecase: container.resolve(ConversationUsecase.self)!,
+                        player: container.resolve(CCPlayer.self)!
                     )
                 )
-                anyView = .init(ConversationListView(viewModel: viewModel))
                 
             case .selection(let conversation):
-                let viewModel: SelectionViewModel = .init(
-                    dependency: .init(
+                anyView = .init(
+                    ConversationDetailView(
+                        item: conversation,
                         conversationUseCase: container.resolve(ConversationUsecase.self)!,
-                        noteUsecase: container.resolve(NoteUsecase.self)!,
-                        item: conversation
+                        noteUsecase: container.resolve(NoteUsecase.self)!
                     )
                 )
-                anyView = .init(SelectionView(viewModel: viewModel))
                 
             case .noteSet(let usecase):
-                let viewModel: NoteSetViewModel
+                let noteSetView: NoteSetView
                 if let bindedUseCase = usecase {
-                    viewModel = .init(dependency: .init(useCase: bindedUseCase))
+                    noteSetView = .init(usecase: bindedUseCase)
                 } else {
-                    viewModel = .init(
-                        dependency: .init(
-                            useCase:container.resolve(NoteUsecase.self, name: "all")!
-                        )
-                    )
+                    noteSetView = .init(usecase: container.resolve(NoteUsecase.self, name: "all")!)
                 }
-                                      
-                anyView = .init(NoteSetView(viewModel: viewModel))
+                anyView = .init(noteSetView)
                 
         }
-
+        
         return anyView
     }
+    
 }
+
+#if DEBUG
+import Combine
+struct FakeConversationUsecase: ConversationUsecase {
+    var conversationSubejct: CurrentValueSubject<[Domain.ConversationEntity], Never> = .init([])
+    func add(_ item: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}
+    func edit(after editedItem: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}
+    func delete(_ item: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}
+}
+
+//struct FakeCCPlayer: CCPlayer {
+//    var isPlayingPublisher: Published<Bool>.Publisher
+//    var currentTimePublisher: Published<TimeInterval>.Publisher { .constant(.zero) }
+//    var durationPublisher: Published<TimeInterval>.Publisher { .constant(10.0) }
+//    
+//    func stopTrackingCurrentTime() {}
+//    func setupPlaying(filePath: URL, completion: (Common.CCError?) -> Void) {}
+//    func startPlaying() {}
+//    func pausePlaying() {}
+//    func finishPlaying() {}
+//    func seek(to time: Double) {}
+//    func changePlayingRate(to value: Float) {}
+//    func removeRecordFile(from filePath: URL, completion: (Common.CCError?) -> Void) {}
+//}
+#endif

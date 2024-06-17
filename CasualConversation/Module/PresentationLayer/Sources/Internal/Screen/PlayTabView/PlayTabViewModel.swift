@@ -13,25 +13,6 @@ import SwiftUI
 import Combine
 
 final class PlayTabViewModel: Dependency, ObservableObject {
-		
-	enum Speed: Float, CaseIterable, CustomStringConvertible {
-		case half = 0.5
-		case threeQuater = 0.75
-		case `default` = 1.0
-		case oneAndOneQuater = 1.25
-		case oneAndHalf = 1.5
-		case oneAndThreeQuater = 1.75
-		case double = 2.0
-		
-		var description: String {
-			switch self {
-			case .half, .default, .oneAndHalf, .double:
-				return String(format: "%.1fx", self.rawValue)
-			default:
-				return String(format: "%.2fx", self.rawValue)
-			}
-		}
-	}
 	
 	enum Direction {
 		case forward
@@ -41,121 +22,107 @@ final class PlayTabViewModel: Dependency, ObservableObject {
 	
 	struct Dependency {
 		let item: ConversationEntity
-		let audioService: CCPlayer
+		let player: CCPlayer
 	}
 	
 	let dependency: Dependency
 	
-	@Published var speed: Speed = .default {
-		didSet { self.changedPlayingSpeed() }
-	}
-	@Published var nextPin: TimeInterval?
+	@Published var speed: Speed = .default
 	@Published var isPlaying: Bool = false
 	@Published var currentTime: TimeInterval = .zero
 	@Published var duration: TimeInterval = .zero
-	@Published var skipSecond: Double = Preference.shared.skipTime.rawValue
 	
+    var pinDisabled: Bool {
+        dependency.item.pins.filter({ currentTime >= $0 }).isEmpty
+    }
+    private var skipSecond: Double = Preference.shared.skipTime.rawValue
 	private var cancellableSet = Set<AnyCancellable>()
 	
 	init(dependency: Dependency) {
 		self.dependency = dependency
 		
-		dependency.audioService.isPlayingPublisher
-			.assign(to: &self.$isPlaying)
-		dependency.audioService.currentTimePublisher
-			.sink(receiveValue: { [weak self] currentTime in
-				self?.currentTime = currentTime
-				self?.changedCurrentTime()
-			})
-			.store(in: &cancellableSet)
-		dependency.audioService.durationPublisher
-			.assign(to: &self.$duration)
-	}
-	
-	deinit {
-		
-	}
-	
-	private func changedPlayingSpeed() {
-		self.dependency.audioService.changePlayingRate(to: speed.rawValue)
-	}
-	
-	private func changedCurrentTime() {
-		self.nextPin = dependency.item.pins.first(where: { currentTime < $0 })
+		bind()
 	}
 	
 }
 
 extension PlayTabViewModel {
 	
-	var disabledPlaying: Bool {
-		duration == .zero
-	}
-	var disabledPlayingOpacity: Double {
-		disabledPlaying ? 0.3 : 1.0
-	}
 	var skipTime: String {
 		"\(Int(skipSecond))"
 	}
-	var isPlayingImageName: String {
-		if disabledPlaying {
-			return "speaker.slash.circle.fill"
-		} else {
-			return self.isPlaying ? "pause.circle.fill" : "play.circle.fill"
-		}
-	}
-	var nextPinButtonOpacity: Double {
-		self.nextPin != nil ? 1 : 0.3
-	}
+	
+    
+    private func bind() {
+        dependency.player.isPlayingSubject
+            .sink { [weak self] isPlaying in
+                self?.isPlaying = isPlaying
+            }
+            .store(in: &cancellableSet)
+        
+        dependency.player.timeSubject
+            .sink { [weak self] currentTime, duration in
+                self?.currentTime = currentTime
+                self?.duration = duration
+            }
+            .store(in: &cancellableSet)
+        
+        $speed
+            .sink { [weak self] speed in
+                self?.dependency.player.changePlayingRate(to: speed.rawValue)
+            }
+            .store(in: &cancellableSet)
+    }
 	
 }
 
 extension PlayTabViewModel {
 	
-	func setupPlaying() {
+	func setup() {
 		let filePath = dependency.item.recordFilePath
-		self.dependency.audioService.setupPlaying(filePath: filePath) { error in
+		self.dependency.player.setup(filePath: filePath) { error in
 			guard error == nil else {
 				return
 			}
 		}
 	}
 	
-	func startPlaying() {
-		self.dependency.audioService.startPlaying()
+	func start() {
+		self.dependency.player.start()
 	}
 	
-	func pausePlaying() {
-		self.dependency.audioService.pausePlaying()
+	func pause() {
+		self.dependency.player.pause()
 	}
 	
-	func skip(_ direction: Direction) {
-		let timeToSeek: Double
-		switch direction {
-		case .forward:
-			timeToSeek = currentTime + skipSecond
-		case .back:
-			timeToSeek = currentTime - skipSecond
-		case .next:
-			guard let nextTimeToSeek = nextPin else {
-				return
-			}
-			timeToSeek = nextTimeToSeek
-		}
-		self.currentTime = timeToSeek
-		self.dependency.audioService.seek(to: timeToSeek)
-	}
-	
-	func editingSliderPointer() {
-		self.dependency.audioService.stopTrackingCurrentTime()
-	}
+    func skip(_ direction: Direction) {
+        let timeToSeek: Double
+        switch direction {
+            case .forward:
+                timeToSeek = currentTime + skipSecond
+            case .back:
+                timeToSeek = currentTime - skipSecond
+            case .next:
+                let leftPins = dependency.item.pins.filter({ currentTime >= $0 })
+                guard let nextTimeToSeek = leftPins.first else {
+                    return
+                }
+                timeToSeek = nextTimeToSeek
+        }
+        self.currentTime = timeToSeek
+        self.dependency.player.seek(to: timeToSeek)
+    }
+    
+    func editingSliderPointer() {
+        self.dependency.player.stopTrackingCurrentTime()
+    }
 	
 	func editedSliderPointer() {
-		self.dependency.audioService.seek(to: currentTime)
+		self.dependency.player.seek(to: currentTime)
 	}
 	
-	func finishPlaying() {
-		self.dependency.audioService.finishPlaying()
+	func finish() {
+		self.dependency.player.finish()
 	}
 	
 }

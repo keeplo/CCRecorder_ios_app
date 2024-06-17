@@ -92,7 +92,7 @@ extension ViewMaker {
             case .playTab(let conversation):
                 let viewModel: PlayTabViewModel = .init(dependency: .init(
                     item: conversation,
-                    audioService: container.resolve(CCPlayer.self)!
+                    player: container.resolve(CCPlayer.self)!
                 )
                 )
                 anyView = .init(PlayTabView(viewModel: viewModel))

@@ -12,14 +12,13 @@ import Combine
 import Foundation
 
 public protocol CCPlayer {
-    var isPlayingPublisher: Published<Bool>.Publisher { get }
-    var currentTimePublisher: Published<TimeInterval>.Publisher { get }
-    var durationPublisher: Published<TimeInterval>.Publisher { get }
+    var isPlayingSubject: CurrentValueSubject<Bool, Never> { get }
+    var timeSubject: CurrentValueSubject<(current: TimeInterval, duration: TimeInterval), Never> { get }
     func stopTrackingCurrentTime()
-    func setupPlaying(filePath: URL, completion: (CCError?) -> Void)
-    func startPlaying()
-    func pausePlaying()
-    func finishPlaying()
+    func setup(filePath: URL, completion: (CCError?) -> Void)
+    func start()
+    func pause()
+    func finish()
     func seek(to time: Double)
     func changePlayingRate(to value: Float)
     func removeRecordFile(from filePath: URL, completion: (CCError?) -> Void) // FIXME: RecordFile 관리 분리 필요

@@ -11,17 +11,6 @@ import Common
 import Combine
 import AVFAudio
 
-public protocol CCRecorder {
-	var isRecordingPublisher: Published<Bool>.Publisher { get }
-	var currentTimePublisher: Published<TimeInterval>.Publisher { get }
-	func setupRecorder(completion: (CCError?) -> Void)
-	func startRecording()
-	func pauseRecording()
-	func stopRecording(completion: (Result<URL, CCError>) -> Void)
-	func finishRecording(isCancel: Bool)
-	func permission(completion: @escaping (Bool) -> Void)
-}
-
 public final class AudioRecordService: NSObject, Dependency {
 	
 	public struct Dependency {

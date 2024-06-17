@@ -7,40 +7,27 @@
 
 import Common
 
-import Foundation.NSURL
+//import Foundation.NSURL
 import Combine
 
-public final class ConversationUsecaseType: Dependency, ConversationUsecase {
-	
-    public struct Dependency {
-		let dataController: ConversationRepository
-		
-		public init(dataController: ConversationRepository) {
-			self.dataController = dataController
-		}
-	}
-	
-    public let dependency: Dependency
+public final class ConversationUsecaseType: ConversationUsecase {
 	
     public var conversationSubejct: CurrentValueSubject<[ConversationEntity], Never> = .init([])
-	
-    public init(dependency: Dependency) {
-		self.dependency = dependency
-		fetchDataSource()
+    
+    struct Dependency {
+		let dataController: ConversationRepository
 	}
+    private let dependency: Dependency
 	
-	private func fetchDataSource() {
-		guard let fetcedList = dependency.dataController.fetch() else {
-			CCError.log.append(.log("Failure fetchDataSource"))
-			return
-		}
-        self.conversationSubejct.send(fetcedList)
+    init(dependency: Dependency) {
+		self.dependency = dependency
+		
+        fetchDataSource()
 	}
  
 }
 
-// MARK: - ConversationRecodable
-extension ConversationUsecaseType {
+extension ConversationUsecaseType { // MARK: - ConversationRecodable
 	
     public func add(_ item: ConversationEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.create(item) { error in
@@ -55,8 +42,7 @@ extension ConversationUsecaseType {
 	
 }
 
-// MARK: - ConversationMaintainable
-extension ConversationUsecaseType {
+extension ConversationUsecaseType { // MARK: - ConversationMaintainable
 	
     public func edit(after editedItem: ConversationEntity, completion: (CCError?) -> Void) {
 		self.dependency.dataController.update(after: editedItem) { error in
@@ -80,4 +66,17 @@ extension ConversationUsecaseType {
 		}
 	}
 	
+}
+
+// MARK: - Private Methods
+extension ConversationUsecaseType {
+    
+    private func fetchDataSource() {
+        guard let fetcedList = dependency.dataController.fetch() else {
+            CCError.log.append(.log("Failure fetchDataSource"))
+            return
+        }
+        self.conversationSubejct.send(fetcedList)
+    }
+    
 }

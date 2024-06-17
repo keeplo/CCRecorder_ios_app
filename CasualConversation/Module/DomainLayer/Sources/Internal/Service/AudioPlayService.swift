@@ -11,144 +11,143 @@ import Common
 import Combine
 import AVFAudio
 
-final class AudioPlayService: NSObject, Dependency {
+final class AudioPlayService: NSObject {
+    
+    let isPlayingSubject: CurrentValueSubject<Bool, Never> = .init(false)
+    let timeSubject: CurrentValueSubject<(current: TimeInterval, duration: TimeInterval), Never> = .init((.zero, .zero))
+    var isPlaying: Bool { isPlayingSubject.value }
+    var duration: TimeInterval { timeSubject.value.duration }
+    
+    private var progressTimer: AnyCancellable?
+    private var audioPlayer: AVAudioPlayer?
 	
     struct Dependency {
 		let dataController: RecordRepository
-		
-		public init(dataController: RecordRepository) {
-			self.dataController = dataController
-		}
 	}
-	
-    var dependency: Dependency
-	
-	private var audioPlayer: AVAudioPlayer? {
-		willSet {
-			if newValue == nil { self.progressTimer?.invalidate() }
-		}
-	}
-	private var progressTimer: Timer?
-	
-	@Published var isPlaying: Bool = false {
-		didSet {
-			if !isPlaying { self.progressTimer?.invalidate() }
-		}
-	}
-	@Published var duration: TimeInterval = .zero
-	@Published var currentTime: TimeInterval = .zero
+    private let dependency: Dependency
+    private var cancellableSet: Set<AnyCancellable> = []
 	
     init(dependency: Dependency) {
 		self.dependency = dependency
 		
 		super.init()
-		setupNotificationCenter()
-	}
-	
-	deinit {
-		NotificationCenter.default.removeObserver(self)
-	}
-	
-	private func setupNotificationCenter() {
-		NotificationCenter.default
-			.addObserver(self,
-						 selector: #selector(handleRouteChange),
-						 name: AVAudioSession.routeChangeNotification,
-						 object: nil)
-		NotificationCenter.default
-			.addObserver(self,
-						 selector: #selector(handleInteruption),
-						 name: AVAudioSession.interruptionNotification,
-						 object: nil)
-	}
-	
-	@objc func handleRouteChange(notification: Notification) {
-		guard let info = notification.userInfo,
-			  let rawValue = info[AVAudioSessionRouteChangeReasonKey] as? UInt else { return }
-		guard let reson = AVAudioSession.RouteChangeReason(rawValue: rawValue) else { return }
-		switch reson {
-		case .unknown:						break
-		case .newDeviceAvailable:			break
-		case .oldDeviceUnavailable:			handleWhenOldDeviceUnavailable(info: info)
-		case .categoryChange:				break
-		case .override:						break
-		case .wakeFromSleep:				break
-		case .noSuitableRouteForCategory:	break
-		case .routeConfigurationChange:		break
-		@unknown default:					break
-		}
-	}
-	
-	private func handleWhenOldDeviceUnavailable(info: [AnyHashable : Any]) {
-		guard let previousRoute = info[AVAudioSessionRouteChangeReasonKey] as? AVAudioSessionRouteDescription,
-			  let previousOutput = previousRoute.outputs.first else { return }
-		if previousOutput.portType == .headphones {
-			if isPlaying {
-				pausePlaying()
-			}
-		}
-	}
-	
-	@objc func handleInteruption(notification: Notification) {
-		guard let info = notification.userInfo,
-			  let rawValue = info[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
-		guard let type = AVAudioSession.InterruptionType(rawValue: rawValue) else { return }
-		switch type {
-		case .began:
-			if isPlaying {
-				pausePlaying()
-			}
-		case .ended:
-			guard let rawValue = info[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
-			let options = AVAudioSession.InterruptionOptions(rawValue: rawValue)
-			if options == .shouldResume {
-				// restart audio or restart recording
-			}
-		@unknown default:
-			break
-		}
-	}
-	
-	private func makeAudioPlayer(by filePath: URL) -> AVAudioPlayer? {
-		guard let data = dependency.dataController.read(of: filePath) else {
-			CCError.log.append(.audioServiceFailed(reason: .fileURLPathInvalidated))
-			return nil
-		}
-		do {
-			return try AVAudioPlayer(data: data) // Test FileType 수정필요
-		} catch {
-			CCError.log.append(.audioServiceFailed(reason: .fileBindingFailure))
-			return nil
-		}
-	}
-	
-	private func startTrakingCurrentTime() {
-		progressTimer = Timer.scheduledTimer(
-			timeInterval: 0.1,
-			target: self,
-			selector: #selector(updateRealTimeValues),
-			userInfo: nil,
-			repeats: true
-		)
-	}
-	
-	@objc private func updateRealTimeValues() {
-		self.currentTime = audioPlayer?.currentTime ?? 0
+		
+        bind()
 	}
 	
 }
 
+extension AudioPlayService {
+    
+    private func bind() {
+        NotificationCenter.default
+            .publisher(for: AVAudioSession.routeChangeNotification)
+            .compactMap(\.userInfo)
+            .map({ $0[AVAudioSessionRouteChangeReasonKey] })
+            .receive(on: DispatchQueue.main)
+            .combineLatest(isPlayingSubject)
+            .sink { [weak self] routeChangeReason, isPlaying in
+                guard let routeChangeReasonDescription = routeChangeReason as? AVAudioSessionRouteDescription,
+                      let resoneRawValue = routeChangeReason as? UInt,
+                      let reason = AVAudioSession.RouteChangeReason(rawValue: resoneRawValue),
+                      let firstOutput = routeChangeReasonDescription.outputs.first else {
+                    return
+                }
+                switch reason {
+                    case .oldDeviceUnavailable:
+                        if case .headphones =  firstOutput.portType {
+                            if isPlaying {
+                                self?.pause()
+                            }
+                        }
+                    default: break
+                }
+            }
+            .store(in: &cancellableSet)
+        
+        NotificationCenter.default
+            .publisher(for: AVAudioSession.interruptionNotification)
+            .compactMap(\.userInfo)
+            .receive(on: DispatchQueue.main)
+            .combineLatest(isPlayingSubject)
+            .sink { [weak self] userInfo, isPlaying in
+                guard let interruptionTypeRawValue = [AVAudioSessionInterruptionTypeKey] as? UInt,
+                      let type = AVAudioSession.InterruptionType(rawValue: interruptionTypeRawValue),
+                      let interruptionOptionRawValue = [AVAudioSessionInterruptionOptionKey] as? UInt
+                else {
+                    return
+                }
+                
+                switch type {
+                    case .began:
+                        if isPlaying {
+                            self?.pause()
+                        }
+                    case .ended:
+                        if case .shouldResume = AVAudioSession.InterruptionOptions(rawValue: interruptionOptionRawValue) {
+                            // restart audio or restart recording
+                        }
+                    @unknown default: fatalError("")
+                }
+            }
+            .store(in: &cancellableSet)
+        
+        isPlayingSubject
+            .sink { [weak self] isPlaying in
+                if isPlaying {
+                    
+                } else {
+                    
+                }
+            }
+            .store(in: &cancellableSet)
+    }
+    
+}
+
+extension AudioPlayService {
+    
+    private func makeAudioPlayer(by filePath: URL) -> AVAudioPlayer? {
+        guard let data = dependency.dataController.read(of: filePath) else {
+            CCError.log.append(.audioServiceFailed(reason: .fileURLPathInvalidated))
+            return nil
+        }
+        do {
+            return try AVAudioPlayer(data: data) // Test FileType 수정필요
+        } catch {
+            CCError.log.append(.audioServiceFailed(reason: .fileBindingFailure))
+            return nil
+        }
+    }
+    
+    private func startTimer() {
+        progressTimer = Timer
+            .publish(every: 0.1, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.updateTime()
+            }
+    }
+    
+    private func stopTimer() {
+        
+    }
+    
+    private func updateTime() {
+        let currentTime = audioPlayer?.currentTime ?? 0
+        timeSubject.send((currentTime, duration))
+    }
+    
+}
+
 extension AudioPlayService: CCPlayer {
-	
-    var isPlayingPublisher: Published<Bool>.Publisher { $isPlaying }
-    var durationPublisher: Published<TimeInterval>.Publisher { $duration }
-    var currentTimePublisher: Published<TimeInterval>.Publisher { $currentTime }
-	
+		
     func stopTrackingCurrentTime() {
-		self.progressTimer?.invalidate()
+		self.progressTimer?.cancel()
+        self.progressTimer = nil
 	}
 	
-    func setupPlaying(filePath: URL, completion: (CCError?) -> Void) {
+    func setup(filePath: URL, completion: (CCError?) -> Void) {
 		guard let audioPlayer = makeAudioPlayer(by: filePath) else {
 			completion(.audioServiceFailed(reason: .fileBindingFailure))
 			return
@@ -158,7 +157,7 @@ extension AudioPlayService: CCPlayer {
 		audioPlayer.numberOfLoops = 0
 		audioPlayer.volume = 1.0
 		audioPlayer.delegate = self
-		self.duration = audioPlayer.duration
+        timeSubject.send((.zero, audioPlayer.duration))
 		guard audioPlayer.prepareToPlay() else {
 			completion(.audioServiceFailed(reason: .preparedFailure))
 			return
@@ -167,25 +166,24 @@ extension AudioPlayService: CCPlayer {
 		completion(nil)
 	}
 	
-    func startPlaying() {
+    func start() {
 		audioPlayer?.play()
-		self.isPlaying = true
-		self.startTrakingCurrentTime()
+        isPlayingSubject.send(true)
+		self.startTimer()
 	}
 	
-    func pausePlaying() {
+    func pause() {
 		self.audioPlayer?.pause()
-		self.isPlaying = false
+        isPlayingSubject.send(false)
 	}
 	
-    func finishPlaying() {
+    func finish() {
 		if isPlaying {
 			self.audioPlayer?.stop()
-			self.isPlaying = false
+            isPlayingSubject.send(false)
 		}
 		self.audioPlayer = nil
-		self.duration = .zero
-		self.currentTime = .zero
+        timeSubject.send((.zero, .zero))
 	}
 	
     func seek(to time: Double) {
@@ -201,7 +199,7 @@ extension AudioPlayService: CCPlayer {
 		self.audioPlayer?.currentTime = seekPosition
 		if isPlaying {
 			self.audioPlayer?.play()
-			self.startTrakingCurrentTime()
+			self.startTimer()
 		}
 	}
 	
@@ -219,9 +217,9 @@ extension AudioPlayService: CCPlayer {
 extension AudioPlayService: AVAudioPlayerDelegate {
 	
 	public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-		self.isPlaying = false
 		self.audioPlayer?.stop()
-		self.currentTime = .zero
+        timeSubject.send((.zero, duration))
+        isPlayingSubject.send(false)
 	}
 	
 }

@@ -38,7 +38,7 @@ struct PlayTabView: View {
             .foregroundColor(.gray)
             .font(.caption)
             .overlay {
-                if viewModel.disabledPlaying {
+                if disabledPlaying {
                     Text("녹음 파일 없음")
                         .font(.headline)
                 }
@@ -46,18 +46,18 @@ struct PlayTabView: View {
             HStack(alignment: .center) {
                 Menu(
                     content: {
-                        ForEach(PlayTabViewModel.Speed.allCases, id: \.self) { item in
+                        ForEach(Speed.allCases, id: \.self) { speed in
                             Button(action: {
-                                viewModel.speed = item
+                                viewModel.speed = speed
                             }, label: {
-                                Text(item.description)
+                                Text(speedDescription(of: viewModel.speed))
                                     .foregroundColor(.logoDarkBlue)
                                     .font(.caption)
                             })
                         }
                     }, label: {
                         Spacer()
-                        Text(viewModel.speed.description)
+                        Text(speedDescription(of: viewModel.speed))
                             .foregroundColor(.logoDarkBlue)
                             .font(.headline)
                         Spacer()
@@ -74,24 +74,24 @@ struct PlayTabView: View {
                         Spacer()
                     }
                 ) // BackwardButton
-                .disabled(viewModel.disabledPlaying)
-                .opacity(viewModel.disabledPlayingOpacity)
+                .disabled(disabledPlaying)
+                .opacity(disabledPlaying ? 0.3 : 1.0)
                 
                 Button(
                     action: {
                         if viewModel.isPlaying {
-                            viewModel.pausePlaying()
+                            viewModel.pause()
                         } else {
-                            viewModel.startPlaying()
+                            viewModel.start()
                         }
                     }, label: {
                         Spacer()
-                        Image(systemName: viewModel.isPlayingImageName)
+                        Image(systemName: isPlayingImageName)
                             .font(.system(size: 44))
                         Spacer()
                     }
                 ) // PlayButton
-                .disabled(viewModel.disabledPlaying)
+                .disabled(disabledPlaying)
                 
                 Button(
                     action: {
@@ -103,8 +103,8 @@ struct PlayTabView: View {
                         Spacer()
                     }
                 ) // GowardButton
-                .disabled(viewModel.disabledPlaying)
-                .opacity(viewModel.disabledPlayingOpacity)
+                .disabled(disabledPlaying)
+                .opacity(disabledPlaying ? 0.3 : 1.0)
                 
                 Button(
                     action: {
@@ -117,8 +117,8 @@ struct PlayTabView: View {
                     }
                 ) // NextPinButton
                 .foregroundColor(.logoDarkBlue)
-                .disabled(viewModel.nextPin == nil)
-                .opacity(viewModel.nextPinButtonOpacity)
+                .disabled(viewModel.pinDisabled)
+                .opacity(viewModel.pinDisabled ? 0.3 : 1.0)
             }
             .foregroundColor(.logoLightBlue)
         } // PlayControl
@@ -129,13 +129,40 @@ struct PlayTabView: View {
     var body: some View {
 		content
             .onAppear {
-                viewModel.setupPlaying()
+                viewModel.setup()
             }
             .onDisappear {
-                viewModel.finishPlaying()
+                viewModel.finish()
             }
     }
 	
+}
+
+extension PlayTabView {
+    
+    private func speedDescription(of speed: Speed) -> String {
+        let format: String
+        switch speed {
+        case .half, .default, .oneAndHalf, .double:
+            format = "%.1fx"
+        default:
+            format = "%.2fx"
+        }
+        return .init(format: format, speed.rawValue)
+    }
+    
+    private var disabledPlaying: Bool {
+        viewModel.duration == .zero
+    }
+    
+    private var isPlayingImageName: String {
+        if disabledPlaying {
+            return "speaker.slash.circle.fill"
+        } else {
+            return viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill"
+        }
+    }
+    
 }
 
 //#if DEBUG // MARK: - Preview

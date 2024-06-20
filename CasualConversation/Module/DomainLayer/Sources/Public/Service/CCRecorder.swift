@@ -12,12 +12,12 @@ import Combine
 import Foundation
 
 public protocol CCRecorder {
-    var isRecordingPublisher: Published<Bool>.Publisher { get }
-    var currentTimePublisher: Published<TimeInterval>.Publisher { get }
-    func setupRecorder(completion: (CCError?) -> Void)
-    func startRecording()
-    func pauseRecording()
-    func stopRecording(completion: (Result<URL, CCError>) -> Void)
-    func finishRecording(isCancel: Bool)
-    func permission(completion: @escaping (Bool) -> Void)
+    var isRecordingSubject: CurrentValueSubject<Bool, Never> { get }
+    var currentTimeSubject: CurrentValueSubject<TimeInterval, Never> { get }
+    
+    func setup(completion: (CCError?) -> Void)
+    func start()
+    func pause()
+    func stop(completion: (Result<URL, CCError>) -> Void)
+    func finish(isCancel: Bool)
 }

@@ -60,13 +60,12 @@ extension ViewMaker {
                 anyView = .init(MainTabView())
                 
             case .record:
-                let viewModel: RecordViewModel = .init(
-                    dependency: .init(
-                        useCase: container.resolve(ConversationUsecase.self)!,
+                anyView = .init(
+                    RecordView(
+                        usecase: container.resolve(ConversationUsecase.self)!,
                         audioService: container.resolve(CCRecorder.self)!
                     )
                 )
-                anyView = .init(RecordView(viewModel: viewModel))
                 
             case .setting:
                 let viewModel: SettingViewModel = .init(
@@ -137,6 +136,17 @@ struct FakeConversationUsecase: ConversationUsecase {
     func add(_ item: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}
     func edit(after editedItem: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}
     func delete(_ item: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}
+}
+
+struct FakeCCRecorder: CCRecorder {
+    var isRecordingSubject: CurrentValueSubject<Bool, Never> = .init(false)
+    var currentTimeSubject: CurrentValueSubject<TimeInterval, Never> = .init(.zero)
+    
+    func setup(completion: (Common.CCError?) -> Void) {}
+    func start() {}
+    func pause() {}
+    func stop(completion: (Result<URL, Common.CCError>) -> Void) {}
+    func finish(isCancel: Bool) {}
 }
 
 //struct FakeCCPlayer: CCPlayer {

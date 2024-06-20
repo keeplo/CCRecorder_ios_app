@@ -199,7 +199,8 @@ struct ConversationDetailView: View {
             ToolbarItemGroup(placement: .keyboard) {
                 Button(
                     action: {
-                        dismissKeyboard()
+                        // TODO: DismissKeyboardFeature 적용
+                        // dismissKeyboard()
                     }, label: {
                         Image(systemName: "keyboard.chevron.compact.down")
                     }

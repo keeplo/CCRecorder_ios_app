@@ -130,7 +130,8 @@ extension AudioPlayService {
     }
     
     private func stopTimer() {
-        
+        progressTimer?.cancel()
+        progressTimer = nil
     }
     
     private func updateTime() {

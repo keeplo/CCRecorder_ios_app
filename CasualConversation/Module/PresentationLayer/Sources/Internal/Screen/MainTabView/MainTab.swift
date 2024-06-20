@@ -11,6 +11,7 @@ import SwiftUI
 struct MainTab: View {
     @Binding var selectedTab: Tab
     @Binding var isPresentedRecordView: Bool
+    @Binding var isPresentedDeniedAlert: Bool
     
     var body: some View {
         VStack {
@@ -21,7 +22,17 @@ struct MainTab: View {
                     selectedTab: $selectedTab
                 )
                 Button(
-                    action: { isPresentedRecordView.toggle() },
+                    action: {
+                        AuthorizationChecker.recordPermission { isPermitted in
+                            Task { @MainActor in
+                                if isPermitted {
+                                    isPresentedRecordView.toggle()
+                                } else {
+                                    isPresentedDeniedAlert.toggle()
+                                }
+                            }
+                        }
+                    },
                     label: {
                         Spacer()
                         ZStack(alignment: .center) {
@@ -51,13 +62,15 @@ struct MainTab: View {
 #Preview("대화 탭") {
     MainTab(
         selectedTab: .constant(.conversations),
-        isPresentedRecordView: .constant(false)
+        isPresentedRecordView: .constant(false), 
+        isPresentedDeniedAlert: .constant(false)
     )
 }
 
 #Preview("노트 탭") {
     MainTab(
         selectedTab: .constant(.notes),
-        isPresentedRecordView: .constant(false)
+        isPresentedRecordView: .constant(false),
+        isPresentedDeniedAlert: .constant(false)
     )
 }

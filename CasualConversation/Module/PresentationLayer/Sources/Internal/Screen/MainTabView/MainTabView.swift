@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainTabView: View {
+struct MainTabView: View, OpenSettingFeature {
 	
     // MARK: - Dependency
 	@EnvironmentObject private var viewMaker: ViewMaker
@@ -23,7 +23,8 @@ struct MainTabView: View {
         .overlay {
             MainTab(
                 selectedTab: $selectedTab,
-                isPresentedRecordView: $isPresentedRecordView
+                isPresentedRecordView: $isPresentedRecordView, 
+                isPresentedDeniedAlert: $isPresentedDeniedAlert
             )
         }
         .background(Color.ccBgColor)
@@ -39,6 +40,7 @@ struct MainTabView: View {
     @State private var selectedTab: Tab = .conversations
     @State private var isPresentedRecordView: Bool = false
     @State private var isPresentedTutorial: Bool = !Preference.shared.isDoneTutorial
+    @State private var isPresentedDeniedAlert: Bool = false
     
     var body: some View {
         NavigationView {
@@ -50,6 +52,14 @@ struct MainTabView: View {
                 .fullScreenCover(isPresented: $isPresentedTutorial) {
                     TutorialView()
                 }
+                .alert(
+                    "마이크 접근 허용 필요",
+                    isPresented: $isPresentedDeniedAlert,
+                    actions: { Button("확인", role: .cancel, action: openSetting) },
+                    message: {
+                        Text("설정 > CasualConversation > CASUALCONVERSATION 접근허용 > 마이크 허용\n 스위치를 허용해주세요")
+                    }
+                )
         }
     }
 

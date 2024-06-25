@@ -37,7 +37,7 @@ public enum PresentationFactory {
     }
     
     public static func makeViewFactory(_ container: DependencyContainer) -> some ViewFactory {
-        ViewMaker(
+        ScreenMaker(
             dependency: .init(container: container)
         )
     }

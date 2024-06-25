@@ -10,7 +10,7 @@ import SwiftUI
 struct MainTabView: View, OpenSettingFeature {
 	
     // MARK: - Dependency
-	@EnvironmentObject private var viewMaker: ViewMaker
+	@EnvironmentObject private var viewMaker: ScreenMaker
 	
     // MARK: - View Render
     var content: some View {

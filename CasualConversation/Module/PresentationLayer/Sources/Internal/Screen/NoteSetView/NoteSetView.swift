@@ -12,7 +12,7 @@ import SwiftUI
 struct NoteSetView: View {
 	
     // MARK: - Dependency
-	@EnvironmentObject private var viewMaker: ViewMaker
+	@EnvironmentObject private var viewMaker: ScreenMaker
 	
     let usecase: NoteUsecase
     

@@ -1,5 +1,5 @@
 //
-//  ViewMaker.swift
+//  ScreenMaker.swift
 //  CasualConversation
 //
 //  Created by Yongwoo Marco on 2022/07/03.
@@ -11,7 +11,7 @@ import Domain
 
 import SwiftUI
 
-final class ViewMaker: Dependency, ObservableObject {
+final class ScreenMaker: Dependency, ObservableObject {
     
 	struct Dependency {
         let container: DependencyContainer
@@ -37,7 +37,7 @@ enum Screen {
     case noteSet(NoteUsecase?) // FIXME: 필터 방식 변경 필요
 }
 
-extension ViewMaker: ViewFactory {
+extension ScreenMaker: ViewFactory {
     
     func makeRootView() -> AnyView {
         .init(
@@ -50,25 +50,27 @@ extension ViewMaker: ViewFactory {
     
 }
 
-extension ViewMaker {
+extension ScreenMaker {
     
     func makeView(_ screen: Screen) -> some View {
-        let anyView: AnyView
+        let screenView: AnyView
         let container = dependency.container
         switch screen {
             case .mainTab:
-                anyView = .init(MainTabView())
+                screenView = .init(
+                    MainTabView()
+                )
                 
             case .record:
-                anyView = .init(
+                screenView = .init(
                     RecordView(
-                        usecase: container.resolve(ConversationUsecase.self)!,
+                        usecase: container.resolve((any ConversationUsecase).self)!,
                         audioService: container.resolve(CCRecorder.self)!
                     )
                 )
                 
             case .setting:
-                anyView = .init(
+                screenView = .init(
                     SettingView(
                         dependency: .init(
                             mainURL: PresentationFactory.mainURL,
@@ -82,7 +84,7 @@ extension ViewMaker {
                 )
                 
             case .noteDetail(let note):
-                anyView = .init(
+                screenView = .init(
                     NoteDetailView(
                         item: note,
                         usecase: container.resolve(NoteUsecase.self)!
@@ -90,15 +92,16 @@ extension ViewMaker {
                 )
                 
             case .playTab(let conversation):
-                let viewModel: PlayTabViewModel = .init(dependency: .init(
-                    item: conversation,
-                    player: container.resolve(CCPlayer.self)!
+                let viewModel: PlayTabViewModel = .init(
+                    dependency: .init(
+                        item: conversation,
+                        player: container.resolve(CCPlayer.self)!
+                    )
                 )
-                )
-                anyView = .init(PlayTabView(viewModel: viewModel))
+                screenView = .init(PlayTabView(viewModel: viewModel))
                 
             case .conversationList:
-                anyView = .init(
+                screenView = .init(
                     ConversationListView(
                         usecase: container.resolve(ConversationUsecase.self)!,
                         player: container.resolve(CCPlayer.self)!
@@ -106,7 +109,7 @@ extension ViewMaker {
                 )
                 
             case .selection(let conversation):
-                anyView = .init(
+                screenView = .init(
                     ConversationDetailView(
                         item: conversation,
                         conversationUseCase: container.resolve(ConversationUsecase.self)!,
@@ -121,18 +124,18 @@ extension ViewMaker {
                 } else {
                     noteSetView = .init(usecase: container.resolve(NoteUsecase.self, name: "all")!)
                 }
-                anyView = .init(noteSetView)
+                screenView = .init(noteSetView)
                 
         }
         
-        return anyView
+        return screenView
     }
     
 }
 
 #if DEBUG
 import Combine
-struct FakeConversationUsecase: ConversationUsecase {
+final class FakeConversationUsecase: ObservableObject, ConversationUsecase {
     var conversationSubejct: CurrentValueSubject<[Domain.ConversationEntity], Never> = .init([])
     func add(_ item: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}
     func edit(after editedItem: Domain.ConversationEntity, completion: (Common.CCError?) -> Void) {}

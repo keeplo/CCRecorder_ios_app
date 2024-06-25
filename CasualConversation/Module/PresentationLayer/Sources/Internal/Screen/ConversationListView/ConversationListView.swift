@@ -12,7 +12,7 @@ import SwiftUI
 struct ConversationListView: View {
 	
     // MARK: - Dependency
-	@EnvironmentObject private var viewMaker: ViewMaker
+	@EnvironmentObject private var screenMaker: ScreenMaker
     
     let usecase: ConversationUsecase
     let player: CCPlayer
@@ -24,7 +24,7 @@ struct ConversationListView: View {
         List {
             ForEach(dataSource, id: \.id) { item in
                 NavigationLink(
-                    destination: viewMaker.makeView(.selection(item)),
+                    destination: screenMaker.makeView(.selection(item)),
                     label: { ConversationListRow(item: item) }
                 )
                 .listRowBackground(Color.clear)

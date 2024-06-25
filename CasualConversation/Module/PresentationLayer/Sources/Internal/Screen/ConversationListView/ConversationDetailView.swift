@@ -20,7 +20,7 @@ struct ConversationDetailView: View {
 	@Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     
-    @EnvironmentObject private var viewMaker: ViewMaker
+    @EnvironmentObject private var screenMaker: ScreenMaker
     
     let conversation: ConversationEntity
     let conversationUseCase: ConversationMaintainable
@@ -118,7 +118,7 @@ struct ConversationDetailView: View {
                 }
             }
             .padding([.leading, .trailing])
-            viewMaker.makeView(.noteSet(noteUsecase))
+            screenMaker.makeView(.noteSet(noteUsecase))
 		}
 		.overlay {
             PlayTab(item: conversation)
@@ -338,12 +338,12 @@ extension ConversationDetailView {
 
 fileprivate struct PlayTab: View {
     let item: ConversationEntity
-    @EnvironmentObject private var viewMaker: ViewMaker
+    @EnvironmentObject private var screenMaker: ScreenMaker
     
     var body: some View {
         VStack {
             Spacer()
-            viewMaker.makeView(.playTab(item))
+            screenMaker.makeView(.playTab(item))
         }
     }
     

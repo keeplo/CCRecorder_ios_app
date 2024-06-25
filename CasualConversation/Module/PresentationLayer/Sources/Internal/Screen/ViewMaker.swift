@@ -68,17 +68,18 @@ extension ViewMaker {
                 )
                 
             case .setting:
-                let viewModel: SettingViewModel = .init(
-                    dependency: .init(
-                        mainURL: PresentationFactory.mainURL,
-                        cafeURL: PresentationFactory.cafeURL,
-                        eLearningURL: PresentationFactory.eLearningURL,
-                        tasteURL: PresentationFactory.tasteURL,
-                        testURL: PresentationFactory.testURL,
-                        receptionTel: PresentationFactory.receptionTel
+                anyView = .init(
+                    SettingView(
+                        dependency: .init(
+                            mainURL: PresentationFactory.mainURL,
+                            cafeURL: PresentationFactory.cafeURL,
+                            eLearningURL: PresentationFactory.eLearningURL,
+                            tasteURL: PresentationFactory.tasteURL,
+                            testURL: PresentationFactory.testURL,
+                            receptionTel: PresentationFactory.receptionTel
+                        )
                     )
                 )
-                anyView = .init(SettingView(viewModel: viewModel))
                 
             case .noteDetail(let note):
                 anyView = .init(

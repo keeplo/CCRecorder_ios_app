@@ -11,7 +11,7 @@ import Domain
 
 import Foundation
 
-final class RecordDataController: Dependency {
+final class RecordDataController {
     
     private let fileManager: FileManager = .default
     private var directoryURL: URL { dependency.documentURL.appendingPathComponent("Record") }
@@ -19,7 +19,7 @@ final class RecordDataController: Dependency {
     struct Dependency {
         let documentURL: URL
     }
-	let dependency: Dependency
+	private let dependency: Dependency
 	
     init(dependency: Dependency) {
 		self.dependency = dependency

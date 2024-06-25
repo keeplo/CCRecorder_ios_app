@@ -11,12 +11,12 @@ import Domain
 
 import SwiftUI
 
-final class ScreenMaker: Dependency, ObservableObject {
+final class ScreenMaker: ObservableObject {
     
 	struct Dependency {
         let container: DependencyContainer
 	}
-	let dependency: Dependency
+	private let dependency: Dependency
     
     private var preference: Preference = .shared
 	

@@ -11,7 +11,7 @@ import Common
 import Combine
 import AVFAudio
 
-final class AudioRecordService: NSObject, Dependency {
+final class AudioRecordService: NSObject {
     
     let isRecordingSubject: CurrentValueSubject<Bool, Never> = .init(false)
     let currentTimeSubject: CurrentValueSubject<TimeInterval, Never> = .init(.zero)
@@ -25,7 +25,7 @@ final class AudioRecordService: NSObject, Dependency {
     struct Dependency {
         let dataController: RecordRepository
     }
-    var dependency: Dependency
+    private let dependency: Dependency
 	
 	public init(dependency: Dependency) {
 		self.dependency = dependency

@@ -12,7 +12,7 @@ import Domain
 import SwiftUI
 import Combine
 
-final class PlayTabViewModel: Dependency, ObservableObject {
+final class PlayTabViewModel: ObservableObject {
 	
 	enum Direction {
 		case forward
@@ -24,8 +24,7 @@ final class PlayTabViewModel: Dependency, ObservableObject {
 		let item: ConversationEntity
 		let player: CCPlayer
 	}
-	
-	let dependency: Dependency
+	private let dependency: Dependency
 	
 	@Published var speed: Speed = .default
 	@Published var isPlaying: Bool = false

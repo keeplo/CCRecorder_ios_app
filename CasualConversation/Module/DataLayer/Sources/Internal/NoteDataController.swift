@@ -35,15 +35,14 @@ extension NoteEntity {
 	}
 }
 
-final class NoteDataController: Dependency {
+final class NoteDataController {
 	
 	static let entityName = "NoteEntity"
 	
     struct Dependency {
         let coreDataStack: CoreDataStack
     }
-	
-	let dependency: Dependency
+	private let dependency: Dependency
 	
 	init(dependency: Dependency) {
 		self.dependency = dependency

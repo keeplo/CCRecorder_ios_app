@@ -38,13 +38,13 @@ extension ConversationEntity {
 	
 }
 
-final class ConversationDataController: Dependency, ConversationRepository {
+final class ConversationDataController: ConversationRepository {
     public var dataSourceSubject: CurrentValueSubject<[ConversationEntity], DataError> = .init([])
     
     struct Dependency {
         let coreDataStack: CoreDataStack
     }
-    let dependency: Dependency
+    private let dependency: Dependency
 	
 	init(dependency: Dependency) {
 		self.dependency = dependency

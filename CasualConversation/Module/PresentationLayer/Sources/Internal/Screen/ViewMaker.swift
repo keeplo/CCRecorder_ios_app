@@ -58,7 +58,9 @@ extension ScreenMaker {
         switch screen {
             case .mainTab:
                 screenView = .init(
-                    MainTabView()
+                    MainTabView(
+                        viewModel: .init()
+                    )
                 )
                 
             case .record:

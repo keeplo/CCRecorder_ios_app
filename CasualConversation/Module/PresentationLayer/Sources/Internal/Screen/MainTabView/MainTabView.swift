@@ -11,20 +11,22 @@ struct MainTabView: View, OpenSettingFeature {
 	
     // MARK: - Dependency
 	@EnvironmentObject private var viewMaker: ScreenMaker
+    
+    @StateObject var viewModel: MainTabViewModel
 	
     // MARK: - View Render
     var content: some View {
         ZStack {
-            switch selectedTab {
+            switch viewModel.currentTab {
                 case .conversations:        viewMaker.makeView(.conversationList)
                 case .notes:                viewMaker.makeView(.noteSet(nil))
             }
         }
         .overlay {
             MainTab(
-                selectedTab: $selectedTab,
-                isPresentedRecordView: $isPresentedRecordView, 
-                isPresentedDeniedAlert: $isPresentedDeniedAlert
+                selectedTab: $viewModel.currentTab,
+                isPresentedRecordView: $viewModel.isPresentedRecordView,
+                isPresentedDeniedAlert: $viewModel.isPresentedDeniedAlert
             )
         }
         .background(Color.ccBgColor)
@@ -36,25 +38,21 @@ struct MainTabView: View, OpenSettingFeature {
         )
     }
     
-    // MARK: - View Action
-    @State private var selectedTab: Tab = .conversations
-    @State private var isPresentedRecordView: Bool = false
-    @State private var isPresentedTutorial: Bool = !Preference.shared.isDoneTutorial
-    @State private var isPresentedDeniedAlert: Bool = false
+    
     
     var body: some View {
         NavigationView {
             content
                 .navigationBarTitleDisplayMode(.large)
-                .fullScreenCover(isPresented: $isPresentedRecordView) {
+                .fullScreenCover(isPresented: $viewModel.isPresentedRecordView) {
                     viewMaker.makeView(.record)
                 }
-                .fullScreenCover(isPresented: $isPresentedTutorial) {
+                .fullScreenCover(isPresented: $viewModel.isPresentedTutorial) {
                     TutorialView()
                 }
                 .alert(
                     "마이크 접근 허용 필요",
-                    isPresented: $isPresentedDeniedAlert,
+                    isPresented: $viewModel.isPresentedDeniedAlert,
                     actions: { Button("확인", role: .cancel, action: openSetting) },
                     message: {
                         Text("설정 > CasualConversation > CASUALCONVERSATION 접근허용 > 마이크 허용\n 스위치를 허용해주세요")
@@ -65,7 +63,7 @@ struct MainTabView: View, OpenSettingFeature {
 
     // MARK: - Private Methods
     private var navigationTitle: String {
-        switch selectedTab {
+        switch viewModel.currentTab {
             case .conversations:    return "Conversations"
             case .notes:            return "Notes"
         }
@@ -74,12 +72,14 @@ struct MainTabView: View, OpenSettingFeature {
 }
 
 // MARK: - Preview
+#if SANDBOX_DEBUG
 #Preview("라이트 모드") {
-    MainTabView()
+    MainTabView(viewModel: .preview)
         .preferredColorScheme(.light)
 }
 
 #Preview("다크 모드") {
-    MainTabView()
+    MainTabView(viewModel: .preview)
         .preferredColorScheme(.dark)
 }
+#endif

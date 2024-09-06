@@ -7,6 +7,6 @@
 
 import ProjectDescription
 
-public extension DeploymentTarget {
-    static let appTarget: Self = .iOS(targetVersion: "15.0", devices: [.iphone])
+public extension DeploymentTargets {
+    static let appTarget: Self = .iOS("15.0")
 }

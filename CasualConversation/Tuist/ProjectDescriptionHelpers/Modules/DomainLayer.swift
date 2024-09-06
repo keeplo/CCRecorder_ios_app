@@ -8,21 +8,28 @@
 import ProjectDescription
 
 extension TargetDependency {
-    public static let domainLayer: TargetDependency = target(name: DomainLayer.name)
+    public static let domainLayer: TargetDependency = .project(
+        target: DomainLayer.name,
+        path: .path("../../Module/\(DomainLayer.name)Layer"),
+        condition: nil
+    )
 }
 
-public struct DomainLayer {
-    public static let name: String = .init(describing: Self.self)
-    public static let packages: [Package] = []
-    public static let target: Target = .init(
+public struct DomainLayer: Module {    
+    public static let name: String = "Domain"
+    public static let packages: [Package] = [
+        .quick,
+        .nimble
+    ]
+    public static let target: Target = .target(
         name: name,
-        platform: .iOS,
+        destinations: .iOS,
         product: .framework,
         productName: nil,
         bundleId: "com.pseapplications.casualconversation.\(name)",
-        deploymentTarget: .appTarget,
+        deploymentTargets: .appTarget,
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Sources/**"],
+        sources: ["../../Module/\(name)Layer/Sources/**"],
         resources: [],
         copyFiles: nil,
         headers: nil,
@@ -39,13 +46,13 @@ public struct DomainLayer {
         buildRules: [],
         mergedBinaryType: .automatic
     )
-    public static let test: Target = .init(
+    public static let test: Target = .target(
         name: name + "Tests",
-        platform: .iOS,
+        destinations: .iOS,
         product: .unitTests,
         bundleId: "com.pseapplications.\(name)Tests",
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Tests/**"],
+        sources: ["../../Module/\(name)Layer/Tests/**"],
         resources: [],
         dependencies: [
             .domainLayer,
@@ -54,5 +61,7 @@ public struct DomainLayer {
             .nimble
         ]
     )
-
+    public static let schemes: [Scheme] =  [
+        .make(name: "\(name)", for: .sandboxDebug, targets: ["\(name)"])
+    ]
 }

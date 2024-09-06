@@ -12,8 +12,8 @@ public extension Scheme {
     static func make(
         name: String,
         for configuration: ConfigurationName,
-        arguments: Arguments? = nil,
-        diagnosticsOptions: [SchemeDiagnosticsOptions] = [.options(mainThreadCheckerEnabled: true), .options(performanceAntipatternCheckerEnabled: true)],
+        arguments: Arguments? = .arguments(environmentVariables: ["OS_ACTIVITY_MODE": "disable"]),
+        diagnosticsOptions: SchemeDiagnosticsOptions = .options(mainThreadCheckerEnabled: true, performanceAntipatternCheckerEnabled: true),
         targets: [TargetReference] = []
     ) -> Scheme {
         .scheme(
@@ -24,7 +24,7 @@ public extension Scheme {
                 configuration: configuration,
                 executable: targets.first,
                 arguments: arguments,
-                diagnosticsOptions: diagnosticsOptions[0]
+                diagnosticsOptions: diagnosticsOptions
             ),
             archiveAction: .archiveAction(configuration: configuration),
             profileAction: .profileAction(configuration: configuration),

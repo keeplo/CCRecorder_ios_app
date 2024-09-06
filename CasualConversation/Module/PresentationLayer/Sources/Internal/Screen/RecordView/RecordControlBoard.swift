@@ -95,6 +95,7 @@ struct RecordControlBoard: View {
     }
 }
 
+#if DEBUG
 #Preview("라이트 모드") {
     RecordControlBoard(
         audioService: FakeCCRecorder(),
@@ -115,3 +116,4 @@ struct RecordControlBoard: View {
     )
     .preferredColorScheme(.dark)
 }
+#endif

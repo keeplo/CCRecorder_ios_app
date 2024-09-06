@@ -59,6 +59,7 @@ extension InfomationBoard {
     
 }
 
+#if DEBUG
 #Preview {
     InfomationBoard(
         dependency: .init(
@@ -71,3 +72,4 @@ extension InfomationBoard {
         )
     )
 }
+#endif

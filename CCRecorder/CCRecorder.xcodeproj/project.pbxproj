@@ -17,6 +17,7 @@
 		A94C40BD2C8ADCF3008E91C2 /* ViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */; };
 		A94C40BF2C8ADD3F008E91C2 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BE2C8ADD3F008E91C2 /* Screen.swift */; };
 		A96BB0B72C8EA74E00F49BD8 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */; };
+		A96BB0BE2C8EB15C00F49BD8 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BB0BD2C8EB15900F49BD8 /* SettingView.swift */; };
 		A9DA8CC72C8A9C3500D1141C /* CCRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */; };
 		A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC82C8A9C3500D1141C /* ContentView.swift */; };
 		A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CCA2C8A9C3500D1141C /* Item.swift */; };
@@ -57,6 +58,7 @@
 		A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCoordinator.swift; sourceTree = "<group>"; };
 		A94C40BE2C8ADD3F008E91C2 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
+		A96BB0BD2C8EB15900F49BD8 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A9DA8CC32C8A9C3500D1141C /* CCRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCRecorderApp.swift; sourceTree = "<group>"; };
 		A9DA8CC82C8A9C3500D1141C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -139,7 +141,6 @@
 		A94C40B62C8AD1D8008E91C2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				A94C40B72C8AD1E4008E91C2 /* String+Key.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -158,6 +159,24 @@
 				A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */,
 			);
 			path = Record;
+			sourceTree = "<group>";
+		};
+		A96BB0B82C8EB03D00F49BD8 /* UserInterface */ = {
+			isa = PBXGroup;
+			children = (
+				A9DA8D002C8A9EA700D1141C /* Screens */,
+				A9DA8D022C8A9EBA00D1141C /* Entity */,
+				A9DA8D012C8A9EB300D1141C /* Utils */,
+			);
+			path = UserInterface;
+			sourceTree = "<group>";
+		};
+		A96BB0BC2C8EB15000F49BD8 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				A96BB0BD2C8EB15900F49BD8 /* SettingView.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		A9DA8CBA2C8A9C3500D1141C = {
@@ -220,9 +239,7 @@
 				A9DA8D072C8A9F9A00D1141C /* init */,
 				A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */,
 				A94C40B62C8AD1D8008E91C2 /* Common */,
-				A9DA8D002C8A9EA700D1141C /* Screens */,
-				A9DA8D022C8A9EBA00D1141C /* Entity */,
-				A9DA8D012C8A9EB300D1141C /* Utils */,
+				A96BB0B82C8EB03D00F49BD8 /* UserInterface */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -245,6 +262,7 @@
 				A9DA8D052C8A9EE700D1141C /* Onboard */,
 				A94C40B92C8AD366008E91C2 /* Root */,
 				A9DA8D062C8A9EF000D1141C /* Main */,
+				A96BB0BC2C8EB15000F49BD8 /* Setting */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -253,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				A90805CB2C8E9306005CF9FC /* Color+.swift */,
+				A94C40B72C8AD1E4008E91C2 /* String+Key.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -428,6 +447,7 @@
 				A96BB0B72C8EA74E00F49BD8 /* RecordView.swift in Sources */,
 				A90805C72C8E878E005CF9FC /* NoteList.swift in Sources */,
 				A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */,
+				A96BB0BE2C8EB15C00F49BD8 /* SettingView.swift in Sources */,
 				A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */,
 				A94C40BD2C8ADCF3008E91C2 /* ViewCoordinator.swift in Sources */,
 				A94C40BF2C8ADD3F008E91C2 /* Screen.swift in Sources */,

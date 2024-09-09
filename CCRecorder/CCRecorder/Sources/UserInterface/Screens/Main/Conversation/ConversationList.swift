@@ -11,10 +11,14 @@ struct ConversationList: View {
     @Environment(ViewCoordinator.self) private var viewCoordinator
 
     var body: some View {
-        Button(
-            action: { viewCoordinator.push(.setting) },
-            label: { Text("설정 화면 이동") }
-        )
+        VStack {
+            Spacer()
+            Button(
+                action: { viewCoordinator.push(.setting) },
+                label: { Text("설정 화면 이동") }
+            )
+            Spacer()
+        }
         .navigationTitle("Conversation")
     }
 }

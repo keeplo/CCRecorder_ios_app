@@ -11,6 +11,7 @@ struct MainTabbar: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @Binding var selectedTab: Tab
+    @Binding var isPresentedModal: Bool
     
     var body: some View {
         HStack {
@@ -21,9 +22,7 @@ struct MainTabbar: View {
             )
             Spacer()
             Button(
-                action: {
-                    // TODO: Modal 화면
-                },
+                action: { isPresentedModal.toggle() },
                 label: {
                     Spacer()
                     ZStack(alignment: .center) {
@@ -98,9 +97,15 @@ fileprivate struct MainTabItem: View {
 }
 
 #Preview("대화 탭") {
-    MainTabbar(selectedTab: .constant(.conversationList))
+    MainTabbar(
+        selectedTab: .constant(.conversationList),
+        isPresentedModal: .constant(false)
+    )
 }
 
 #Preview("노트 탭") {
-    MainTabbar(selectedTab: .constant(.noteList))
+    MainTabbar(
+        selectedTab: .constant(.noteList),
+        isPresentedModal: .constant(false)
+    )
 }

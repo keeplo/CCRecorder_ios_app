@@ -30,7 +30,7 @@ struct OnboardView: View {
                                         .tint(.white)
                                         .font(.system(size: 16, weight: .bold, design: .rounded))
                                         .padding()
-                                        .background(.ccIcon)
+                                        .background(Color.Any.icon)
                                         .shadow(color: .black, radius: 1, x: 1, y: 1)
                                 }
                             )
@@ -42,7 +42,7 @@ struct OnboardView: View {
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
-        .background(.ccRecorder)
+        .background(Color.Light.recorder)
     }
     
 }

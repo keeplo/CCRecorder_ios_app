@@ -1,0 +1,35 @@
+//
+//  RootView.swift
+//  CCRecorder
+//
+//  Created by 김용우 on 9/6/24.
+//
+
+import SwiftUI
+
+struct RootView: View {
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    @State private var viewCoordinator: ViewCoordinator = .init()
+    
+    var body: some View {
+        NavigationStack(path: $viewCoordinator.path) {
+            MainView()
+                .navigationDestination(for: Screen.self) {
+                    switch $0 {
+                        case .setting:
+                            SettingView()
+                    }
+                }
+        }
+        .environment(viewCoordinator)
+        .environment(\.colorScheme, userColorScheme)
+    }
+    
+    private var userColorScheme: ColorScheme {
+        return colorScheme
+    }
+}
+
+#Preview {
+    RootView()
+}

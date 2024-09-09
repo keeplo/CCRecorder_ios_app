@@ -1,5 +1,5 @@
 //
-//  NoteList.swift
+//  SettingView.swift
 //  CCRecorder
 //
 //  Created by 김용우 on 9/9/24.
@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct NoteList: View {
+struct SettingView: View {
     @Environment(ViewCoordinator.self) private var viewCoordinator
-
+    
     var body: some View {
         Button(
-            action: { viewCoordinator.push(.setting) },
-            label: { Text("설정 화면 이동") }
+            action: { viewCoordinator.pop() },
+            label: { Text("pop") }
         )
-        .navigationTitle("Note")
+        .navigationTitle("설정화면")
     }
 }
 
 #Preview {
-    NoteList()
+    SettingView()
         .environment(ViewCoordinator())
 }

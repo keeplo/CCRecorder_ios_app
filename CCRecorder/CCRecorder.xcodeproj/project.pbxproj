@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A90805BB2C8E7B01005CF9FC /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805B92C8E7B01005CF9FC /* LaunchScreenView.swift */; };
+		A90805BE2C8E7B1F005CF9FC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805BC2C8E7B1F005CF9FC /* RootView.swift */; };
+		A90805C12C8E7B3A005CF9FC /* String+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805BF2C8E7B3A005CF9FC /* String+Key.swift */; };
 		A9DA8CC72C8A9C3500D1141C /* CCRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */; };
 		A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC82C8A9C3500D1141C /* ContentView.swift */; };
 		A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CCA2C8A9C3500D1141C /* Item.swift */; };
@@ -37,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A90805B92C8E7B01005CF9FC /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		A90805BC2C8E7B1F005CF9FC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		A90805BF2C8E7B3A005CF9FC /* String+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Key.swift"; sourceTree = "<group>"; };
 		A9DA8CC32C8A9C3500D1141C /* CCRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCRecorderApp.swift; sourceTree = "<group>"; };
 		A9DA8CC82C8A9C3500D1141C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +83,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A90805BA2C8E7B01005CF9FC /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A90805B92C8E7B01005CF9FC /* LaunchScreenView.swift */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		A90805BD2C8E7B1F005CF9FC /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				A90805BC2C8E7B1F005CF9FC /* RootView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		A90805C02C8E7B3A005CF9FC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A90805BF2C8E7B3A005CF9FC /* String+Key.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		A9DA8CBA2C8A9C3500D1141C = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +166,7 @@
 			children = (
 				A9DA8D072C8A9F9A00D1141C /* init */,
 				A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */,
+				A90805C02C8E7B3A005CF9FC /* Common */,
 				A9DA8D002C8A9EA700D1141C /* Screens */,
 				A9DA8D022C8A9EBA00D1141C /* Entity */,
 				A9DA8D012C8A9EB300D1141C /* Utils */,
@@ -155,6 +186,8 @@
 		A9DA8D002C8A9EA700D1141C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				A90805BA2C8E7B01005CF9FC /* LaunchScreen */,
+				A90805BD2C8E7B1F005CF9FC /* Root */,
 				A9DA8D052C8A9EE700D1141C /* Onboard */,
 				A9DA8D062C8A9EF000D1141C /* Main */,
 			);
@@ -334,7 +367,10 @@
 				A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */,
 				A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */,
 				A9DA8D092C8A9FB100D1141C /* MainView.swift in Sources */,
+				A90805BE2C8E7B1F005CF9FC /* RootView.swift in Sources */,
 				A9DA8CC72C8A9C3500D1141C /* CCRecorderApp.swift in Sources */,
+				A90805C12C8E7B3A005CF9FC /* String+Key.swift in Sources */,
+				A90805BB2C8E7B01005CF9FC /* LaunchScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

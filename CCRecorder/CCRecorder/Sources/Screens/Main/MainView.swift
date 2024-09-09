@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(ViewCoordinator.self) private var viewCoordinator
 
     var body: some View {
-        Text("Hello, World!")
+        Button(
+            action: { viewCoordinator.push(.setting) },
+            label: { Text("설정 화면 이동") }
+        )
     }
 }
 

@@ -7,9 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A90805BB2C8E7B01005CF9FC /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805B92C8E7B01005CF9FC /* LaunchScreenView.swift */; };
-		A90805BE2C8E7B1F005CF9FC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805BC2C8E7B1F005CF9FC /* RootView.swift */; };
-		A90805C12C8E7B3A005CF9FC /* String+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805BF2C8E7B3A005CF9FC /* String+Key.swift */; };
+		A90805C52C8E8772005CF9FC /* ConversationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805C42C8E876D005CF9FC /* ConversationList.swift */; };
+		A90805C72C8E878E005CF9FC /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805C62C8E878B005CF9FC /* NoteList.swift */; };
+		A90805CA2C8E8952005CF9FC /* MainTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805C92C8E894B005CF9FC /* MainTabbar.swift */; };
+		A90805CC2C8E930A005CF9FC /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805CB2C8E9306005CF9FC /* Color+.swift */; };
+		A94C40B22C8ACF22008E91C2 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40B12C8ACF22008E91C2 /* LaunchScreenView.swift */; };
+		A94C40B82C8AD1E4008E91C2 /* String+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40B72C8AD1E4008E91C2 /* String+Key.swift */; };
+		A94C40BB2C8AD372008E91C2 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BA2C8AD372008E91C2 /* RootView.swift */; };
+		A94C40BD2C8ADCF3008E91C2 /* ViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */; };
+		A94C40BF2C8ADD3F008E91C2 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BE2C8ADD3F008E91C2 /* Screen.swift */; };
+		A96BB0B72C8EA74E00F49BD8 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */; };
+		A96BB0BE2C8EB15C00F49BD8 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BB0BD2C8EB15900F49BD8 /* SettingView.swift */; };
 		A9DA8CC72C8A9C3500D1141C /* CCRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */; };
 		A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC82C8A9C3500D1141C /* ContentView.swift */; };
 		A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CCA2C8A9C3500D1141C /* Item.swift */; };
@@ -40,9 +48,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A90805B92C8E7B01005CF9FC /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
-		A90805BC2C8E7B1F005CF9FC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		A90805BF2C8E7B3A005CF9FC /* String+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Key.swift"; sourceTree = "<group>"; };
+		A90805C42C8E876D005CF9FC /* ConversationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationList.swift; sourceTree = "<group>"; };
+		A90805C62C8E878B005CF9FC /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
+		A90805C92C8E894B005CF9FC /* MainTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbar.swift; sourceTree = "<group>"; };
+		A90805CB2C8E9306005CF9FC /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		A94C40B12C8ACF22008E91C2 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		A94C40B72C8AD1E4008E91C2 /* String+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Key.swift"; sourceTree = "<group>"; };
+		A94C40BA2C8AD372008E91C2 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCoordinator.swift; sourceTree = "<group>"; };
+		A94C40BE2C8ADD3F008E91C2 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
+		A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
+		A96BB0BD2C8EB15900F49BD8 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A9DA8CC32C8A9C3500D1141C /* CCRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCRecorderApp.swift; sourceTree = "<group>"; };
 		A9DA8CC82C8A9C3500D1141C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,28 +99,84 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A90805BA2C8E7B01005CF9FC /* LaunchScreen */ = {
+		A90805C22C8E874A005CF9FC /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
-				A90805B92C8E7B01005CF9FC /* LaunchScreenView.swift */,
+				A90805C42C8E876D005CF9FC /* ConversationList.swift */,
+			);
+			path = Conversation;
+			sourceTree = "<group>";
+		};
+		A90805C32C8E875E005CF9FC /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				A90805C62C8E878B005CF9FC /* NoteList.swift */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		A90805C82C8E8947005CF9FC /* Subview */ = {
+			isa = PBXGroup;
+			children = (
+				A90805C92C8E894B005CF9FC /* MainTabbar.swift */,
+			);
+			path = Subview;
+			sourceTree = "<group>";
+		};
+		A94C40AF2C8ACDD9008E91C2 /* Subview */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Subview;
+			sourceTree = "<group>";
+		};
+		A94C40B02C8ACEE1008E91C2 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A94C40B12C8ACF22008E91C2 /* LaunchScreenView.swift */,
 			);
 			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
-		A90805BD2C8E7B1F005CF9FC /* Root */ = {
+		A94C40B62C8AD1D8008E91C2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				A90805BC2C8E7B1F005CF9FC /* RootView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		A94C40B92C8AD366008E91C2 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				A94C40BA2C8AD372008E91C2 /* RootView.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
 		};
-		A90805C02C8E7B3A005CF9FC /* Common */ = {
+		A96BB0B52C8EA73D00F49BD8 /* Record */ = {
 			isa = PBXGroup;
 			children = (
-				A90805BF2C8E7B3A005CF9FC /* String+Key.swift */,
+				A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */,
 			);
-			path = Common;
+			path = Record;
+			sourceTree = "<group>";
+		};
+		A96BB0B82C8EB03D00F49BD8 /* UserInterface */ = {
+			isa = PBXGroup;
+			children = (
+				A9DA8D002C8A9EA700D1141C /* Screens */,
+				A9DA8D022C8A9EBA00D1141C /* Entity */,
+				A9DA8D012C8A9EB300D1141C /* Utils */,
+			);
+			path = UserInterface;
+			sourceTree = "<group>";
+		};
+		A96BB0BC2C8EB15000F49BD8 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				A96BB0BD2C8EB15900F49BD8 /* SettingView.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		A9DA8CBA2C8A9C3500D1141C = {
@@ -166,10 +238,8 @@
 			children = (
 				A9DA8D072C8A9F9A00D1141C /* init */,
 				A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */,
-				A90805C02C8E7B3A005CF9FC /* Common */,
-				A9DA8D002C8A9EA700D1141C /* Screens */,
-				A9DA8D022C8A9EBA00D1141C /* Entity */,
-				A9DA8D012C8A9EB300D1141C /* Utils */,
+				A94C40B62C8AD1D8008E91C2 /* Common */,
+				A96BB0B82C8EB03D00F49BD8 /* UserInterface */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -186,10 +256,13 @@
 		A9DA8D002C8A9EA700D1141C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				A90805BA2C8E7B01005CF9FC /* LaunchScreen */,
-				A90805BD2C8E7B1F005CF9FC /* Root */,
+				A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */,
+				A94C40BE2C8ADD3F008E91C2 /* Screen.swift */,
+				A94C40B02C8ACEE1008E91C2 /* LaunchScreen */,
 				A9DA8D052C8A9EE700D1141C /* Onboard */,
+				A94C40B92C8AD366008E91C2 /* Root */,
 				A9DA8D062C8A9EF000D1141C /* Main */,
+				A96BB0BC2C8EB15000F49BD8 /* Setting */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -197,6 +270,8 @@
 		A9DA8D012C8A9EB300D1141C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A90805CB2C8E9306005CF9FC /* Color+.swift */,
+				A94C40B72C8AD1E4008E91C2 /* String+Key.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -212,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				A9DA8D032C8A9EE200D1141C /* OnboardView.swift */,
+				A94C40AF2C8ACDD9008E91C2 /* Subview */,
 			);
 			path = Onboard;
 			sourceTree = "<group>";
@@ -220,6 +296,10 @@
 			isa = PBXGroup;
 			children = (
 				A9DA8D082C8A9FB100D1141C /* MainView.swift */,
+				A90805C82C8E8947005CF9FC /* Subview */,
+				A90805C22C8E874A005CF9FC /* Conversation */,
+				A90805C32C8E875E005CF9FC /* Note */,
+				A96BB0B52C8EA73D00F49BD8 /* Record */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -318,7 +398,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = A9DA8CBA2C8A9C3500D1141C;
 			productRefGroup = A9DA8CC42C8A9C3500D1141C /* Products */;
@@ -363,14 +442,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A94C40BB2C8AD372008E91C2 /* RootView.swift in Sources */,
 				A9DA8D042C8A9EE200D1141C /* OnboardView.swift in Sources */,
+				A96BB0B72C8EA74E00F49BD8 /* RecordView.swift in Sources */,
+				A90805C72C8E878E005CF9FC /* NoteList.swift in Sources */,
 				A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */,
+				A96BB0BE2C8EB15C00F49BD8 /* SettingView.swift in Sources */,
 				A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */,
+				A94C40BD2C8ADCF3008E91C2 /* ViewCoordinator.swift in Sources */,
+				A94C40BF2C8ADD3F008E91C2 /* Screen.swift in Sources */,
+				A90805CC2C8E930A005CF9FC /* Color+.swift in Sources */,
 				A9DA8D092C8A9FB100D1141C /* MainView.swift in Sources */,
-				A90805BE2C8E7B1F005CF9FC /* RootView.swift in Sources */,
+				A90805CA2C8E8952005CF9FC /* MainTabbar.swift in Sources */,
 				A9DA8CC72C8A9C3500D1141C /* CCRecorderApp.swift in Sources */,
-				A90805C12C8E7B3A005CF9FC /* String+Key.swift in Sources */,
-				A90805BB2C8E7B01005CF9FC /* LaunchScreenView.swift in Sources */,
+				A94C40B82C8AD1E4008E91C2 /* String+Key.swift in Sources */,
+				A90805C52C8E8772005CF9FC /* ConversationList.swift in Sources */,
+				A94C40B22C8ACF22008E91C2 /* LaunchScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,10 +624,14 @@
 				DEVELOPMENT_TEAM = 9486RJPBM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Casual Conversation";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -566,10 +657,14 @@
 				DEVELOPMENT_TEAM = 9486RJPBM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Casual Conversation";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

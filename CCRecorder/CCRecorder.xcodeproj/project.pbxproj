@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A90805C52C8E8772005CF9FC /* ConversationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805C42C8E876D005CF9FC /* ConversationList.swift */; };
+		A90805C72C8E878E005CF9FC /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805C62C8E878B005CF9FC /* NoteList.swift */; };
+		A90805CA2C8E8952005CF9FC /* MainTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805C92C8E894B005CF9FC /* MainTabbar.swift */; };
 		A90805CC2C8E930A005CF9FC /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90805CB2C8E9306005CF9FC /* Color+.swift */; };
 		A94C40B22C8ACF22008E91C2 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40B12C8ACF22008E91C2 /* LaunchScreenView.swift */; };
 		A94C40B82C8AD1E4008E91C2 /* String+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40B72C8AD1E4008E91C2 /* String+Key.swift */; };
 		A94C40BB2C8AD372008E91C2 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BA2C8AD372008E91C2 /* RootView.swift */; };
 		A94C40BD2C8ADCF3008E91C2 /* ViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */; };
 		A94C40BF2C8ADD3F008E91C2 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94C40BE2C8ADD3F008E91C2 /* Screen.swift */; };
+		A96BB0B72C8EA74E00F49BD8 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */; };
 		A9DA8CC72C8A9C3500D1141C /* CCRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */; };
 		A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CC82C8A9C3500D1141C /* ContentView.swift */; };
 		A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA8CCA2C8A9C3500D1141C /* Item.swift */; };
@@ -43,12 +47,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A90805C42C8E876D005CF9FC /* ConversationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationList.swift; sourceTree = "<group>"; };
+		A90805C62C8E878B005CF9FC /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
+		A90805C92C8E894B005CF9FC /* MainTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbar.swift; sourceTree = "<group>"; };
 		A90805CB2C8E9306005CF9FC /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		A94C40B12C8ACF22008E91C2 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		A94C40B72C8AD1E4008E91C2 /* String+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Key.swift"; sourceTree = "<group>"; };
 		A94C40BA2C8AD372008E91C2 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCoordinator.swift; sourceTree = "<group>"; };
 		A94C40BE2C8ADD3F008E91C2 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
+		A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		A9DA8CC32C8A9C3500D1141C /* CCRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCRecorderApp.swift; sourceTree = "<group>"; };
 		A9DA8CC82C8A9C3500D1141C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,6 +97,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A90805C22C8E874A005CF9FC /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				A90805C42C8E876D005CF9FC /* ConversationList.swift */,
+			);
+			path = Conversation;
+			sourceTree = "<group>";
+		};
+		A90805C32C8E875E005CF9FC /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				A90805C62C8E878B005CF9FC /* NoteList.swift */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		A90805C82C8E8947005CF9FC /* Subview */ = {
+			isa = PBXGroup;
+			children = (
+				A90805C92C8E894B005CF9FC /* MainTabbar.swift */,
+			);
+			path = Subview;
+			sourceTree = "<group>";
+		};
 		A94C40AF2C8ACDD9008E91C2 /* Subview */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,10 +148,16 @@
 			isa = PBXGroup;
 			children = (
 				A94C40BA2C8AD372008E91C2 /* RootView.swift */,
-				A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */,
-				A94C40BE2C8ADD3F008E91C2 /* Screen.swift */,
 			);
 			path = Root;
+			sourceTree = "<group>";
+		};
+		A96BB0B52C8EA73D00F49BD8 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				A96BB0B62C8EA74C00F49BD8 /* RecordView.swift */,
+			);
+			path = Record;
 			sourceTree = "<group>";
 		};
 		A9DA8CBA2C8A9C3500D1141C = {
@@ -182,7 +220,6 @@
 				A9DA8D072C8A9F9A00D1141C /* init */,
 				A9DA8CC62C8A9C3500D1141C /* CCRecorderApp.swift */,
 				A94C40B62C8AD1D8008E91C2 /* Common */,
-				A94C40B02C8ACEE1008E91C2 /* LaunchScreen */,
 				A9DA8D002C8A9EA700D1141C /* Screens */,
 				A9DA8D022C8A9EBA00D1141C /* Entity */,
 				A9DA8D012C8A9EB300D1141C /* Utils */,
@@ -202,6 +239,9 @@
 		A9DA8D002C8A9EA700D1141C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				A94C40BC2C8ADCF3008E91C2 /* ViewCoordinator.swift */,
+				A94C40BE2C8ADD3F008E91C2 /* Screen.swift */,
+				A94C40B02C8ACEE1008E91C2 /* LaunchScreen */,
 				A9DA8D052C8A9EE700D1141C /* Onboard */,
 				A94C40B92C8AD366008E91C2 /* Root */,
 				A9DA8D062C8A9EF000D1141C /* Main */,
@@ -237,6 +277,10 @@
 			isa = PBXGroup;
 			children = (
 				A9DA8D082C8A9FB100D1141C /* MainView.swift */,
+				A90805C82C8E8947005CF9FC /* Subview */,
+				A90805C22C8E874A005CF9FC /* Conversation */,
+				A90805C32C8E875E005CF9FC /* Note */,
+				A96BB0B52C8EA73D00F49BD8 /* Record */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -381,14 +425,18 @@
 			files = (
 				A94C40BB2C8AD372008E91C2 /* RootView.swift in Sources */,
 				A9DA8D042C8A9EE200D1141C /* OnboardView.swift in Sources */,
+				A96BB0B72C8EA74E00F49BD8 /* RecordView.swift in Sources */,
+				A90805C72C8E878E005CF9FC /* NoteList.swift in Sources */,
 				A9DA8CC92C8A9C3500D1141C /* ContentView.swift in Sources */,
 				A9DA8CCB2C8A9C3500D1141C /* Item.swift in Sources */,
 				A94C40BD2C8ADCF3008E91C2 /* ViewCoordinator.swift in Sources */,
 				A94C40BF2C8ADD3F008E91C2 /* Screen.swift in Sources */,
 				A90805CC2C8E930A005CF9FC /* Color+.swift in Sources */,
 				A9DA8D092C8A9FB100D1141C /* MainView.swift in Sources */,
+				A90805CA2C8E8952005CF9FC /* MainTabbar.swift in Sources */,
 				A9DA8CC72C8A9C3500D1141C /* CCRecorderApp.swift in Sources */,
 				A94C40B82C8AD1E4008E91C2 /* String+Key.swift in Sources */,
+				A90805C52C8E8772005CF9FC /* ConversationList.swift in Sources */,
 				A94C40B22C8ACF22008E91C2 /* LaunchScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

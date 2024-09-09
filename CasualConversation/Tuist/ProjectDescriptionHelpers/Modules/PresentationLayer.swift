@@ -8,23 +8,29 @@
 import ProjectDescription
 
 extension TargetDependency {
-    public static let presentationLayer: TargetDependency = target(name: PresentationLayer.name)
+    public static let presentationLayer: TargetDependency = .project(
+        target: PresentationLayer.name,
+        path: .path("../../Module/\(PresentationLayer.name)Layer"),
+        condition: nil
+    )
 }
 
-public struct PresentationLayer {
-    public static let name: String = .init(describing: Self.self)
-    public static let packages: [Package] = []
-    
-    public static let target: Target = .init(
+public struct PresentationLayer: Module {
+    public static let name: String = "Presentation"
+    public static let packages: [Package] = [
+        .quick,
+        .nimble
+    ]
+    public static let target: Target = .target(
         name: name,
-        platform: .iOS,
+        destinations: .iOS,
         product: .framework,
         productName: nil,
         bundleId: "com.pseapplications.casualconversation.\(name)",
-        deploymentTarget: .appTarget,
+        deploymentTargets: .appTarget,
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Sources/**"],
-        resources: ["../../Module/\(name)/Resources/**"],
+        sources: ["../../Module/\(name)Layer/Sources/**"],
+        resources: ["../../Module/\(name)Layer/Resources/**"],
         copyFiles: nil,
         headers: nil,
         entitlements: nil,
@@ -42,13 +48,13 @@ public struct PresentationLayer {
         buildRules: [],
         mergedBinaryType: .automatic
     )
-    public static let test: Target = .init(
+    public static let test: Target = .target(
         name: name + "Tests",
-        platform: .iOS,
+        destinations: .iOS,
         product: .unitTests,
         bundleId: "com.pseapplications.\(name)Tests",
         infoPlist: .default,
-        sources: ["../../Module/\(name)/Tests/**"],
+        sources: ["../../Module/\(name)Layer/Tests/**"],
         resources: [],
         dependencies: [
             .presentationLayer,
@@ -57,5 +63,8 @@ public struct PresentationLayer {
             .nimble
         ]
     )
-
+    public static let schemes: [Scheme] =  [
+        .make(name: "\(name)", for: .sandboxDebug, targets: ["\(name)"])
+    ]
 }
+

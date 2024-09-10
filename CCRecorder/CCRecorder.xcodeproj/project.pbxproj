@@ -169,6 +169,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A9615E522C9021C400D2F954 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A90805CB2C8E9306005CF9FC /* Color+.swift */,
+				A94C40B72C8AD1E4008E91C2 /* String+Key.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		A96BB0B52C8EA73D00F49BD8 /* Record */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,8 +295,7 @@
 		A9DA8D012C8A9EB300D1141C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				A90805CB2C8E9306005CF9FC /* Color+.swift */,
-				A94C40B72C8AD1E4008E91C2 /* String+Key.swift */,
+				A9615E522C9021C400D2F954 /* Extension */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

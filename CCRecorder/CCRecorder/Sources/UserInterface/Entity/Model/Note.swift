@@ -44,24 +44,3 @@ extension Note {
     var isDone: Bool            { !original.isEmpty && !translation.isEmpty }
     
 }
-
-#if DEBUG
-extension Note {
-    
-    static var vocabularyDummy: Self {
-        .init(
-            original: "Test",
-            translation: "",
-            category: .vocabulary
-        )
-    }
-    static var sentenceDummy: Self {
-        .init(
-            original: "",
-            translation: "테스트 용 문장을 이렇게 작성함",
-            category: .sentence
-        )
-    }
-    
-}
-#endif

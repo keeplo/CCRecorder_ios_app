@@ -17,10 +17,7 @@ struct ConversationDetailView: View {
     
     var body: some View {
         VStack {
-            Color.gray
-                .overlay {
-                    Text("CoversationDetail")
-                }
+            InformationToolbar(conversation: $conversation)
             NoteList(
                 notes: filteredNotes,
                 onDelete: onDelete(of:)

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlayTab: View {
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var currentTime: TimeInterval = .zero
     @State private var duration: TimeInterval = .zero
@@ -40,6 +41,7 @@ struct PlayTab: View {
                 PinButton()
             }
         }
+        .background(colorScheme == .dark ? Color.Dark.background : Color.Light.background)
         .onAppear {
             // setup()
         }

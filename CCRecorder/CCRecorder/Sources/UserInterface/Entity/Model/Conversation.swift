@@ -22,7 +22,7 @@ final class Conversation {
     @Relationship var members: [Memeber]
     
     init(
-        id: UUID,
+        id: UUID = .init(),
         createdDate: Date = .init(),
         recordFilePath: URL,
         pins: [TimeInterval] = [],

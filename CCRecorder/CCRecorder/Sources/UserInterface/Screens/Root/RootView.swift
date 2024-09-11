@@ -16,6 +16,12 @@ struct RootView: View {
             MainView()
                 .navigationDestination(for: Screen.self) {
                     switch $0 {
+                        case .conversationList:
+                            ConversationListView()
+                            
+                        case .conversationDetail(let conversation):
+                            ConversationDetail(conversation: conversation)
+                            
                         case .setting:
                             SettingView()
                     }

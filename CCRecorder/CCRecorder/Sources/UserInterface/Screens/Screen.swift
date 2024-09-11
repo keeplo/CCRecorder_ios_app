@@ -7,6 +7,8 @@
 
 import Foundation
 
-enum Screen {
+enum Screen: Hashable {
+    case conversationList
+    case conversationDetail(Conversation)
     case setting
 }

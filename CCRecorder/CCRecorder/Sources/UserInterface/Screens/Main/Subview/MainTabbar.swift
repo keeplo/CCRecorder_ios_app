@@ -28,7 +28,7 @@ struct MainTabbar: View {
                     ZStack(alignment: .center) {
                         Image(systemName: "mic.fill.badge.plus")
                             .font(.system(size: 44))
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .padding()
                             .background(recordButtonColor)
                             .clipShape(.circle)
@@ -54,7 +54,7 @@ struct MainTabbar: View {
     }
     
     private var recordButtonColor: Color {
-        colorScheme == .dark ? .Dark.logoGreen : .Light.logoGreen
+        colorScheme == .dark ? .Dark.logoBlue : .Light.logoBlue
     }
     
 }
@@ -70,9 +70,7 @@ fileprivate struct MainTabItem: View {
                 Spacer()
                 Image(systemName: tabItemImageName)
                     .font(.system(size: 28, weight: .bold))
-                    .tint(
-                        currentTintColor
-                    )
+                    .foregroundStyle(currentTintColor)
                 Spacer()
             }
         )

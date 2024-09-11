@@ -13,6 +13,7 @@ enum Tab {
 }
 
 struct MainView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Environment(ViewCoordinator.self) private var viewCoordinator
     
     @State private var selectedTab: Tab = .conversationList
@@ -29,12 +30,21 @@ struct MainView: View {
                 isPresentedModal: $isPresentedModal
             )
         }
+        .background(backgroudColor)
         .fullScreenCover(isPresented: $isPresentedModal) {
             RecordView()
         }
         .toolbar {
             MainViewToolbar()
         }
+    }
+    
+}
+
+extension MainView {
+    
+    private var backgroudColor: Color {
+        colorScheme == .dark ? .Dark.background : .Light.background
     }
     
 }
@@ -48,7 +58,7 @@ fileprivate struct MainViewToolbar: ToolbarContent {
                 action: { viewCoordinator.push(.setting) },
                 label: { 
                     Image(systemName: "gear")
-                        .tint(.accent)
+                        .foregroundStyle(.accent)
                 }
             )
         }

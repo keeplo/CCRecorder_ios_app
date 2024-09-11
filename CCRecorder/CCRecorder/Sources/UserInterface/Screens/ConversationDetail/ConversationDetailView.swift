@@ -20,6 +20,10 @@ struct ConversationDetailView: View {
                 .overlay {
                     Text("CoversationDetail")
                 }
+            NoteList(
+                notes: $conversation.notes,
+                onDelete: onDelete(of:)
+            )
             PlayTab()
         }
     }

@@ -22,8 +22,8 @@ struct MainView: View {
     var body: some View {
         VStack {
             switch selectedTab {
-                case .noteList:             NoteList()
                 case .conversationList:     ConversationListView()
+                case .noteList:             NoteListView()
             }
             MainTabbar(
                 selectedTab: $selectedTab, 

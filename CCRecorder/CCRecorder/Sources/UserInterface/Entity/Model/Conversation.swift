@@ -18,17 +18,17 @@ final class Conversation {
     let pins: [TimeInterval]
     var title: String
     var topic: String
-    @Relationship var notes: [Note]
+    var noteIds: [UUID]
     @Relationship var members: [Memeber]
     
     init(
-        id: UUID,
+        id: UUID = .init(),
         createdDate: Date = .init(),
         recordFilePath: URL,
         pins: [TimeInterval] = [],
         title: String,
         topic: String,
-        notes: [Note] = [],
+        notes: [UUID] = [],
         members: [Memeber]
     ) {
         self.id = id
@@ -37,7 +37,7 @@ final class Conversation {
         self.pins = pins
         self.title = title
         self.topic = topic
-        self.notes = notes
+        self.noteIds = notes
         self.members = members
     }
     

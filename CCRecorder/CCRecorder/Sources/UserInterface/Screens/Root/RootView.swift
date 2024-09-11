@@ -20,7 +20,7 @@ struct RootView: View {
                             ConversationListView()
                             
                         case .conversationDetail(let conversation):
-                            ConversationDetail(conversation: conversation)
+                            ConversationDetailView(conversation: conversation)
                             
                         case .setting:
                             SettingView()

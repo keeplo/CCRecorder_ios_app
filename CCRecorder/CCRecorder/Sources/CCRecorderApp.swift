@@ -49,7 +49,12 @@ struct CCRecorderApp: App {
                             }
                         }
                         .animation(.easeInOut, value: isFirstLaunched)
-                        .modelContainer(for: Conversation.self)
+                        .modelContainer(
+                            for: [
+                                Conversation.self,
+                                Note.self
+                            ]
+                        )
             }
         }
 //        .modelContainer(sharedModelContainer)

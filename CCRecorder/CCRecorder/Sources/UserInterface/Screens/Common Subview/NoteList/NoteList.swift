@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NoteList: View {
-    @Binding var notes: [Note]
+    var notes: [Note]
     
     let onDelete: (IndexSet) -> Void
     
@@ -29,26 +29,6 @@ struct NoteList: View {
             NoteDetail(note: note)
                 .presentationDetents(detents(of: note.category))
         }
-        /// FIXME: 더미 데이터 - 시작
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Button(
-                    action: {
-                        notes.append(
-                            Note(
-                                original: "Dummy",
-                                translation: "",
-                                category: [
-                                    Note.Category.sentence,
-                                    Note.Category.vocabulary
-                                ][Int.random(in: 0...1)]
-                            )
-                        )
-                    }, label: { Text("더미 추가") }
-                )
-            }
-        }
-        /// FIXME: 더미 데이터 - 끝
     }
     
 }
@@ -66,7 +46,7 @@ private extension NoteList {
 
 #Preview {
     NoteList(
-        notes: .constant([.sentenceDummy, .vocabularyDummy]),
+        notes: [.sentenceDummy, .vocabularyDummy],
         onDelete: { _ in }
     )
 }

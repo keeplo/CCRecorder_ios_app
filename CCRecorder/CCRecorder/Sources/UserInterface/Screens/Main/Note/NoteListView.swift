@@ -16,30 +16,10 @@ struct NoteListView: View {
     
     var body: some View {
         NoteList(
-            notes: .init(get: { sortedNotes }, set: { _ in }),
+            notes: sortedNotes,
             onDelete: onDelete(at:)
         )
         .navigationTitle("Note")
-        /// FIXME: 더미 데이터 - 시작
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Button(
-                    action: {
-                        modelContext.insert(
-                            Note(
-                                original: "Dummy",
-                                translation: "",
-                                category: [
-                                    Note.Category.sentence,
-                                    Note.Category.vocabulary
-                                ][Int.random(in: 0...1)]
-                            )
-                        )
-                    }, label: { Text("더미 추가") }
-                )
-            }
-        }
-        /// FIXME: 더미 데이터 - 끝
     }
     
 }
